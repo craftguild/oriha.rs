@@ -1,0 +1,107 @@
+name: Checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  checks:
+    runs-on: warp-ubuntu-2404-x64-4x
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            packages/expo-oriha/package-lock.json
+            packages/font-registry/package-lock.json
+            examples/expo-preview/package-lock.json
+
+      - name: Select pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.95.0 --profile minimal --component clippy --component rustfmt
+          rustup override set 1.95.0
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install locked npm projects
+        run: |
+          npm --prefix packages/expo-oriha ci --ignore-scripts
+          npm --prefix packages/font-registry ci --ignore-scripts
+          npm --prefix examples/expo-preview ci --ignore-scripts
+
+      - name: Install quality tools
+        run: |
+          cargo install tokei --version 15.0.0 --locked
+          cargo install cargo-deny --version 0.19.8 --locked
+
+      - name: Prepare an owned sandboxed Chrome for Linux validation
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          sysctl kernel.apparmor_restrict_unprivileged_userns > "$RUNNER_TEMP/oriha-ci-userns.restriction"
+          cat "$RUNNER_TEMP/oriha-ci-userns.restriction"
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends apparmor
+          ci_chrome="$RUNNER_TEMP/oriha-ci-chrome-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          test ! -e "$ci_chrome"
+          mkdir "$ci_chrome"
+          touch "$RUNNER_TEMP/oriha-ci-chrome.owned"
+          cp -R /opt/google/chrome/. "$ci_chrome/"
+          cmp /opt/google/chrome/chrome "$ci_chrome/chrome"
+          cmp /opt/google/chrome/google-chrome "$ci_chrome/google-chrome"
+          test -x "$ci_chrome/chrome" && test -x "$ci_chrome/google-chrome"
+          cat > "$RUNNER_TEMP/oriha-ci-chrome.apparmor" <<EOF
+          abi <abi/4.0>,
+          include <tunables/global>
+          profile oriha-ci-chrome-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT} "$ci_chrome/chrome" flags=(unconfined) {
+            userns,
+          }
+          EOF
+          sudo apparmor_parser -a "$RUNNER_TEMP/oriha-ci-chrome.apparmor"
+          touch "$RUNNER_TEMP/oriha-ci-chrome.loaded"
+          sysctl kernel.apparmor_restrict_unprivileged_userns | cmp - "$RUNNER_TEMP/oriha-ci-userns.restriction"
+          printf '%s\n' "$ci_chrome" >> "$GITHUB_PATH"
+          "$ci_chrome/google-chrome" --version
+
+      - name: Run common and product checks
+        run: |
+          make setup
+          cargo fetch --locked
+          make check
+
+      - name: Verify the distributed CLI in isolation
+        run: |
+          make build
+          make acceptance
+
+      - name: Remove owned Chrome namespace permission and files
+        if: always() && runner.os == 'Linux'
+        shell: bash
+        run: |
+          if test -f "$RUNNER_TEMP/oriha-ci-chrome.loaded"; then
+            sudo apparmor_parser -R "$RUNNER_TEMP/oriha-ci-chrome.apparmor"
+          fi
+          if test -f "$RUNNER_TEMP/oriha-ci-userns.restriction"; then
+            sysctl kernel.apparmor_restrict_unprivileged_userns | cmp - "$RUNNER_TEMP/oriha-ci-userns.restriction"
+          fi
+          if test -f "$RUNNER_TEMP/oriha-ci-chrome.owned"; then
+            ci_chrome="$RUNNER_TEMP/oriha-ci-chrome-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+            rm -rf -- "$ci_chrome"
+          fi

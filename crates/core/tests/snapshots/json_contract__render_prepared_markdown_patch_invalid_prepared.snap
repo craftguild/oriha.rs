@@ -1,0 +1,52 @@
+---
+source: crates/core/tests/json_contract.rs
+expression: output
+---
+{
+  "fallbackReason": "invalidInput",
+  "output": {
+    "assets": [],
+    "diagnostics": [
+      {
+        "code": "prepared.invalid_json",
+        "engine": "core",
+        "message": "PreparedMarkdownPatch JSON could not be parsed: key must be a string at line 1 column 2",
+        "severity": "error"
+      }
+    ],
+    "html": "",
+    "sourceMap": [],
+    "stats": {
+      "blocksByKind": [],
+      "calloutsByKind": [],
+      "codeBlocksByLanguageKind": [],
+      "headingsByLevel": [],
+      "issuesByKind": [
+        {
+          "count": 1,
+          "kind": "invalidPreparedJson"
+        }
+      ],
+      "lockedFeaturesByKind": [],
+      "schemaVersion": 1,
+      "totalBlocks": 0,
+      "unsupportedByKind": []
+    }
+  },
+  "patches": [
+    {
+      "html": "",
+      "op": "replaceAll"
+    }
+  ],
+  "snapshot": {
+    "blocks": [],
+    "nextStableIndex": 1,
+    "outputResourceFingerprint": "",
+    "schemaVersion": 3,
+    "settingsFingerprint": "",
+    "tailHash": "",
+    "tailHtmlByteLength": 0
+  },
+  "strategy": "replaceAll"
+}

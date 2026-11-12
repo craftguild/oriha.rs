@@ -1,0 +1,172 @@
+:root {{
+{variables}
+}}
+
+.oriha-document {{
+  color: var(--oriha-color-text);
+  box-sizing: border-box;
+  font-family: var(--oriha-font-body);
+  font-size: var(--oriha-font-size-body);
+  line-height: var(--oriha-line-height);
+  overflow-wrap: anywhere;
+  max-width: var(--oriha-content-max-width);
+  margin: 0 auto;
+  padding: var(--oriha-content-padding);
+  border-radius: var(--oriha-content-radius);
+}}
+
+.oriha-document > * + * {{
+  margin-top: 1rem;
+}}
+
+.oriha-markdown-block > *:first-child,
+.oriha-callout__body > *:first-child {{
+  margin-top: 0;
+}}
+
+.oriha-markdown-block > *:last-child,
+.oriha-callout__body > *:last-child {{
+  margin-bottom: 0;
+}}
+
+.oriha-heading {{
+  color: var(--oriha-color-heading);
+  font-family: var(--oriha-font-heading);
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: var(--oriha-heading-margin-top);
+  margin-bottom: var(--oriha-heading-margin-bottom);
+}}
+
+.oriha-heading--h1,
+.oriha-heading--h2 {{
+  border-bottom: var(--oriha-heading-border);
+  padding-bottom: var(--oriha-heading-padding-bottom);
+}}
+
+.oriha-heading--h1 {{
+  font-size: 2em;
+}}
+
+.oriha-heading--h2 {{
+  font-size: 1.5em;
+}}
+
+.oriha-heading--h3 {{
+  font-size: 1.25em;
+}}
+
+.oriha-heading--h4 {{
+  font-size: 1.1em;
+}}
+
+.oriha-heading--h5 {{
+  font-size: 1em;
+}}
+
+.oriha-heading--h6 {{
+  font-size: 0.875em;
+}}
+
+.oriha-paragraph {{
+  margin-top: var(--oriha-paragraph-margin-top);
+  margin-bottom: var(--oriha-paragraph-margin-bottom);
+}}
+
+.oriha-document a {{
+  color: var(--oriha-color-link);
+  text-decoration: none;
+}}
+
+.oriha-document a:hover {{
+  color: var(--oriha-color-link-hover);
+  text-decoration: underline;
+}}
+
+.oriha-document code,
+.oriha-code-block,
+.oriha-code-block-header {{
+  font-family: var(--oriha-font-mono);
+}}
+
+.oriha-document :not(pre) > code {{
+  background: var(--oriha-code-inline-bg);
+  border-radius: var(--oriha-code-inline-radius);
+  padding: 0.2em 0.4em;
+  font-size: 0.85em;
+}}
+
+.oriha-code-block-wrapper {{
+  background: var(--oriha-syntax-bg);
+  border-radius: var(--oriha-code-radius);
+  box-shadow: var(--oriha-table-shadow);
+  color: var(--oriha-code-text);
+  margin: var(--oriha-table-margin);
+  overflow: hidden;
+}}
+
+.oriha-code-block-header {{
+  align-items: center;
+  background: var(--oriha-code-header-bg);
+  box-sizing: border-box;
+  color: var(--oriha-code-text);
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  line-height: 1.35;
+  min-height: 36px;
+  padding: 0 12px;
+}}
+
+.oriha-code-block-language {{
+  font-size: var(--oriha-font-size-code-label);
+  font-weight: 600;
+  letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}}
+
+.oriha-code-copy-button {{
+  appearance: none;
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--oriha-code-copy-text);
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 7px;
+  font: inherit;
+  font-size: var(--oriha-font-size-code-label);
+  font-weight: 500;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 8px;
+}}
+
+.oriha-code-copy-icon {{
+  flex: 0 0 auto;
+  height: 18px;
+  width: 18px;
+}}
+
+.oriha-code-copy-label {{
+  line-height: 1;
+}}
+
+.oriha-code-copy-button:hover {{
+  background: var(--oriha-code-copy-hover-bg);
+}}
+
+.oriha-code-copy-button[data-oriha-copy-state="copied"] {{
+  background: var(--oriha-code-copy-success-bg);
+  color: var(--oriha-code-copy-success-text);
+}}
+
+.oriha-code-copy-button[data-oriha-copy-state="failed"] {{
+  background: var(--oriha-code-copy-failure-bg);
+  color: var(--oriha-code-copy-failure-text);
+}}
+

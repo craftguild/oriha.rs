@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "source", "fonts"],
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "source": {
+      "type": "object",
+      "required": ["provider", "baseUrl", "display", "policy"],
+      "properties": {
+        "provider": { "const": "google-fonts-css2" },
+        "baseUrl": { "type": "string" },
+        "display": { "type": "string" },
+        "policy": {
+          "type": "object",
+          "required": ["allowTextParameter", "allowPerDocumentSubset"],
+          "properties": {
+            "allowTextParameter": { "const": false },
+            "allowPerDocumentSubset": { "const": false }
+          }
+        }
+      }
+    },
+    "fonts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "family", "kinds", "source"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "label": { "type": "string" },
+          "family": { "type": "string" },
+          "kinds": {
+            "type": "array",
+            "items": { "enum": ["heading", "body", "code"] },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "source": {
+            "type": "object",
+            "required": ["specimenUrl", "css2Family"],
+            "properties": {
+              "specimenUrl": { "type": "string" },
+              "css2Family": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

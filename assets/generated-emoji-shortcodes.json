@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "owner": "oriha-emoji-shortcodes",
+  "generator_revision": "e19b7363b9ab881f51ea0f16f9caa3cf44e5c2221c9adaf2a5dd773546aa369e",
+  "inputs": {
+    "crates/core/scripts/generate-emoji-shortcodes.mjs": "e19b7363b9ab881f51ea0f16f9caa3cf44e5c2221c9adaf2a5dd773546aa369e",
+    "crates/core/emoji-data/github-gemoji-0eca75db9301421efc8710baf7a7576793ae452a/emoji.json": "b174ae2aeb321b52f64adb9ff412f966a7f338839d780784dd15dcad702c2dd6",
+    "crates/core/emoji-data/github-gemoji-0eca75db9301421efc8710baf7a7576793ae452a/LICENSE": "7ea1d1fd0602e6623b9a65e791499a0ea5a2f5f60f91bfad78cbaeee19da26e6",
+    "crates/core/emoji-data/unicode-cldr-json-48.2.0/annotations/en/annotations.json": "f22083cb86dffb63a643d5bacb5d9899f82d2fa5d388ad4f3aed72184acef505",
+    "crates/core/emoji-data/unicode-cldr-json-48.2.0/annotationsDerived/en/annotations.json": "15c9457afa703a32dcc78d54626418a91e820fe0ddd67b7d491c4c4d9f5846ab",
+    "crates/core/emoji-data/unicode-cldr-json-48.2.0/LICENSE": "220ba0e1c43b99530d2d5bdb892a99dca0989414f51ab695ecd90163eaa1ec3b",
+    "crates/core/emoji-data/unicode-emoji-16.0/emoji-test.txt": "24f0c534e86cf142e2496953e8f0e46a3e702392911eddcd29c6cced85139697",
+    "crates/core/emoji-data/unicode-emoji-16.0/LICENSE": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96"
+  },
+  "files": {
+    "crates/core/src/emoji/generated/shortcodes.rs": "87fb7d4c9eeb5751ac76a01374493709821f3517af30c059e9fbe459d349028a"
+  }
+}

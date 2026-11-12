@@ -1,0 +1,13 @@
+@startuml
+<style>
+lifeLine {
+  LineStyle 0
+}
+delay {
+  LineStyle 1-4
+}
+</style>
+Alice -> Bob : hello
+...
+Alice <- Bob : hello
+@enduml

@@ -1,0 +1,97 @@
+---
+source: crates/core/tests/json_contract.rs
+expression: prepared
+---
+{
+  "input": {
+    "appearance": {
+      "blockBorders": false,
+      "bodyFontFamily": {
+        "fallbacks": [
+          "BlinkMacSystemFont",
+          "\"Segoe UI\"",
+          "sans-serif"
+        ],
+        "family": "-apple-system"
+      },
+      "codeFontFamily": {
+        "fallbacks": [
+          "Consolas",
+          "\"Liberation Mono\"",
+          "monospace"
+        ],
+        "family": "\"SFMono-Regular\""
+      },
+      "colorScheme": "light",
+      "fullTableData": false,
+      "headingFontFamily": {
+        "fallbacks": [
+          "BlinkMacSystemFont",
+          "\"Segoe UI\"",
+          "sans-serif"
+        ],
+        "family": "-apple-system"
+      },
+      "roundedCorners": true,
+      "shadows": true,
+      "style": "rich",
+      "syntaxTheme": "github-light",
+      "tableBorderStyle": "inner"
+    },
+    "features": {
+      "callouts": true,
+      "gfm": true,
+      "math": true,
+      "mermaid": true,
+      "plantuml": false,
+      "rawHtml": false,
+      "syntaxHighlight": true
+    },
+    "markdown": "# Title\n\nParagraph with *emphasis*, **strong**, `code`, and a [link](https://example.com).\n\n- item one\n- [ ] task item\n\n> :::note Heads up\n> Callout body.\n\n| a | b |\n|---|---|\n| 1 | 2 |\n\n```rust\nfn main() {}\n```\n\nMath: $x^2$\n\n```mermaid\nflowchart TD\nA --> B\n```\n",
+    "mode": "semanticHtml",
+    "renderOptions": {
+      "sourceAttributes": false,
+      "tableOfContents": false
+    },
+    "viewport": null
+  },
+  "textMeasurements": {
+    "requests": [
+      {
+        "engine": "mermaid",
+        "fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif",
+        "fontSize": 16.0,
+        "fontWeight": "600",
+        "id": "mermaid.measurement.wrapped.bfe509702f9c5ce4",
+        "kind": "wrapped",
+        "maxWidth": 220.0,
+        "style": {
+          "fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif",
+          "fontSize": 16.0,
+          "fontWeight": "600",
+          "maxWidth": 220.0
+        },
+        "text": "A",
+        "wrapMode": "svgLike"
+      },
+      {
+        "engine": "mermaid",
+        "fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif",
+        "fontSize": 16.0,
+        "fontWeight": "600",
+        "id": "mermaid.measurement.wrapped.e2a1600503e7c7b7",
+        "kind": "wrapped",
+        "maxWidth": 220.0,
+        "style": {
+          "fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif",
+          "fontSize": 16.0,
+          "fontWeight": "600",
+          "maxWidth": 220.0
+        },
+        "text": "B",
+        "wrapMode": "svgLike"
+      }
+    ]
+  },
+  "version": 3
+}

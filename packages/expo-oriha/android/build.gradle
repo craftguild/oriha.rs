@@ -1,0 +1,37 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+group = 'co.progressiveworks.oriha'
+version = '0.1.0'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useExpoPublishing()
+useCoreDependencies()
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  namespace "co.progressiveworks.oriha"
+
+  compileSdkVersion safeExtGet("compileSdkVersion", 35)
+
+  defaultConfig {
+    minSdkVersion safeExtGet("minSdkVersion", 23)
+    targetSdkVersion safeExtGet("targetSdkVersion", 35)
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += ["src/main/java"]
+      jniLibs.srcDirs += ["src/main/jniLibs"]
+    }
+  }
+}
+
+dependencies {
+  implementation "net.java.dev.jna:jna:5.18.1@aar"
+}

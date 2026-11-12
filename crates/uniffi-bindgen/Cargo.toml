@@ -1,0 +1,16 @@
+[package]
+rust-version.workspace = true
+license.workspace = true
+name = "oriha-uniffi-bindgen"
+authors.workspace = true
+edition.workspace = true
+publish.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[[bin]]
+name = "oriha-uniffi-bindgen"
+path = "src/main.rs"
+
+[dependencies]
+uniffi = { workspace = true, features = ["cli"] }

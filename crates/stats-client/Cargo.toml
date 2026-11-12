@@ -1,0 +1,19 @@
+[package]
+rust-version.workspace = true
+license.workspace = true
+name = "oriha-stats-client"
+authors.workspace = true
+edition.workspace = true
+publish.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[dependencies]
+oriha-core.workspace = true
+oriha-stats-schema.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

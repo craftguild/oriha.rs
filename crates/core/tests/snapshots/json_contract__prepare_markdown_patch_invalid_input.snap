@@ -1,0 +1,70 @@
+---
+source: crates/core/tests/json_contract.rs
+expression: prepared
+---
+{
+  "diagnostics": [
+    {
+      "code": "input.invalid_json",
+      "engine": "core",
+      "message": "RenderPatchInput JSON could not be parsed: key must be a string at line 1 column 2",
+      "severity": "error"
+    }
+  ],
+  "input": {
+    "appearance": {
+      "blockBorders": false,
+      "bodyFontFamily": {
+        "fallbacks": [
+          "BlinkMacSystemFont",
+          "\"Segoe UI\"",
+          "sans-serif"
+        ],
+        "family": "-apple-system"
+      },
+      "codeFontFamily": {
+        "fallbacks": [
+          "Consolas",
+          "\"Liberation Mono\"",
+          "monospace"
+        ],
+        "family": "\"SFMono-Regular\""
+      },
+      "colorScheme": "light",
+      "fullTableData": false,
+      "headingFontFamily": {
+        "fallbacks": [
+          "BlinkMacSystemFont",
+          "\"Segoe UI\"",
+          "sans-serif"
+        ],
+        "family": "-apple-system"
+      },
+      "roundedCorners": true,
+      "shadows": true,
+      "style": "rich",
+      "syntaxTheme": "github-light",
+      "tableBorderStyle": "inner"
+    },
+    "features": {
+      "callouts": true,
+      "gfm": true,
+      "math": false,
+      "mermaid": false,
+      "plantuml": false,
+      "rawHtml": false,
+      "syntaxHighlight": true
+    },
+    "markdown": "",
+    "mode": "styledHtml",
+    "renderOptions": {
+      "sourceAttributes": false,
+      "tableOfContents": false
+    },
+    "viewport": null
+  },
+  "textMeasurements": {
+    "requests": []
+  },
+  "version": 1
+}

@@ -1,0 +1,63 @@
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {{
+  color: var(--oriha-syntax-comment);
+}}
+
+.token.punctuation {{
+  color: var(--oriha-syntax-punctuation);
+}}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {{
+  color: var(--oriha-syntax-constant);
+}}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {{
+  color: var(--oriha-syntax-string);
+}}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {{
+  color: var(--oriha-syntax-operator);
+}}
+
+.token.atrule,
+.token.attr-value,
+.token.section,
+.token.keyword {{
+  color: var(--oriha-syntax-keyword);
+}}
+
+.token.function,
+.token.class-name {{
+  color: var(--oriha-syntax-function);
+}}
+
+.token.regex,
+.token.important,
+.token.variable {{
+  color: var(--oriha-syntax-variable);
+}}
+
+.token.inserted {{
+  color: var(--oriha-color-success);
+}}
+
+.token.deleted {{
+  color: var(--oriha-color-danger);
+}}

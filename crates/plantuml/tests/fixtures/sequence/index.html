@@ -1,0 +1,4261 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PlantUML sequence fixture visual index</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #cbd5e1;
+      --supported: #166534;
+      --supported-bg: #dcfce7;
+      --unsupported: #991b1b;
+      --unsupported-bg: #fee2e2;
+      --accent: #2563eb;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+    }
+    .header-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .counts {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    button {
+      min-height: 32px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+    }
+    button[aria-pressed="true"] {
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+    }
+    main {
+      padding: 24px;
+    }
+    .case-list {
+      display: grid;
+      gap: 20px;
+    }
+    .case {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .case[hidden] {
+      display: none;
+    }
+    .case-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .case-title {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    h2 {
+      margin: 0;
+      font-size: 16px;
+    }
+    .summary {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .badge.supported {
+      color: var(--supported);
+      background: var(--supported-bg);
+    }
+    .badge.unsupported {
+      color: var(--unsupported);
+      background: var(--unsupported-bg);
+    }
+    .links {
+      display: flex;
+      gap: 10px;
+      justify-content: end;
+      flex-wrap: wrap;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .pair {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0;
+    }
+    figure {
+      margin: 0;
+      min-width: 0;
+      border-right: 1px solid var(--border);
+    }
+    figure:last-child {
+      border-right: 0;
+    }
+    figcaption {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+    .svg-frame {
+      min-height: 300px;
+      max-height: 680px;
+      overflow: auto;
+      background: #fff;
+    }
+    .svg-frame img {
+      display: block;
+      width: 100%;
+      min-width: 520px;
+      height: auto;
+    }
+    .error {
+      margin: 0;
+      padding: 12px 16px;
+      border-top: 1px solid #fecaca;
+      color: var(--unsupported);
+      background: #fff5f5;
+      font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-wrap: anywhere;
+    }
+    details {
+      border-top: 1px solid var(--border);
+      background: #fcfdff;
+    }
+    summary {
+      padding: 10px 16px;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    pre {
+      margin: 0;
+      padding: 0 16px 16px;
+      overflow: auto;
+      color: #1e293b;
+      font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre;
+    }
+    @media (max-width: 960px) {
+      main {
+        padding: 12px;
+      }
+      .page-header {
+        padding: 12px;
+      }
+      .pair {
+        grid-template-columns: 1fr;
+      }
+      figure {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      figure:last-child {
+        border-bottom: 0;
+      }
+      .case-header {
+        grid-template-columns: 1fr;
+      }
+      .links {
+        justify-content: start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div class="header-row">
+      <h1>PlantUML sequence fixtures</h1>
+      <div class="counts">
+        <span>87 total</span>
+        <span>87 supported</span>
+        <span>0 unsupported</span>
+      </div>
+    </div>
+    <div class="controls" aria-label="Fixture filters">
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="supported" aria-pressed="false">Supported</button>
+      <button type="button" data-filter="unsupported" aria-pressed="false">Unsupported</button>
+    </div>
+  </header>
+  <main>
+    <div class="case-list">
+      <section class="case" id="case-001" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-001">001</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice -&gt; Bob: Authentication Request</p>
+          </div>
+          <nav class="links" aria-label="001 files">
+            <a href="001.puml">PUML</a>
+            <a href="001-golden.svg">PlantUML SVG</a>
+            <a href="001.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="001-golden.svg" alt="001 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="001.svg" alt="001 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Alice -&gt; Bob: Authentication Request
+Bob --&gt; Alice: Authentication Response
+
+Alice -&gt; Bob: Another authentication Request
+Alice &lt;-- Bob: Another authentication Response
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-002" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-002">002</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Participant as Foo</p>
+          </div>
+          <nav class="links" aria-label="002 files">
+            <a href="002.puml">PUML</a>
+            <a href="002-golden.svg">PlantUML SVG</a>
+            <a href="002.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="002-golden.svg" alt="002 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="002.svg" alt="002 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Participant as Foo
+actor       Actor       as Foo1
+boundary    Boundary    as Foo2
+control     Control     as Foo3
+entity      Entity      as Foo4
+database    Database    as Foo5
+collections Collections as Foo6
+queue       Queue       as Foo7
+Foo -&gt; Foo1 : To actor 
+Foo -&gt; Foo2 : To boundary
+Foo -&gt; Foo3 : To control
+Foo -&gt; Foo4 : To entity
+Foo -&gt; Foo5 : To database
+Foo -&gt; Foo6 : To collections
+Foo -&gt; Foo7: To queue
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-003" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-003">003</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">actor Bob #red</p>
+          </div>
+          <nav class="links" aria-label="003 files">
+            <a href="003.puml">PUML</a>
+            <a href="003-golden.svg">PlantUML SVG</a>
+            <a href="003.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="003-golden.svg" alt="003 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="003.svg" alt="003 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+actor Bob #red
+&#x27; The only difference between actor
+&#x27;and participant is the drawing
+participant Alice
+participant &quot;I have a really\nlong name&quot; as L #99FF99
+/&#x27; You can also declare:
+   participant L as &quot;I have a really\nlong name&quot;  #99FF99
+  &#x27;/
+
+Alice-&gt;Bob: Authentication Request
+Bob-&gt;Alice: Authentication Response
+Bob-&gt;L: Log transaction
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-004" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-004">004</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Last order 30</p>
+          </div>
+          <nav class="links" aria-label="004 files">
+            <a href="004.puml">PUML</a>
+            <a href="004-golden.svg">PlantUML SVG</a>
+            <a href="004.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="004-golden.svg" alt="004 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="004.svg" alt="004 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Last order 30
+participant Middle order 20
+participant First order 10
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-005" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-005">005</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Participant [</p>
+          </div>
+          <nav class="links" aria-label="005 files">
+            <a href="005.puml">PUML</a>
+            <a href="005-golden.svg">PlantUML SVG</a>
+            <a href="005.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="005-golden.svg" alt="005 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="005.svg" alt="005 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Participant [
+    =Title
+    ----
+    &quot;&quot;SubTitle&quot;&quot;
+]
+
+participant Bob
+
+Participant -&gt; Bob
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-006" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-006">006</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice -&gt; &quot;Bob()&quot; : Hello</p>
+          </div>
+          <nav class="links" aria-label="006 files">
+            <a href="006.puml">PUML</a>
+            <a href="006-golden.svg">PlantUML SVG</a>
+            <a href="006.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="006-golden.svg" alt="006 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="006.svg" alt="006 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Alice -&gt; &quot;Bob()&quot; : Hello
+&quot;Bob()&quot; -&gt; &quot;This is very\nlong&quot; as Long
+&#x27; You can also declare:
+&#x27; &quot;Bob()&quot; -&gt; Long as &quot;This is very\nlong&quot;
+Long --&gt; &quot;Bob()&quot; : ok
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-007" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-007">007</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice -&gt; Alice: This is a signal to self.\nIt also demonstrates\nmultiline \ntext</p>
+          </div>
+          <nav class="links" aria-label="007 files">
+            <a href="007.puml">PUML</a>
+            <a href="007-golden.svg">PlantUML SVG</a>
+            <a href="007.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="007-golden.svg" alt="007 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="007.svg" alt="007 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Alice -&gt; Alice: This is a signal to self.\nIt also demonstrates\nmultiline \ntext
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-008" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-008">008</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice &lt;- Alice: This is a signal to self.\nIt also demonstrates\nmultiline \ntext</p>
+          </div>
+          <nav class="links" aria-label="008 files">
+            <a href="008.puml">PUML</a>
+            <a href="008-golden.svg">PlantUML SVG</a>
+            <a href="008.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="008-golden.svg" alt="008 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="008.svg" alt="008 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Alice &lt;- Alice: This is a signal to self.\nIt also demonstrates\nmultiline \ntext
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-009" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-009">009</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam sequenceMessageAlign right</p>
+          </div>
+          <nav class="links" aria-label="009 files">
+            <a href="009.puml">PUML</a>
+            <a href="009-golden.svg">PlantUML SVG</a>
+            <a href="009.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="009-golden.svg" alt="009 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="009.svg" alt="009 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam sequenceMessageAlign right
+Bob -&gt; Alice : Request
+Alice -&gt; Bob : Response
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-010" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-010">010</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam responseMessageBelowArrow true</p>
+          </div>
+          <nav class="links" aria-label="010 files">
+            <a href="010.puml">PUML</a>
+            <a href="010-golden.svg">PlantUML SVG</a>
+            <a href="010.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="010-golden.svg" alt="010 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="010.svg" alt="010 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam responseMessageBelowArrow true
+Bob -&gt; Alice : hello
+Bob &lt;- Alice : ok
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-011" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-011">011</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">actor Alice</p>
+          </div>
+          <nav class="links" aria-label="011 files">
+            <a href="011.puml">PUML</a>
+            <a href="011-golden.svg">PlantUML SVG</a>
+            <a href="011.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="011-golden.svg" alt="011 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="011.svg" alt="011 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+actor Alice
+actor Bob
+Alice -&gt; Bob : hello
+hide footbox
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-012" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-012">012</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam actorStyle awesome</p>
+          </div>
+          <nav class="links" aria-label="012 files">
+            <a href="012.puml">PUML</a>
+            <a href="012-golden.svg">PlantUML SVG</a>
+            <a href="012.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="012-golden.svg" alt="012 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="012.svg" alt="012 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam actorStyle awesome
+actor Alice
+actor Bob
+Alice -&gt; Bob : hello
+hide footbox
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-013" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-013">013</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam actorStyle Hollow</p>
+          </div>
+          <nav class="links" aria-label="013 files">
+            <a href="013.puml">PUML</a>
+            <a href="013-golden.svg">PlantUML SVG</a>
+            <a href="013.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="013-golden.svg" alt="013 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="013.svg" alt="013 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam actorStyle Hollow
+actor Alice
+actor Bob
+Alice -&gt; Bob : hello
+hide footbox
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-014" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-014">014</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Bob -&gt;x Alice</p>
+          </div>
+          <nav class="links" aria-label="014 files">
+            <a href="014.puml">PUML</a>
+            <a href="014-golden.svg">PlantUML SVG</a>
+            <a href="014.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="014-golden.svg" alt="014 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="014.svg" alt="014 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Bob -&gt;x Alice
+Bob -&gt; Alice
+Bob -&gt;&gt; Alice
+Bob -\ Alice
+Bob \\- Alice
+Bob //-- Alice
+
+Bob -&gt;o Alice
+Bob o\\-- Alice
+
+Bob &lt;-&gt; Alice
+Bob &lt;-&gt;o Alice
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-015" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-015">015</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Bob -[#red]&gt; Alice : hello</p>
+          </div>
+          <nav class="links" aria-label="015 files">
+            <a href="015.puml">PUML</a>
+            <a href="015-golden.svg">PlantUML SVG</a>
+            <a href="015.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="015-golden.svg" alt="015 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="015.svg" alt="015 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Bob -[#red]&gt; Alice : hello
+Alice -[#0000FF]-&gt;Bob : ok
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-016" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-016">016</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">autonumber</p>
+          </div>
+          <nav class="links" aria-label="016 files">
+            <a href="016.puml">PUML</a>
+            <a href="016-golden.svg">PlantUML SVG</a>
+            <a href="016.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="016-golden.svg" alt="016 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="016.svg" alt="016 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+autonumber
+Bob -&gt; Alice : Authentication Request
+Bob &lt;- Alice : Authentication Response
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-017" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-017">017</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">autonumber</p>
+          </div>
+          <nav class="links" aria-label="017 files">
+            <a href="017.puml">PUML</a>
+            <a href="017-golden.svg">PlantUML SVG</a>
+            <a href="017.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="017-golden.svg" alt="017 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="017.svg" alt="017 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+autonumber
+Bob -&gt; Alice : Authentication Request
+Bob &lt;- Alice : Authentication Response
+
+autonumber 15
+Bob -&gt; Alice : Another authentication Request
+Bob &lt;- Alice : Another authentication Response
+
+autonumber 40 10
+Bob -&gt; Alice : Yet another authentication Request
+Bob &lt;- Alice : Yet another authentication Response
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-018" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-018">018</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">autonumber &quot;&lt;b&gt;[000]&quot;</p>
+          </div>
+          <nav class="links" aria-label="018 files">
+            <a href="018.puml">PUML</a>
+            <a href="018-golden.svg">PlantUML SVG</a>
+            <a href="018.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="018-golden.svg" alt="018 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="018.svg" alt="018 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+autonumber &quot;&lt;b&gt;[000]&quot;
+Bob -&gt; Alice : Authentication Request
+Bob &lt;- Alice : Authentication Response
+
+autonumber 15 &quot;&lt;b&gt;(&lt;u&gt;##&lt;/u&gt;)&quot;
+Bob -&gt; Alice : Another authentication Request
+Bob &lt;- Alice : Another authentication Response
+
+autonumber 40 10 &quot;&lt;font color=red&gt;&lt;b&gt;Message 0  &quot;
+Bob -&gt; Alice : Yet another authentication Request
+Bob &lt;- Alice : Yet another authentication Response
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-019" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-019">019</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">autonumber 10 10 &quot;&lt;b&gt;[000]&quot;</p>
+          </div>
+          <nav class="links" aria-label="019 files">
+            <a href="019.puml">PUML</a>
+            <a href="019-golden.svg">PlantUML SVG</a>
+            <a href="019.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="019-golden.svg" alt="019 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="019.svg" alt="019 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+autonumber 10 10 &quot;&lt;b&gt;[000]&quot;
+Bob -&gt; Alice : Authentication Request
+Bob &lt;- Alice : Authentication Response
+
+autonumber stop
+Bob -&gt; Alice : dummy
+
+autonumber resume &quot;&lt;font color=red&gt;&lt;b&gt;Message 0  &quot;
+Bob -&gt; Alice : Yet another authentication Request
+Bob &lt;- Alice : Yet another authentication Response
+
+autonumber stop
+Bob -&gt; Alice : dummy
+
+autonumber resume 1 &quot;&lt;font color=blue&gt;&lt;b&gt;Message 0  &quot;
+Bob -&gt; Alice : Yet another authentication Request
+Bob &lt;- Alice : Yet another authentication Response
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-020" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-020">020</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">autonumber 1.1.1</p>
+          </div>
+          <nav class="links" aria-label="020 files">
+            <a href="020.puml">PUML</a>
+            <a href="020-golden.svg">PlantUML SVG</a>
+            <a href="020.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="020-golden.svg" alt="020 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="020.svg" alt="020 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+autonumber 1.1.1
+Alice -&gt; Bob: Authentication request
+Bob --&gt; Alice: Response
+
+autonumber inc A
+&#x27;Now we have 2.1.1
+Alice -&gt; Bob: Another authentication request
+Bob --&gt; Alice: Response
+
+autonumber inc B
+&#x27;Now we have 2.2.1
+Alice -&gt; Bob: Another authentication request
+Bob --&gt; Alice: Response
+
+autonumber inc A
+&#x27;Now we have 3.1.1
+Alice -&gt; Bob: Another authentication request
+autonumber inc B
+&#x27;Now we have 3.2.1
+Bob --&gt; Alice: Response
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-021" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-021">021</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">autonumber 10</p>
+          </div>
+          <nav class="links" aria-label="021 files">
+            <a href="021.puml">PUML</a>
+            <a href="021-golden.svg">PlantUML SVG</a>
+            <a href="021.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="021-golden.svg" alt="021 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="021.svg" alt="021 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+autonumber 10
+Alice -&gt; Bob
+note right
+  the &lt;U+0025&gt;autonumber&lt;U+0025&gt; works everywhere.
+  Here, its value is ** %autonumber% **
+end note
+Bob --&gt; Alice: //This is the response %autonumber%//
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-022" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-022">022</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">header Page Header</p>
+          </div>
+          <nav class="links" aria-label="022 files">
+            <a href="022.puml">PUML</a>
+            <a href="022-golden.svg">PlantUML SVG</a>
+            <a href="022.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="022-golden.svg" alt="022 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="022.svg" alt="022 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+header Page Header
+footer Page %page% of %lastpage%
+
+title Example Title
+
+Alice -&gt; Bob : message 1
+Alice -&gt; Bob : message 2
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-023" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-023">023</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice -&gt; Bob : message 1</p>
+          </div>
+          <nav class="links" aria-label="023 files">
+            <a href="023.puml">PUML</a>
+            <a href="023-golden.svg">PlantUML SVG</a>
+            <a href="023.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="023-golden.svg" alt="023 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="023.svg" alt="023 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+Alice -&gt; Bob : message 1
+Alice -&gt; Bob : message 2
+
+newpage
+
+Alice -&gt; Bob : message 3
+Alice -&gt; Bob : message 4
+
+newpage A title for the\nlast page
+
+Alice -&gt; Bob : message 5
+Alice -&gt; Bob : message 6
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-024" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-024">024</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice -&gt; Bob: Authentication Request</p>
+          </div>
+          <nav class="links" aria-label="024 files">
+            <a href="024.puml">PUML</a>
+            <a href="024-golden.svg">PlantUML SVG</a>
+            <a href="024.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="024-golden.svg" alt="024 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="024.svg" alt="024 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Alice -&gt; Bob: Authentication Request
+
+alt successful case
+
+    Bob -&gt; Alice: Authentication Accepted
+
+else some kind of failure
+
+    Bob -&gt; Alice: Authentication Failure
+    group My own label
+    Alice -&gt; Log : Log attack start
+        loop 1000 times
+            Alice -&gt; Bob: DNS Attack
+        end
+    Alice -&gt; Log : Log attack end
+    end
+
+else Another type of failure
+
+   Bob -&gt; Alice: Please repeat
+
+end
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-025" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-025">025</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice -&gt; Bob: Authentication Request</p>
+          </div>
+          <nav class="links" aria-label="025 files">
+            <a href="025.puml">PUML</a>
+            <a href="025-golden.svg">PlantUML SVG</a>
+            <a href="025.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="025-golden.svg" alt="025 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="025.svg" alt="025 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Alice -&gt; Bob: Authentication Request
+Bob -&gt; Alice: Authentication Failure
+group My own label [My own label 2]
+    Alice -&gt; Log : Log attack start
+    loop 1000 times
+        Alice -&gt; Bob: DNS Attack
+    end
+    Alice -&gt; Log : Log attack end
+end
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-026" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-026">026</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant a</p>
+          </div>
+          <nav class="links" aria-label="026 files">
+            <a href="026.puml">PUML</a>
+            <a href="026-golden.svg">PlantUML SVG</a>
+            <a href="026.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="026-golden.svg" alt="026 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="026.svg" alt="026 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant a
+
+partition p1
+b -&gt; c: msg
+c --&gt; b: OK
+note right: Some right note
+end
+
+partition p2
+a -&gt; b: msg
+note left: Some left note
+end
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-027" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-027">027</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">!pragma teoz true</p>
+          </div>
+          <nav class="links" aria-label="027 files">
+            <a href="027.puml">PUML</a>
+            <a href="027-golden.svg">PlantUML SVG</a>
+            <a href="027.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="027-golden.svg" alt="027 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="027.svg" alt="027 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+!pragma teoz true
+participant a
+
+partition p1
+b -&gt; c: msg
+c --&gt; b: OK
+note right: Some right note
+end
+
+partition p2
+a -&gt; b: msg
+note left: Some left note
+end
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-028" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-028">028</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice-&gt;Bob : hello</p>
+          </div>
+          <nav class="links" aria-label="028 files">
+            <a href="028.puml">PUML</a>
+            <a href="028-golden.svg">PlantUML SVG</a>
+            <a href="028.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="028-golden.svg" alt="028 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="028.svg" alt="028 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Alice-&gt;Bob : hello
+note left: this is a first note
+
+Bob-&gt;Alice : ok
+note right: this is another note
+
+Bob-&gt;Bob : I am thinking
+note left
+a note
+can also be defined
+on several lines
+end note
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-029" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-029">029</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice</p>
+          </div>
+          <nav class="links" aria-label="029 files">
+            <a href="029.puml">PUML</a>
+            <a href="029-golden.svg">PlantUML SVG</a>
+            <a href="029.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="029-golden.svg" alt="029 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="029.svg" alt="029 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice
+participant Bob
+note left of Alice #aqua
+This is displayed
+left of Alice.
+end note
+
+note right of Alice: This is displayed right of Alice.
+
+note over Alice: This is displayed over Alice.
+
+note over Alice, Bob #FFAAAA: This is displayed\n over Bob and Alice.
+
+note over Bob, Alice
+This is yet another
+example of
+a long note.
+end note
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-030" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-030">030</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">caller -&gt; server : conReq</p>
+          </div>
+          <nav class="links" aria-label="030 files">
+            <a href="030.puml">PUML</a>
+            <a href="030-golden.svg">PlantUML SVG</a>
+            <a href="030.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="030-golden.svg" alt="030 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="030.svg" alt="030 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+caller -&gt; server : conReq
+hnote over caller : idle
+caller &lt;- server : conConf
+rnote over server
+ &quot;r&quot; as rectangle
+ &quot;h&quot; as hexagon
+endrnote
+rnote over server
+ this is
+ on several
+ lines
+endrnote
+hnote over caller
+ this is
+ on several
+ lines
+endhnote
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-031" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-031">031</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice-&gt;Bob:m1</p>
+          </div>
+          <nav class="links" aria-label="031 files">
+            <a href="031.puml">PUML</a>
+            <a href="031-golden.svg">PlantUML SVG</a>
+            <a href="031.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="031-golden.svg" alt="031 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="031.svg" alt="031 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Alice-&gt;Bob:m1
+Bob-&gt;Charlie:m2
+note over Alice, Charlie: Old method for note over all part. with:\n &quot;&quot;note over //FirstPart, LastPart//&quot;&quot;.
+note across: New method with:\n&quot;&quot;note across&quot;&quot;
+Bob-&gt;Alice
+hnote across:Note across all part.
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-032" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-032">032</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">note over Alice : initial state of Alice</p>
+          </div>
+          <nav class="links" aria-label="032 files">
+            <a href="032.puml">PUML</a>
+            <a href="032-golden.svg">PlantUML SVG</a>
+            <a href="032.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="032-golden.svg" alt="032 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="032.svg" alt="032 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+note over Alice : initial state of Alice
+note over Bob : initial state of Bob
+Bob -&gt; Alice : hello
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-033" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-033">033</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">note over Alice : initial state of Alice</p>
+          </div>
+          <nav class="links" aria-label="033 files">
+            <a href="033.puml">PUML</a>
+            <a href="033-golden.svg">PlantUML SVG</a>
+            <a href="033.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="033-golden.svg" alt="033 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="033.svg" alt="033 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+note over Alice : initial state of Alice
+/ note over Bob : initial state of Bob
+Bob -&gt; Alice : hello
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-034" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-034">034</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice</p>
+          </div>
+          <nav class="links" aria-label="034 files">
+            <a href="034.puml">PUML</a>
+            <a href="034-golden.svg">PlantUML SVG</a>
+            <a href="034.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="034-golden.svg" alt="034 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="034.svg" alt="034 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice
+participant &quot;The **Famous** Bob&quot; as Bob
+
+Alice -&gt; Bob : hello --there--
+... Some ~~long delay~~ ...
+Bob -&gt; Alice : ok
+note left
+  This is **bold**
+  This is //italics//
+  This is &quot;&quot;monospaced&quot;&quot;
+  This is --stroked--
+  This is __underlined__
+  This is ~~waved~~
+end note
+
+Alice -&gt; Bob : A //well formatted// message
+note right of Alice
+ This is &lt;back:cadetblue&gt;&lt;size:18&gt;displayed&lt;/size&gt;&lt;/back&gt;
+ __left of__ Alice.
+end note
+note left of Bob
+ &lt;u:red&gt;This&lt;/u&gt; is &lt;color #118888&gt;displayed&lt;/color&gt;
+ **&lt;color purple&gt;left of&lt;/color&gt; &lt;s:red&gt;Alice&lt;/strike&gt; Bob**.
+end note
+note over Alice, Bob
+ &lt;w:#FF33FF&gt;This is hosted&lt;/w&gt; by &lt;img sourceforge.jpg&gt;
+end note
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-035" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-035">035</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">== Initialization ==</p>
+          </div>
+          <nav class="links" aria-label="035 files">
+            <a href="035.puml">PUML</a>
+            <a href="035-golden.svg">PlantUML SVG</a>
+            <a href="035.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="035-golden.svg" alt="035 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="035.svg" alt="035 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+== Initialization ==
+
+Alice -&gt; Bob: Authentication Request
+Bob --&gt; Alice: Authentication Response
+
+== Repetition ==
+
+Alice -&gt; Bob: Another authentication Request
+Alice &lt;-- Bob: another authentication Response
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-036" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-036">036</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice</p>
+          </div>
+          <nav class="links" aria-label="036 files">
+            <a href="036.puml">PUML</a>
+            <a href="036-golden.svg">PlantUML SVG</a>
+            <a href="036.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="036-golden.svg" alt="036 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="036.svg" alt="036 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice
+actor Bob
+
+ref over Alice, Bob : init
+
+Alice -&gt; Bob : hello
+
+ref over Bob
+  This can be on
+  several lines
+end ref
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-037" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-037">037</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice -&gt; Bob: Authentication Request</p>
+          </div>
+          <nav class="links" aria-label="037 files">
+            <a href="037.puml">PUML</a>
+            <a href="037-golden.svg">PlantUML SVG</a>
+            <a href="037.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="037-golden.svg" alt="037 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="037.svg" alt="037 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+Alice -&gt; Bob: Authentication Request
+...
+Bob --&gt; Alice: Authentication Response
+...5 minutes later...
+Bob --&gt; Alice: Good Bye !
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-038" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-038">038</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam maxMessageSize 50</p>
+          </div>
+          <nav class="links" aria-label="038 files">
+            <a href="038.puml">PUML</a>
+            <a href="038-golden.svg">PlantUML SVG</a>
+            <a href="038.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="038-golden.svg" alt="038 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="038.svg" alt="038 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam maxMessageSize 50
+participant a
+participant b
+a -&gt; b :this\nis\nmanually\ndone
+a -&gt; b :this is a very long message on several words
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-039" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-039">039</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">ParticipantNumber1 -&gt; ParticipantNumber2 : this is a very long message that is very long</p>
+          </div>
+          <nav class="links" aria-label="039 files">
+            <a href="039.puml">PUML</a>
+            <a href="039-golden.svg">PlantUML SVG</a>
+            <a href="039.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="039-golden.svg" alt="039 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="039.svg" alt="039 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+ParticipantNumber1 -&gt; ParticipantNumber2 : this is a very long message that is very long
+ParticipantNumber1 -&gt; ParticipantNumber1 : this is a very long message that is very long 
+ParticipantNumber2 -&gt; ParticipantNumber3 : foo2
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-040" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-040">040</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">!pragma teoz true</p>
+          </div>
+          <nav class="links" aria-label="040 files">
+            <a href="040.puml">PUML</a>
+            <a href="040-golden.svg">PlantUML SVG</a>
+            <a href="040.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="040-golden.svg" alt="040 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="040.svg" alt="040 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+!pragma teoz true
+!pragma sequenceMessageSpan true
+
+ParticipantNumber1 -&gt; ParticipantNumber2 : this is a very long message that is very long
+ParticipantNumber1 -&gt; ParticipantNumber1 : this is a very long message that is very long 
+ParticipantNumber2 -&gt; ParticipantNumber3 : foo2
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-041" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-041">041</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice -&gt; Bob: message 1</p>
+          </div>
+          <nav class="links" aria-label="041 files">
+            <a href="041.puml">PUML</a>
+            <a href="041-golden.svg">PlantUML SVG</a>
+            <a href="041.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="041-golden.svg" alt="041 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="041.svg" alt="041 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+Alice -&gt; Bob: message 1
+Bob --&gt; Alice: ok
+|||
+Alice -&gt; Bob: message 2
+Bob --&gt; Alice: ok
+||45||
+Alice -&gt; Bob: message 3
+Bob --&gt; Alice: ok
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-042" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-042">042</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant User</p>
+          </div>
+          <nav class="links" aria-label="042 files">
+            <a href="042.puml">PUML</a>
+            <a href="042-golden.svg">PlantUML SVG</a>
+            <a href="042.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="042-golden.svg" alt="042 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="042.svg" alt="042 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant User
+
+User -&gt; A: DoWork
+activate A
+
+A -&gt; B: &lt;&lt; createRequest &gt;&gt;
+activate B
+
+B -&gt; C: DoWork
+activate C
+C --&gt; B: WorkDone
+destroy C
+
+B --&gt; A: RequestCreated
+deactivate B
+
+A -&gt; User: Done
+deactivate A
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-043" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-043">043</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant User</p>
+          </div>
+          <nav class="links" aria-label="043 files">
+            <a href="043.puml">PUML</a>
+            <a href="043-golden.svg">PlantUML SVG</a>
+            <a href="043.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="043-golden.svg" alt="043 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="043.svg" alt="043 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant User
+
+User -&gt; A: DoWork
+activate A #FFBBBB
+
+A -&gt; A: Internal call
+activate A #DarkSalmon
+
+A -&gt; B: &lt;&lt; createRequest &gt;&gt;
+activate B
+
+B --&gt; A: RequestCreated
+deactivate B
+deactivate A
+A -&gt; User: Done
+deactivate A
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-044" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-044">044</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">autoactivate on</p>
+          </div>
+          <nav class="links" aria-label="044 files">
+            <a href="044.puml">PUML</a>
+            <a href="044-golden.svg">PlantUML SVG</a>
+            <a href="044.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="044-golden.svg" alt="044 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="044.svg" alt="044 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+autoactivate on
+alice -&gt; bob : hello
+bob -&gt; bob : self call
+bill -&gt; bob #005500 : hello from thread 2
+bob -&gt; george ** : create
+return done in thread 2
+return rc
+bob -&gt; george !! : delete
+return success
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-045" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-045">045</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Bob -&gt; Alice : hello</p>
+          </div>
+          <nav class="links" aria-label="045 files">
+            <a href="045.puml">PUML</a>
+            <a href="045-golden.svg">PlantUML SVG</a>
+            <a href="045.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="045-golden.svg" alt="045 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="045.svg" alt="045 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Bob -&gt; Alice : hello
+activate Alice
+Alice -&gt; Alice : some action
+return bye
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-046" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-046">046</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Bob -&gt; Alice : hello</p>
+          </div>
+          <nav class="links" aria-label="046 files">
+            <a href="046.puml">PUML</a>
+            <a href="046-golden.svg">PlantUML SVG</a>
+            <a href="046.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="046-golden.svg" alt="046 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="046.svg" alt="046 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Bob -&gt; Alice : hello
+
+create Other
+Alice -&gt; Other : new
+
+create control String
+Alice -&gt; String
+note right : You can also put notes!
+
+Alice --&gt; Bob : ok
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-047" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-047">047</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">alice -&gt; bob ++ : hello</p>
+          </div>
+          <nav class="links" aria-label="047 files">
+            <a href="047.puml">PUML</a>
+            <a href="047-golden.svg">PlantUML SVG</a>
+            <a href="047.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="047-golden.svg" alt="047 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="047.svg" alt="047 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+alice -&gt; bob ++ : hello
+bob -&gt; bob ++ : self call
+bob -&gt; bib ++  #005500 : hello
+bob -&gt; george ** : create
+return done
+return rc
+bob -&gt; george !! : delete
+return success
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-048" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-048">048</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">alice   -&gt;  bob     ++   : hello1</p>
+          </div>
+          <nav class="links" aria-label="048 files">
+            <a href="048.puml">PUML</a>
+            <a href="048-golden.svg">PlantUML SVG</a>
+            <a href="048.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="048-golden.svg" alt="048 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="048.svg" alt="048 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+alice   -&gt;  bob     ++   : hello1
+bob     -&gt;  charlie --++ : hello2
+charlie --&gt; alice   --   : ok
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-049" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-049">049</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">alice -&gt; bob   --++ #gold: hello</p>
+          </div>
+          <nav class="links" aria-label="049 files">
+            <a href="049.puml">PUML</a>
+            <a href="049-golden.svg">PlantUML SVG</a>
+            <a href="049.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="049-golden.svg" alt="049 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="049.svg" alt="049 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+@startuml
+alice -&gt; bob   --++ #gold: hello
+bob   -&gt; alice --++ #gold: you too
+alice -&gt; bob   --: step1
+alice -&gt; bob   : step2
+@enduml
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-050" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-050">050</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">[-&gt; A: DoWork</p>
+          </div>
+          <nav class="links" aria-label="050 files">
+            <a href="050.puml">PUML</a>
+            <a href="050-golden.svg">PlantUML SVG</a>
+            <a href="050.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="050-golden.svg" alt="050 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="050.svg" alt="050 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+[-&gt; A: DoWork
+
+activate A
+
+A -&gt; A: Internal call
+activate A
+
+A -&gt;] : &lt;&lt; createRequest &gt;&gt;
+
+A&lt;--] : RequestCreated
+deactivate A
+[&lt;- A: Done
+deactivate A
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-051" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-051">051</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice</p>
+          </div>
+          <nav class="links" aria-label="051 files">
+            <a href="051.puml">PUML</a>
+            <a href="051-golden.svg">PlantUML SVG</a>
+            <a href="051.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="051-golden.svg" alt="051 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="051.svg" alt="051 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice
+participant Bob #lightblue
+Alice -&gt; Bob
+Bob -&gt; Carol
+...
+[-&gt; Bob
+[o-&gt; Bob
+[o-&gt;o Bob
+[x-&gt; Bob
+...
+[&lt;- Bob
+[x&lt;- Bob
+...
+Bob -&gt;]
+Bob -&gt;o]
+Bob o-&gt;o]
+Bob -&gt;x]
+...
+Bob &lt;-]
+Bob x&lt;-]
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-052" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-052">052</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">?-&gt; Alice    : &quot;&quot;?-&gt;&quot;&quot;\n**short** to actor1</p>
+          </div>
+          <nav class="links" aria-label="052 files">
+            <a href="052.puml">PUML</a>
+            <a href="052-golden.svg">PlantUML SVG</a>
+            <a href="052.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="052-golden.svg" alt="052 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="052.svg" alt="052 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+?-&gt; Alice    : &quot;&quot;?-&gt;&quot;&quot;\n**short** to actor1
+[-&gt; Alice    : &quot;&quot;[-&gt;&quot;&quot;\n**from start** to actor1
+[-&gt; Bob      : &quot;&quot;[-&gt;&quot;&quot;\n**from start** to actor2
+?-&gt; Bob      : &quot;&quot;?-&gt;&quot;&quot;\n**short** to actor2
+Alice -&gt;]    : &quot;&quot;-&gt;]&quot;&quot;\nfrom actor1 **to end**
+Alice -&gt;?    : &quot;&quot;-&gt;?&quot;&quot;\n**short** from actor1
+Alice -&gt; Bob : &quot;&quot;-&gt;&quot;&quot; \nfrom actor1 to actor2
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-053" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-053">053</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">!pragma teoz true</p>
+          </div>
+          <nav class="links" aria-label="053 files">
+            <a href="053.puml">PUML</a>
+            <a href="053-golden.svg">PlantUML SVG</a>
+            <a href="053.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="053-golden.svg" alt="053 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="053.svg" alt="053 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+!pragma teoz true
+
+{start} Alice -&gt; Bob : start doing things during duration
+Bob -&gt; Max : something
+Max -&gt; Bob : something else
+{end} Bob -&gt; Alice : finish
+
+{start} &lt;-&gt; {end} : some time
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-054" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-054">054</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant &quot;Famous Bob&quot; as Bob &lt;&lt; Generated &gt;&gt;</p>
+          </div>
+          <nav class="links" aria-label="054 files">
+            <a href="054.puml">PUML</a>
+            <a href="054-golden.svg">PlantUML SVG</a>
+            <a href="054.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="054-golden.svg" alt="054 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="054.svg" alt="054 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+participant &quot;Famous Bob&quot; as Bob &lt;&lt; Generated &gt;&gt;
+participant Alice &lt;&lt; (C,#ADD1B2) Testable &gt;&gt;
+
+Bob-&gt;Alice: First message
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-055" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-055">055</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam guillemet false</p>
+          </div>
+          <nav class="links" aria-label="055 files">
+            <a href="055.puml">PUML</a>
+            <a href="055-golden.svg">PlantUML SVG</a>
+            <a href="055.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="055-golden.svg" alt="055 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="055.svg" alt="055 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+skinparam guillemet false
+participant &quot;Famous Bob&quot; as Bob &lt;&lt; Generated &gt;&gt;
+participant Alice &lt;&lt; (C,#ADD1B2) Testable &gt;&gt;
+
+Bob-&gt;Alice: First message
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-056" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-056">056</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Bob &lt;&lt; (C,#ADD1B2) &gt;&gt;</p>
+          </div>
+          <nav class="links" aria-label="056 files">
+            <a href="056.puml">PUML</a>
+            <a href="056-golden.svg">PlantUML SVG</a>
+            <a href="056.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="056-golden.svg" alt="056 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="056.svg" alt="056 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+participant Bob &lt;&lt; (C,#ADD1B2) &gt;&gt;
+participant Alice &lt;&lt; (C,#ADD1B2) &gt;&gt;
+
+Bob-&gt;Alice: First message
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-057" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-057">057</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam stereotypePosition top</p>
+          </div>
+          <nav class="links" aria-label="057 files">
+            <a href="057.puml">PUML</a>
+            <a href="057-golden.svg">PlantUML SVG</a>
+            <a href="057.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="057-golden.svg" alt="057 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="057.svg" alt="057 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam stereotypePosition top
+
+participant A&lt;&lt;st1&gt;&gt;
+participant B&lt;&lt;st2&gt;&gt;
+A --&gt; B : stereo test
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-058" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-058">058</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam stereotypePosition bottom</p>
+          </div>
+          <nav class="links" aria-label="058 files">
+            <a href="058.puml">PUML</a>
+            <a href="058-golden.svg">PlantUML SVG</a>
+            <a href="058.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="058-golden.svg" alt="058 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="058.svg" alt="058 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam stereotypePosition bottom
+
+participant A&lt;&lt;st1&gt;&gt;
+participant B&lt;&lt;st2&gt;&gt;
+A --&gt; B : stereo test
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-059" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-059">059</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">title __Simple__ **communication** example</p>
+          </div>
+          <nav class="links" aria-label="059 files">
+            <a href="059.puml">PUML</a>
+            <a href="059-golden.svg">PlantUML SVG</a>
+            <a href="059.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="059-golden.svg" alt="059 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="059.svg" alt="059 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+title __Simple__ **communication** example
+
+Alice -&gt; Bob: Authentication Request
+Bob -&gt; Alice: Authentication Response
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-060" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-060">060</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">title __Simple__ communication example\non several lines</p>
+          </div>
+          <nav class="links" aria-label="060 files">
+            <a href="060.puml">PUML</a>
+            <a href="060-golden.svg">PlantUML SVG</a>
+            <a href="060.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="060-golden.svg" alt="060 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="060.svg" alt="060 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+title __Simple__ communication example\non several lines
+
+Alice -&gt; Bob: Authentication Request
+Bob -&gt; Alice: Authentication Response
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-061" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-061">061</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">title</p>
+          </div>
+          <nav class="links" aria-label="061 files">
+            <a href="061.puml">PUML</a>
+            <a href="061-golden.svg">PlantUML SVG</a>
+            <a href="061.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="061-golden.svg" alt="061 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="061.svg" alt="061 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+title
+ &lt;u&gt;Simple&lt;/u&gt; communication example
+ on &lt;i&gt;several&lt;/i&gt; lines and using &lt;font color=red&gt;html&lt;/font&gt;
+ This is hosted by &lt;img:sourceforge.jpg&gt;
+end title
+
+Alice -&gt; Bob: Authentication Request
+Bob -&gt; Alice: Authentication Response
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-062" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-062">062</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">box &quot;Internal Service&quot; #LightBlue</p>
+          </div>
+          <nav class="links" aria-label="062 files">
+            <a href="062.puml">PUML</a>
+            <a href="062-golden.svg">PlantUML SVG</a>
+            <a href="062.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="062-golden.svg" alt="062 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="062.svg" alt="062 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+box &quot;Internal Service&quot; #LightBlue
+participant Bob
+participant Alice
+end box
+participant Other
+
+Bob -&gt; Alice : hello
+Alice -&gt; Other : hello
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-063" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-063">063</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">hide footbox</p>
+          </div>
+          <nav class="links" aria-label="063 files">
+            <a href="063.puml">PUML</a>
+            <a href="063-golden.svg">PlantUML SVG</a>
+            <a href="063.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="063-golden.svg" alt="063 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="063.svg" alt="063 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+
+hide footbox
+title Foot Box removed
+
+Alice -&gt; Bob: Authentication Request
+Bob --&gt; Alice: Authentication Response
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-064" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-064">064</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam sequenceArrowThickness 2</p>
+          </div>
+          <nav class="links" aria-label="064 files">
+            <a href="064.puml">PUML</a>
+            <a href="064-golden.svg">PlantUML SVG</a>
+            <a href="064.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="064-golden.svg" alt="064 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="064.svg" alt="064 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+skinparam sequenceParticipant underline
+
+actor User
+participant &quot;First Class&quot; as A
+participant &quot;Second Class&quot; as B
+participant &quot;Last Class&quot; as C
+
+User -&gt; A: DoWork
+activate A
+
+A -&gt; B: Create Request
+activate B
+
+B -&gt; C: DoWork
+activate C
+C --&gt; B: WorkDone
+destroy C
+
+B --&gt; A: Request Created
+deactivate B
+
+A --&gt; User: Done
+deactivate A
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-065" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-065">065</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam backgroundColor #EEEBDC</p>
+          </div>
+          <nav class="links" aria-label="065 files">
+            <a href="065.puml">PUML</a>
+            <a href="065-golden.svg">PlantUML SVG</a>
+            <a href="065.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="065-golden.svg" alt="065 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="065.svg" alt="065 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+skinparam sequence {
+ArrowColor DeepSkyBlue
+ActorBorderColor DeepSkyBlue
+LifeLineBorderColor blue
+LifeLineBackgroundColor #A9DCDF
+
+ParticipantBorderColor DeepSkyBlue
+ParticipantBackgroundColor DodgerBlue
+ParticipantFontName Impact
+ParticipantFontSize 17
+ParticipantFontColor #A9DCDF
+
+ActorBackgroundColor aqua
+ActorFontColor DeepSkyBlue
+ActorFontSize 17
+ActorFontName Aapex
+}
+
+actor User
+participant &quot;First Class&quot; as A
+participant &quot;Second Class&quot; as B
+participant &quot;Last Class&quot; as C
+
+User -&gt; A: DoWork
+activate A
+
+A -&gt; B: Create Request
+activate B
+
+B -&gt; C: DoWork
+activate C
+C --&gt; B: WorkDone
+destroy C
+
+B --&gt; A: Request Created
+deactivate B
+
+A --&gt; User: Done
+deactivate A
+
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-066" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-066">066</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam ParticipantPadding 20</p>
+          </div>
+          <nav class="links" aria-label="066 files">
+            <a href="066.puml">PUML</a>
+            <a href="066-golden.svg">PlantUML SVG</a>
+            <a href="066.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="066-golden.svg" alt="066 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="066.svg" alt="066 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+
+box &quot;Foo1&quot;
+participant Alice1
+participant Alice2
+end box
+box &quot;Foo2&quot;
+participant Bob1
+participant Bob2
+end box
+Alice1 -&gt; Bob1 : hello
+Alice1 -&gt; Out : out
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-067" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-067">067</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice as a</p>
+          </div>
+          <nav class="links" aria-label="067 files">
+            <a href="067.puml">PUML</a>
+            <a href="067-golden.svg">PlantUML SVG</a>
+            <a href="067.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="067-golden.svg" alt="067 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="067.svg" alt="067 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice as a
+participant Bob   as b
+a -&gt;     b : &quot;&quot;-&gt;   &quot;&quot;
+a -&gt;&gt;    b : &quot;&quot;-&gt;&gt;  &quot;&quot;
+a -\     b : &quot;&quot;-\   &quot;&quot;
+a -\\    b : &quot;&quot;-\\\\&quot;&quot;
+a -/     b : &quot;&quot;-/   &quot;&quot;
+a -//    b : &quot;&quot;-//  &quot;&quot;
+a -&gt;x    b : &quot;&quot;-&gt;x  &quot;&quot;
+a x-&gt;    b : &quot;&quot;x-&gt;  &quot;&quot;
+a o-&gt;    b : &quot;&quot;o-&gt;  &quot;&quot;
+a -&gt;o    b : &quot;&quot;-&gt;o  &quot;&quot;
+a o-&gt;o   b : &quot;&quot;o-&gt;o &quot;&quot;
+a &lt;-&gt;    b : &quot;&quot;&lt;-&gt;  &quot;&quot;
+a o&lt;-&gt;o  b : &quot;&quot;o&lt;-&gt;o&quot;&quot;
+a x&lt;-&gt;x  b : &quot;&quot;x&lt;-&gt;x&quot;&quot;
+a -&gt;&gt;o   b : &quot;&quot;-&gt;&gt;o &quot;&quot;
+a -\o    b : &quot;&quot;-\o  &quot;&quot;
+a -\\o   b : &quot;&quot;-\\\\o&quot;&quot;
+a -/o    b : &quot;&quot;-/o  &quot;&quot;
+a -//o   b : &quot;&quot;-//o &quot;&quot;
+a x-&gt;o   b : &quot;&quot;x-&gt;o &quot;&quot;
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-068" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-068">068</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice as a</p>
+          </div>
+          <nav class="links" aria-label="068 files">
+            <a href="068.puml">PUML</a>
+            <a href="068-golden.svg">PlantUML SVG</a>
+            <a href="068.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="068-golden.svg" alt="068 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="068.svg" alt="068 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice as a
+participant Bob   as b
+a -&gt;     a : &quot;&quot;-&gt;   &quot;&quot;
+a -&gt;&gt;    a : &quot;&quot;-&gt;&gt;  &quot;&quot;
+a -\     a : &quot;&quot;-\   &quot;&quot;
+a -\\    a : &quot;&quot;-\\\\&quot;&quot;
+a -/     a : &quot;&quot;-/   &quot;&quot;
+a -//    a : &quot;&quot;-//  &quot;&quot;
+a -&gt;x    a : &quot;&quot;-&gt;x  &quot;&quot;
+a x-&gt;    a : &quot;&quot;x-&gt;  &quot;&quot;
+a o-&gt;    a : &quot;&quot;o-&gt;  &quot;&quot;
+a -&gt;o    a : &quot;&quot;-&gt;o  &quot;&quot;
+a o-&gt;o   a : &quot;&quot;o-&gt;o &quot;&quot;
+a &lt;-&gt;    a : &quot;&quot;&lt;-&gt;  &quot;&quot;
+a o&lt;-&gt;o  a : &quot;&quot;o&lt;-&gt;o&quot;&quot;
+a x&lt;-&gt;x  a : &quot;&quot;x&lt;-&gt;x&quot;&quot;
+a -&gt;&gt;o   a : &quot;&quot;-&gt;&gt;o &quot;&quot;
+a -\o    a : &quot;&quot;-\o  &quot;&quot;
+a -\\o   a : &quot;&quot;-\\\\o&quot;&quot;
+a -/o    a : &quot;&quot;-/o  &quot;&quot;
+a -//o   a : &quot;&quot;-//o &quot;&quot;
+a x-&gt;o   a : &quot;&quot;x-&gt;o &quot;&quot;
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-069" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-069">069</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice as a</p>
+          </div>
+          <nav class="links" aria-label="069 files">
+            <a href="069.puml">PUML</a>
+            <a href="069-golden.svg">PlantUML SVG</a>
+            <a href="069.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="069-golden.svg" alt="069 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="069.svg" alt="069 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice as a
+participant Bob   as b
+[-&gt;      b : &quot;&quot;[-&gt;   &quot;&quot;
+[-&gt;&gt;     b : &quot;&quot;[-&gt;&gt;  &quot;&quot;
+[-\      b : &quot;&quot;[-\   &quot;&quot;
+[-\\     b : &quot;&quot;[-\\\\&quot;&quot;
+[-/      b : &quot;&quot;[-/   &quot;&quot;
+[-//     b : &quot;&quot;[-//  &quot;&quot;
+[-&gt;x     b : &quot;&quot;[-&gt;x  &quot;&quot;
+[x-&gt;     b : &quot;&quot;[x-&gt;  &quot;&quot;
+[o-&gt;     b : &quot;&quot;[o-&gt;  &quot;&quot;
+[-&gt;o     b : &quot;&quot;[-&gt;o  &quot;&quot;
+[o-&gt;o    b : &quot;&quot;[o-&gt;o &quot;&quot;
+[&lt;-&gt;     b : &quot;&quot;[&lt;-&gt;  &quot;&quot;
+[o&lt;-&gt;o   b : &quot;&quot;[o&lt;-&gt;o&quot;&quot;
+[x&lt;-&gt;x   b : &quot;&quot;[x&lt;-&gt;x&quot;&quot;
+[-&gt;&gt;o    b : &quot;&quot;[-&gt;&gt;o &quot;&quot;
+[-\o     b : &quot;&quot;[-\o  &quot;&quot;
+[-\\o    b : &quot;&quot;[-\\\\o&quot;&quot;
+[-/o     b : &quot;&quot;[-/o  &quot;&quot;
+[-//o    b : &quot;&quot;[-//o &quot;&quot;
+[x-&gt;o    b : &quot;&quot;[x-&gt;o &quot;&quot;
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-070" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-070">070</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice as a</p>
+          </div>
+          <nav class="links" aria-label="070 files">
+            <a href="070.puml">PUML</a>
+            <a href="070-golden.svg">PlantUML SVG</a>
+            <a href="070.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="070-golden.svg" alt="070 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="070.svg" alt="070 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice as a
+participant Bob   as b
+a -&gt;]      : &quot;&quot;-&gt;]   &quot;&quot;
+a -&gt;&gt;]     : &quot;&quot;-&gt;&gt;]  &quot;&quot;
+a -\]      : &quot;&quot;-\]   &quot;&quot;
+a -\\]     : &quot;&quot;-\\\\]&quot;&quot;
+a -/]      : &quot;&quot;-/]   &quot;&quot;
+a -//]     : &quot;&quot;-//]  &quot;&quot;
+a -&gt;x]     : &quot;&quot;-&gt;x]  &quot;&quot;
+a x-&gt;]     : &quot;&quot;x-&gt;]  &quot;&quot;
+a o-&gt;]     : &quot;&quot;o-&gt;]  &quot;&quot;
+a -&gt;o]     : &quot;&quot;-&gt;o]  &quot;&quot;
+a o-&gt;o]    : &quot;&quot;o-&gt;o] &quot;&quot;
+a &lt;-&gt;]     : &quot;&quot;&lt;-&gt;]  &quot;&quot;
+a o&lt;-&gt;o]   : &quot;&quot;o&lt;-&gt;o]&quot;&quot;
+a x&lt;-&gt;x]   : &quot;&quot;x&lt;-&gt;x]&quot;&quot;
+a -&gt;&gt;o]    : &quot;&quot;-&gt;&gt;o] &quot;&quot;
+a -\o]     : &quot;&quot;-\o]  &quot;&quot;
+a -\\o]    : &quot;&quot;-\\\\o]&quot;&quot;
+a -/o]     : &quot;&quot;-/o]  &quot;&quot;
+a -//o]    : &quot;&quot;-//o] &quot;&quot;
+a x-&gt;o]    : &quot;&quot;x-&gt;o] &quot;&quot;
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-071" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-071">071</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice as a</p>
+          </div>
+          <nav class="links" aria-label="071 files">
+            <a href="071.puml">PUML</a>
+            <a href="071-golden.svg">PlantUML SVG</a>
+            <a href="071.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="071-golden.svg" alt="071 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="071.svg" alt="071 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice as a
+participant Bob   as b
+a -&gt;     b : //Long long label//
+?-&gt;      b : &quot;&quot;?-&gt;   &quot;&quot;
+?-&gt;&gt;     b : &quot;&quot;?-&gt;&gt;  &quot;&quot;
+?-\      b : &quot;&quot;?-\   &quot;&quot;
+?-\\     b : &quot;&quot;?-\\\\&quot;&quot;
+?-/      b : &quot;&quot;?-/   &quot;&quot;
+?-//     b : &quot;&quot;?-//  &quot;&quot;
+?-&gt;x     b : &quot;&quot;?-&gt;x  &quot;&quot;
+?x-&gt;     b : &quot;&quot;?x-&gt;  &quot;&quot;
+?o-&gt;     b : &quot;&quot;?o-&gt;  &quot;&quot;
+?-&gt;o     b : &quot;&quot;?-&gt;o  &quot;&quot;
+?o-&gt;o    b : &quot;&quot;?o-&gt;o &quot;&quot;
+?&lt;-&gt;     b : &quot;&quot;?&lt;-&gt;  &quot;&quot;
+?o&lt;-&gt;o   b : &quot;&quot;?o&lt;-&gt;o&quot;&quot;
+?x&lt;-&gt;x   b : &quot;&quot;?x&lt;-&gt;x&quot;&quot;
+?-&gt;&gt;o    b : &quot;&quot;?-&gt;&gt;o &quot;&quot;
+?-\o     b : &quot;&quot;?-\o  &quot;&quot;
+?-\\o    b : &quot;&quot;?-\\\\o &quot;&quot;
+?-/o     b : &quot;&quot;?-/o  &quot;&quot;
+?-//o    b : &quot;&quot;?-//o &quot;&quot;
+?x-&gt;o    b : &quot;&quot;?x-&gt;o &quot;&quot;
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-072" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-072">072</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice as a</p>
+          </div>
+          <nav class="links" aria-label="072 files">
+            <a href="072.puml">PUML</a>
+            <a href="072-golden.svg">PlantUML SVG</a>
+            <a href="072.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="072-golden.svg" alt="072 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="072.svg" alt="072 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice as a
+participant Bob   as b
+a -&gt;     b : //Long long label//
+a -&gt;?      : &quot;&quot;-&gt;?   &quot;&quot;
+a -&gt;&gt;?     : &quot;&quot;-&gt;&gt;?  &quot;&quot;
+a -\?      : &quot;&quot;-\?   &quot;&quot;
+a -\\?     : &quot;&quot;-\\\\?&quot;&quot;
+a -/?      : &quot;&quot;-/?   &quot;&quot;
+a -//?     : &quot;&quot;-//?  &quot;&quot;
+a -&gt;x?     : &quot;&quot;-&gt;x?  &quot;&quot;
+a x-&gt;?     : &quot;&quot;x-&gt;?  &quot;&quot;
+a o-&gt;?     : &quot;&quot;o-&gt;?  &quot;&quot;
+a -&gt;o?     : &quot;&quot;-&gt;o?  &quot;&quot;
+a o-&gt;o?    : &quot;&quot;o-&gt;o? &quot;&quot;
+a &lt;-&gt;?     : &quot;&quot;&lt;-&gt;?  &quot;&quot;
+a o&lt;-&gt;o?   : &quot;&quot;o&lt;-&gt;o?&quot;&quot;
+a x&lt;-&gt;x?   : &quot;&quot;x&lt;-&gt;x?&quot;&quot;
+a -&gt;&gt;o?    : &quot;&quot;-&gt;&gt;o? &quot;&quot;
+a -\o?     : &quot;&quot;-\o?  &quot;&quot;
+a -\\o?    : &quot;&quot;-\\\\o?&quot;&quot;
+a -/o?     : &quot;&quot;-/o?  &quot;&quot;
+a -//o?    : &quot;&quot;-//o? &quot;&quot;
+a x-&gt;o?    : &quot;&quot;x-&gt;o? &quot;&quot;
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-073" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-073">073</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Bob -&gt; Alice : hello</p>
+          </div>
+          <nav class="links" aria-label="073 files">
+            <a href="073.puml">PUML</a>
+            <a href="073-golden.svg">PlantUML SVG</a>
+            <a href="073.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="073-golden.svg" alt="073 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="073.svg" alt="073 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Bob -&gt; Alice : hello
+Alice -&gt; Bob : ok
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-074" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-074">074</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam lifelineStrategy nosolid</p>
+          </div>
+          <nav class="links" aria-label="074 files">
+            <a href="074.puml">PUML</a>
+            <a href="074-golden.svg">PlantUML SVG</a>
+            <a href="074.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="074-golden.svg" alt="074 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="074.svg" alt="074 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam lifelineStrategy nosolid
+Bob -&gt; Alice : hello
+Alice -&gt; Bob : ok
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-075" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-075">075</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam lifelineStrategy solid</p>
+          </div>
+          <nav class="links" aria-label="075 files">
+            <a href="075.puml">PUML</a>
+            <a href="075-golden.svg">PlantUML SVG</a>
+            <a href="075.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="075-golden.svg" alt="075 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="075.svg" alt="075 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam lifelineStrategy solid
+Bob -&gt; Alice : hello
+Alice -&gt; Bob : ok
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-076" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-076">076</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">skinparam style strictuml</p>
+          </div>
+          <nav class="links" aria-label="076 files">
+            <a href="076.puml">PUML</a>
+            <a href="076-golden.svg">PlantUML SVG</a>
+            <a href="076.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="076-golden.svg" alt="076 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="076.svg" alt="076 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+skinparam style strictuml
+Bob -&gt; Alice : hello
+Alice -&gt; Bob : ok
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-077" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-077">077</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">participant Alice</p>
+          </div>
+          <nav class="links" aria-label="077 files">
+            <a href="077.puml">PUML</a>
+            <a href="077-golden.svg">PlantUML SVG</a>
+            <a href="077.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="077-golden.svg" alt="077 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="077.svg" alt="077 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+participant Alice
+participant Bob
+participant Carol
+
+Alice -&gt; Bob : hello
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-078" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-078">078</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">hide unlinked</p>
+          </div>
+          <nav class="links" aria-label="078 files">
+            <a href="078.puml">PUML</a>
+            <a href="078-golden.svg">PlantUML SVG</a>
+            <a href="078.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="078-golden.svg" alt="078 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="078.svg" alt="078 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+hide unlinked
+participant Alice
+participant Bob
+participant Carol
+
+Alice -&gt; Bob : hello
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-079" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-079">079</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice -&gt; Bob: Authentication Request</p>
+          </div>
+          <nav class="links" aria-label="079 files">
+            <a href="079.puml">PUML</a>
+            <a href="079-golden.svg">PlantUML SVG</a>
+            <a href="079.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="079-golden.svg" alt="079 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="079.svg" alt="079 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Alice -&gt; Bob: Authentication Request
+alt#Gold #LightBlue Successful case
+    Bob -&gt; Alice: Authentication Accepted
+else #Pink Failure
+    Bob -&gt; Alice: Authentication Rejected
+end
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-080" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-080">080</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">mainframe This is a **mainframe**</p>
+          </div>
+          <nav class="links" aria-label="080 files">
+            <a href="080.puml">PUML</a>
+            <a href="080-golden.svg">PlantUML SVG</a>
+            <a href="080.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="080-golden.svg" alt="080 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="080.svg" alt="080 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+mainframe This is a **mainframe**
+Alice-&gt;Bob : Hello
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-081" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-081">081</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">A -&gt;(10) B: text 10</p>
+          </div>
+          <nav class="links" aria-label="081 files">
+            <a href="081.puml">PUML</a>
+            <a href="081-golden.svg">PlantUML SVG</a>
+            <a href="081.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="081-golden.svg" alt="081 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="081.svg" alt="081 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+A -&gt;(10) B: text 10
+B -&gt;(10) A: text 10
+
+A -&gt;(10) B: text 10
+A (10)&lt;- B: text 10
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-082" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-082">082</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">A -&gt;(40) B++: Rq</p>
+          </div>
+          <nav class="links" aria-label="082 files">
+            <a href="082.puml">PUML</a>
+            <a href="082-golden.svg">PlantUML SVG</a>
+            <a href="082.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="082-golden.svg" alt="082 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="082.svg" alt="082 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+A -&gt;(40) B++: Rq
+B --&gt;(20) A--: Rs
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-083" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-083">083</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">!pragma teoz true</p>
+          </div>
+          <nav class="links" aria-label="083 files">
+            <a href="083.puml">PUML</a>
+            <a href="083-golden.svg">PlantUML SVG</a>
+            <a href="083.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="083-golden.svg" alt="083 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="083.svg" alt="083 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+!pragma teoz true
+A -&gt;(50) C: Starts\nwhen &#x27;B&#x27; sends
+&amp; B -&gt;(25) C: \nBut B&#x27;s message\n arrives before A&#x27;s
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-084" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-084">084</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">!pragma teoz true</p>
+          </div>
+          <nav class="links" aria-label="084 files">
+            <a href="084.puml">PUML</a>
+            <a href="084-golden.svg">PlantUML SVG</a>
+            <a href="084.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="084-golden.svg" alt="084 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="084.svg" alt="084 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+!pragma teoz true
+
+S1 -&gt;(30) S2: msg 1\n
+&amp; S2 -&gt;(30) S1: msg 2
+
+note left S1: msg\nS2 to S1
+&amp; note right S2: msg\nS1 to S2
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-085" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-085">085</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">!pragma teoz true</p>
+          </div>
+          <nav class="links" aria-label="085 files">
+            <a href="085.puml">PUML</a>
+            <a href="085-golden.svg">PlantUML SVG</a>
+            <a href="085.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="085-golden.svg" alt="085 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="085.svg" alt="085 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+!pragma teoz true
+Alice -&gt; Bob : hello
+&amp; Bob -&gt; Charlie : hi
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-086" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-086">086</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">Alice -&gt; Bob : hello</p>
+          </div>
+          <nav class="links" aria-label="086 files">
+            <a href="086.puml">PUML</a>
+            <a href="086-golden.svg">PlantUML SVG</a>
+            <a href="086.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="086-golden.svg" alt="086 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="086.svg" alt="086 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+Alice -&gt; Bob : hello
+...
+Alice &lt;- Bob : hello
+@enduml
+</pre>
+        </details>
+      </section>
+      <section class="case" id="case-087" data-status="supported">
+        <header class="case-header">
+          <div>
+            <div class="case-title">
+              <h2><a href="#case-087">087</a></h2>
+              <span class="badge supported">supported</span>
+            </div>
+            <p class="summary">&lt;style&gt;</p>
+          </div>
+          <nav class="links" aria-label="087 files">
+            <a href="087.puml">PUML</a>
+            <a href="087-golden.svg">PlantUML SVG</a>
+            <a href="087.svg">oriha SVG</a>
+          </nav>
+        </header>
+        <div class="pair">
+          <figure>
+            <figcaption>PlantUML</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="087-golden.svg" alt="087 PlantUML golden SVG">
+            </div>
+          </figure>
+          <figure>
+            <figcaption>oriha-plantuml</figcaption>
+            <div class="svg-frame">
+              <img loading="lazy" src="087.svg" alt="087 oriha-plantuml SVG">
+            </div>
+          </figure>
+        </div>
+        <details>
+          <summary>Source</summary>
+          <pre>@startuml
+&lt;style&gt;
+lifeLine {
+  LineStyle 0
+}
+delay {
+  LineStyle 1-4
+}
+&lt;/style&gt;
+Alice -&gt; Bob : hello
+...
+Alice &lt;- Bob : hello
+@enduml
+</pre>
+        </details>
+      </section>
+    </div>
+  </main>
+  <script>
+    const buttons = Array.from(document.querySelectorAll("[data-filter]"));
+    const cases = Array.from(document.querySelectorAll(".case"));
+    for (const button of buttons) {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        for (const item of cases) {
+          item.hidden = filter !== "all" && item.dataset.status !== filter;
+        }
+        for (const candidate of buttons) {
+          candidate.setAttribute("aria-pressed", String(candidate === button));
+        }
+      });
+    }
+  </script>
+</body>
+</html>

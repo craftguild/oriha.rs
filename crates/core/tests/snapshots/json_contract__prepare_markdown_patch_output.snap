@@ -1,0 +1,131 @@
+---
+source: crates/core/tests/json_contract.rs
+expression: prepared
+---
+{
+  "input": {
+    "appearance": {
+      "blockBorders": false,
+      "bodyFontFamily": {
+        "fallbacks": [
+          "BlinkMacSystemFont",
+          "\"Segoe UI\"",
+          "sans-serif"
+        ],
+        "family": "-apple-system"
+      },
+      "codeFontFamily": {
+        "fallbacks": [
+          "Consolas",
+          "\"Liberation Mono\"",
+          "monospace"
+        ],
+        "family": "\"SFMono-Regular\""
+      },
+      "colorScheme": "light",
+      "fullTableData": false,
+      "headingFontFamily": {
+        "fallbacks": [
+          "BlinkMacSystemFont",
+          "\"Segoe UI\"",
+          "sans-serif"
+        ],
+        "family": "-apple-system"
+      },
+      "roundedCorners": true,
+      "shadows": true,
+      "style": "rich",
+      "syntaxTheme": "github-light",
+      "tableBorderStyle": "inner"
+    },
+    "features": {
+      "callouts": true,
+      "gfm": true,
+      "math": false,
+      "mermaid": true,
+      "plantuml": false,
+      "rawHtml": false,
+      "syntaxHighlight": true
+    },
+    "markdown": "New\n\n```mermaid\nflowchart TD\nA --> B\n```\n",
+    "mode": "semanticHtml",
+    "renderOptions": {
+      "sourceAttributes": false,
+      "tableOfContents": false
+    },
+    "viewport": null
+  },
+  "previousSnapshot": {
+    "blocks": [
+      {
+        "htmlHash": "d1dc5e3271d0f4ce",
+        "kind": "paragraph",
+        "sourceHash": "3018cd19bf898cd6",
+        "sourceRange": {
+          "endColumn": 3,
+          "endLine": 1,
+          "startColumn": 1,
+          "startLine": 1
+        },
+        "stableId": "oriha-b-1"
+      },
+      {
+        "htmlHash": "fb5cee31c999aa27",
+        "kind": "codeBlock",
+        "sourceHash": "09ed0dee21b0fcb5",
+        "sourceRange": {
+          "endColumn": 3,
+          "endLine": 6,
+          "startColumn": 1,
+          "startLine": 3
+        },
+        "stableId": "oriha-b-2"
+      }
+    ],
+    "nextStableIndex": 3,
+    "outputResourceFingerprint": "0f261daf3e694973",
+    "schemaVersion": 3,
+    "settingsFingerprint": "738b47bf4b59d02b",
+    "tailHash": "cbf29ce484222325",
+    "tailHtmlByteLength": 0
+  },
+  "textMeasurements": {
+    "requests": [
+      {
+        "engine": "mermaid",
+        "fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif",
+        "fontSize": 16.0,
+        "fontWeight": "600",
+        "id": "mermaid.measurement.wrapped.bfe509702f9c5ce4",
+        "kind": "wrapped",
+        "maxWidth": 220.0,
+        "style": {
+          "fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif",
+          "fontSize": 16.0,
+          "fontWeight": "600",
+          "maxWidth": 220.0
+        },
+        "text": "A",
+        "wrapMode": "svgLike"
+      },
+      {
+        "engine": "mermaid",
+        "fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif",
+        "fontSize": 16.0,
+        "fontWeight": "600",
+        "id": "mermaid.measurement.wrapped.e2a1600503e7c7b7",
+        "kind": "wrapped",
+        "maxWidth": 220.0,
+        "style": {
+          "fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif",
+          "fontSize": 16.0,
+          "fontWeight": "600",
+          "maxWidth": 220.0
+        },
+        "text": "B",
+        "wrapMode": "svgLike"
+      }
+    ]
+  },
+  "version": 1
+}

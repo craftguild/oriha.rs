@@ -1,0 +1,245 @@
+---
+source: crates/core/tests/json_contract.rs
+expression: output
+---
+{
+  "assets": [
+    {
+      "content": "[asset content]",
+      "id": "oriha-stix-two-math",
+      "kind": "other",
+      "mimeType": "font/otf"
+    }
+  ],
+  "diagnostics": [
+    {
+      "code": "callout.unclosed",
+      "engine": "core",
+      "message": "Callout block was not closed before end-of-document.",
+      "severity": "warning"
+    }
+  ],
+  "html": "<article class=\"oriha-document\" data-oriha-theme=\"rich-light\"><h1 id=\"title\" class=\"oriha-heading oriha-heading--h1\" data-oriha-block-kind=\"heading\" data-oriha-block-id=\"1\" data-oriha-heading-level=\"1\">Title</h1><p id=\"2\" class=\"oriha-paragraph\" data-oriha-block-kind=\"paragraph\">Paragraph with <em>emphasis</em>, <strong>strong</strong>, <code>code</code>, and a <a href=\"https://example.com\">link</a>.</p><ul id=\"7\" class=\"oriha-list\" data-oriha-block-kind=\"list\"><li id=\"4\" class=\"oriha-list-item\" data-oriha-list-marker=\"-\">item one</li><li id=\"6\" class=\"oriha-list-item oriha-task-list-item\" data-oriha-list-marker=\"-\"><input disabled=\"\" type=\"checkbox\"> task item</li></ul><blockquote id=\"10\" class=\"oriha-blockquote\" data-oriha-block-kind=\"blockQuote\"><section id=\"8\" class=\"oriha-callout oriha-callout--note\" data-oriha-block-kind=\"callout\" data-oriha-callout-kind=\"note\"><div class=\"oriha-callout__title\"><span class=\"oriha-callout__icon\" aria-hidden=\"true\"><svg viewBox=\"0 0 16 16\" role=\"img\" focusable=\"false\"><path d=\"M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm.75 10h-1.5v-5h1.5v5Zm0-6.25h-1.5v-1.5h1.5v1.5Z\"/></svg></span><span class=\"oriha-callout__title-text\">Heads up</span></div><div class=\"oriha-callout__body\"><p id=\"9\" class=\"oriha-paragraph\" data-oriha-block-kind=\"paragraph\">Callout body.</p></div></section></blockquote><div class=\"oriha-table-scroll-wrapper\" data-oriha-block-kind=\"table\"><table class=\"oriha-table\"><thead><tr><th>a</th><th>b</th></tr></thead><tbody><tr><td>1</td><td>2</td></tr></tbody></table></div><div id=\"12\" class=\"oriha-code-block-wrapper\" data-oriha-block-kind=\"codeBlock\" data-oriha-code-language=\"rust\" data-oriha-code-copy=\"fn main() {}\n\"><div class=\"oriha-code-block-header\"><span class=\"oriha-code-block-language\">Rust</span><button type=\"button\" class=\"oriha-code-copy-button\" data-oriha-copy-button=\"true\" aria-label=\"Copy code\"><svg class=\"oriha-code-copy-icon size-6\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z\" /></svg><span class=\"oriha-code-copy-label\" data-oriha-copy-label=\"true\">Copy</span></button></div><pre class=\"oriha-code-block\"><code class=\"language-rust\"><span class=\"oriha-code-gutter\" aria-hidden=\"true\"><span class=\"oriha-code-line-number\">1</span></span><span class=\"oriha-code-scroll\"><span class=\"oriha-code-lines\"><span class=\"oriha-code-line\"><span class=\"oriha-code-line-content\"><span class=\"token keyword\">fn</span> <span class=\"token function\">main</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span> <span class=\"token punctuation\">{</span><span class=\"token punctuation\">}</span></span></span></span></span></code></pre></div>\n<p id=\"13\" class=\"oriha-paragraph\" data-oriha-block-kind=\"paragraph\">Math: <span class=\"oriha-math-inline\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"21.2\" height=\"27.46\" viewBox=\"0 0 21.2 27.46\" data-latex-mode=\"inline\" role=\"img\"><title>LaTeX math</title><text x=\"2\" y=\"21.18\" font-family=\"'ORIHA STIX Two Math', 'STIX Two Math', 'Cambria Math', serif\" font-size=\"18\" fill=\"#111827\">&#x1d465;</text><text x=\"12.96\" y=\"11.6\" font-family=\"'ORIHA STIX Two Math', 'STIX Two Math', 'Cambria Math', serif\" font-size=\"12.6\" fill=\"#111827\">2</text></svg></span></p><figure id=\"14\" class=\"oriha-mermaid\" data-oriha-block-kind=\"codeBlock\" data-oriha-code-language=\"mermaid\"><svg id=\"mermaid-14\" xmlns=\"http://www.w3.org/2000/svg\" width=\"196\" height=\"244\" viewBox=\"0 0 196 244\" role=\"img\"><defs><marker id=\"mermaid-14-arrow\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"8\" markerHeight=\"8\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#d1d9e0\"/></marker></defs><rect class=\"oriha-mermaid-svg-bg\" x=\"0\" y=\"0\" width=\"196\" height=\"244\" rx=\"12\" fill=\"#ffffff\"/><g class=\"oriha-mermaid-flowchart\"><path class=\"oriha-mermaid-edge\" d=\"M 98 86 L 98 122 L 98 122 L 98 158\" fill=\"none\" stroke=\"#d1d9e0\" stroke-width=\"1.6\" marker-end=\"url(#mermaid-14-arrow)\"/><g class=\"oriha-mermaid-node\"><rect x=\"34\" y=\"34\" width=\"128\" height=\"52\" rx=\"8\" fill=\"#ffffff\" stroke=\"#d1d9e0\" stroke-width=\"1.4\"/><text x=\"98\" y=\"64.40\" text-anchor=\"middle\" fill=\"#333333\" font-family=\"-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif\" font-size=\"16\" font-weight=\"600\"><tspan x=\"98\">A</tspan></text></g><g class=\"oriha-mermaid-node\"><rect x=\"34\" y=\"158\" width=\"128\" height=\"52\" rx=\"8\" fill=\"#ffffff\" stroke=\"#d1d9e0\" stroke-width=\"1.4\"/><text x=\"98\" y=\"188.40\" text-anchor=\"middle\" fill=\"#333333\" font-family=\"-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif\" font-size=\"16\" font-weight=\"600\"><tspan x=\"98\">B</tspan></text></g></g></svg></figure>\n</article>",
+  "sourceMap": [
+    {
+      "id": "1",
+      "kind": "heading",
+      "sourceRange": {
+        "endColumn": 7,
+        "endLine": 1,
+        "startColumn": 1,
+        "startLine": 1
+      }
+    },
+    {
+      "id": "3",
+      "kind": "paragraph",
+      "sourceRange": {
+        "endColumn": 8,
+        "endLine": 1,
+        "startColumn": 1,
+        "startLine": 1
+      }
+    },
+    {
+      "id": "5",
+      "kind": "paragraph",
+      "sourceRange": {
+        "endColumn": 13,
+        "endLine": 1,
+        "startColumn": 1,
+        "startLine": 1
+      }
+    },
+    {
+      "id": "9",
+      "kind": "paragraph",
+      "sourceRange": {
+        "endColumn": 13,
+        "endLine": 1,
+        "startColumn": 1,
+        "startLine": 1
+      }
+    },
+    {
+      "id": "8",
+      "kind": "callout",
+      "sourceRange": {
+        "endColumn": 13,
+        "endLine": 2,
+        "startColumn": 1,
+        "startLine": 1
+      }
+    },
+    {
+      "id": "2",
+      "kind": "paragraph",
+      "sourceRange": {
+        "endColumn": 81,
+        "endLine": 3,
+        "startColumn": 1,
+        "startLine": 3
+      }
+    },
+    {
+      "id": "4",
+      "kind": "listItem",
+      "sourceRange": {
+        "endColumn": 10,
+        "endLine": 5,
+        "startColumn": 1,
+        "startLine": 5
+      }
+    },
+    {
+      "id": "7",
+      "kind": "list",
+      "metadata": {
+        "marker": "-",
+        "ordered": "false"
+      },
+      "sourceRange": {
+        "endColumn": 16,
+        "endLine": 6,
+        "startColumn": 1,
+        "startLine": 5
+      }
+    },
+    {
+      "id": "6",
+      "kind": "listItem",
+      "sourceRange": {
+        "endColumn": 16,
+        "endLine": 6,
+        "startColumn": 1,
+        "startLine": 6
+      }
+    },
+    {
+      "id": "10",
+      "kind": "blockQuote",
+      "sourceRange": {
+        "endColumn": 15,
+        "endLine": 9,
+        "startColumn": 1,
+        "startLine": 8
+      }
+    },
+    {
+      "id": "11",
+      "kind": "table",
+      "sourceRange": {
+        "endColumn": 9,
+        "endLine": 13,
+        "startColumn": 1,
+        "startLine": 11
+      }
+    },
+    {
+      "id": "12",
+      "kind": "codeBlock",
+      "metadata": {
+        "info": "rust",
+        "language": "rust"
+      },
+      "sourceRange": {
+        "endColumn": 3,
+        "endLine": 17,
+        "startColumn": 1,
+        "startLine": 15
+      }
+    },
+    {
+      "id": "13",
+      "kind": "paragraph",
+      "sourceRange": {
+        "endColumn": 11,
+        "endLine": 19,
+        "startColumn": 1,
+        "startLine": 19
+      }
+    },
+    {
+      "id": "14",
+      "kind": "codeBlock",
+      "metadata": {
+        "info": "mermaid",
+        "language": "mermaid"
+      },
+      "sourceRange": {
+        "endColumn": 3,
+        "endLine": 24,
+        "startColumn": 1,
+        "startLine": 21
+      }
+    }
+  ],
+  "stats": {
+    "blocksByKind": [
+      {
+        "count": 5,
+        "kind": "paragraph"
+      },
+      {
+        "count": 1,
+        "kind": "heading"
+      },
+      {
+        "count": 2,
+        "kind": "fencedCode"
+      },
+      {
+        "count": 1,
+        "kind": "blockQuote"
+      },
+      {
+        "count": 1,
+        "kind": "list"
+      },
+      {
+        "count": 2,
+        "kind": "listItem"
+      },
+      {
+        "count": 1,
+        "kind": "gfmTable"
+      },
+      {
+        "count": 1,
+        "kind": "callout"
+      }
+    ],
+    "calloutsByKind": [
+      {
+        "count": 1,
+        "kind": "note"
+      }
+    ],
+    "codeBlocksByLanguageKind": [
+      {
+        "count": 1,
+        "kind": "rust"
+      },
+      {
+        "count": 1,
+        "kind": "mermaid"
+      }
+    ],
+    "headingsByLevel": [
+      {
+        "count": 1,
+        "kind": "h1"
+      }
+    ],
+    "issuesByKind": [
+      {
+        "count": 1,
+        "kind": "unclosedCallout"
+      }
+    ],
+    "lockedFeaturesByKind": [],
+    "schemaVersion": 1,
+    "totalBlocks": 14,
+    "unsupportedByKind": []
+  }
+}

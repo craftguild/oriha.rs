@@ -1,0 +1,107 @@
+---
+source: crates/core/tests/json_contract.rs
+expression: output
+---
+{
+  "output": {
+    "assets": [],
+    "diagnostics": [],
+    "html": "<article class=\"oriha-document\" data-oriha-theme=\"rich-light\"><p id=\"1\" class=\"oriha-paragraph\" data-oriha-block-kind=\"paragraph\" data-oriha-stable-id=\"oriha-b-1\">New</p><figure id=\"2\" class=\"oriha-mermaid\" data-oriha-block-kind=\"codeBlock\" data-oriha-code-language=\"mermaid\" data-oriha-stable-id=\"oriha-b-2\"><svg id=\"mermaid-2\" xmlns=\"http://www.w3.org/2000/svg\" width=\"196\" height=\"244\" viewBox=\"0 0 196 244\" role=\"img\"><defs><marker id=\"mermaid-2-arrow\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"8\" markerHeight=\"8\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#d1d9e0\"/></marker></defs><rect class=\"oriha-mermaid-svg-bg\" x=\"0\" y=\"0\" width=\"196\" height=\"244\" rx=\"12\" fill=\"#ffffff\"/><g class=\"oriha-mermaid-flowchart\"><path class=\"oriha-mermaid-edge\" d=\"M 98 86 L 98 122 L 98 122 L 98 158\" fill=\"none\" stroke=\"#d1d9e0\" stroke-width=\"1.6\" marker-end=\"url(#mermaid-2-arrow)\"/><g class=\"oriha-mermaid-node\"><rect x=\"34\" y=\"34\" width=\"128\" height=\"52\" rx=\"8\" fill=\"#ffffff\" stroke=\"#d1d9e0\" stroke-width=\"1.4\"/><text x=\"98\" y=\"64.40\" text-anchor=\"middle\" fill=\"#333333\" font-family=\"-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif\" font-size=\"16\" font-weight=\"600\"><tspan x=\"98\">A</tspan></text></g><g class=\"oriha-mermaid-node\"><rect x=\"34\" y=\"158\" width=\"128\" height=\"52\" rx=\"8\" fill=\"#ffffff\" stroke=\"#d1d9e0\" stroke-width=\"1.4\"/><text x=\"98\" y=\"188.40\" text-anchor=\"middle\" fill=\"#333333\" font-family=\"-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif\" font-size=\"16\" font-weight=\"600\"><tspan x=\"98\">B</tspan></text></g></g></svg></figure>\n</article>",
+    "sourceMap": [
+      {
+        "id": "1",
+        "kind": "paragraph",
+        "sourceRange": {
+          "endColumn": 3,
+          "endLine": 1,
+          "startColumn": 1,
+          "startLine": 1
+        }
+      },
+      {
+        "id": "2",
+        "kind": "codeBlock",
+        "metadata": {
+          "info": "mermaid",
+          "language": "mermaid"
+        },
+        "sourceRange": {
+          "endColumn": 3,
+          "endLine": 6,
+          "startColumn": 1,
+          "startLine": 3
+        }
+      }
+    ],
+    "stats": {
+      "blocksByKind": [
+        {
+          "count": 1,
+          "kind": "paragraph"
+        },
+        {
+          "count": 1,
+          "kind": "fencedCode"
+        }
+      ],
+      "calloutsByKind": [],
+      "codeBlocksByLanguageKind": [
+        {
+          "count": 1,
+          "kind": "mermaid"
+        }
+      ],
+      "headingsByLevel": [],
+      "issuesByKind": [],
+      "lockedFeaturesByKind": [],
+      "schemaVersion": 1,
+      "totalBlocks": 2,
+      "unsupportedByKind": []
+    }
+  },
+  "patches": [
+    {
+      "html": "<p id=\"1\" class=\"oriha-paragraph\" data-oriha-block-kind=\"paragraph\" data-oriha-stable-id=\"oriha-b-1\">New</p>",
+      "insertBeforeStableId": "oriha-b-2",
+      "op": "replaceBlocks",
+      "removeStableIds": [
+        "oriha-b-1"
+      ]
+    }
+  ],
+  "snapshot": {
+    "blocks": [
+      {
+        "htmlHash": "10d68aecbc90b38d",
+        "kind": "paragraph",
+        "sourceHash": "3741f519c32ac391",
+        "sourceRange": {
+          "endColumn": 3,
+          "endLine": 1,
+          "startColumn": 1,
+          "startLine": 1
+        },
+        "stableId": "oriha-b-1"
+      },
+      {
+        "htmlHash": "fb5cee31c999aa27",
+        "kind": "codeBlock",
+        "sourceHash": "09ed0dee21b0fcb5",
+        "sourceRange": {
+          "endColumn": 3,
+          "endLine": 6,
+          "startColumn": 1,
+          "startLine": 3
+        },
+        "stableId": "oriha-b-2"
+      }
+    ],
+    "nextStableIndex": 3,
+    "outputResourceFingerprint": "0f261daf3e694973",
+    "schemaVersion": 3,
+    "settingsFingerprint": "738b47bf4b59d02b",
+    "tailHash": "cbf29ce484222325",
+    "tailHtmlByteLength": 0
+  },
+  "strategy": "incremental"
+}

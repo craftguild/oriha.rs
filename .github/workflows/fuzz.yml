@@ -1,0 +1,57 @@
+name: Fuzz
+
+on:
+  schedule:
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+    inputs:
+      seconds_per_target:
+        description: "Seconds to run each fuzz target"
+        required: false
+        default: "300"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fuzz-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  fuzz:
+    runs-on: warp-ubuntu-2404-x64-4x
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [render, render_json]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install nightly toolchain
+        run: |
+          rustup toolchain install nightly --profile minimal
+          rustup default nightly
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: fuzz
+
+      - name: Install cargo-fuzz
+        run: cargo install cargo-fuzz --locked
+
+      - name: Run fuzz target
+        run: |
+          SECONDS_PER_TARGET="${{ github.event.inputs.seconds_per_target || '300' }}"
+          cargo fuzz run ${{ matrix.target }} -- -max_total_time="${SECONDS_PER_TARGET}"
+
+      - name: Upload crash artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz-artifacts-${{ matrix.target }}
+          path: fuzz/artifacts
+          if-no-files-found: ignore

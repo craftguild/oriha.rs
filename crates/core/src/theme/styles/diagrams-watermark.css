@@ -1,0 +1,198 @@
+.oriha-diagram {{
+  background: var(--oriha-diagram-bg);
+  border: 1px solid var(--oriha-diagram-border);
+  border-radius: var(--oriha-content-radius);
+  box-sizing: border-box;
+  color: var(--oriha-diagram-text);
+  margin: var(--oriha-table-margin);
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}}
+
+.oriha-plantuml,
+.oriha-mermaid {{
+  background: var(--oriha-table-bg);
+  border: 0;
+  border-radius: var(--oriha-table-radius);
+  box-shadow: var(--oriha-table-shadow);
+}}
+
+.oriha-math-block {{
+  background: var(--oriha-table-bg);
+  border: 0;
+  border-radius: var(--oriha-table-radius);
+}}
+
+.oriha-plantuml > svg,
+.oriha-diagram > svg,
+.oriha-math-block > svg,
+.oriha-mermaid > svg {{
+  display: block;
+  max-width: none;
+}}
+
+.oriha-math-inline {{
+  display: inline-block;
+  line-height: 0;
+  max-width: 100%;
+  vertical-align: -0.18em;
+}}
+
+.oriha-math-inline > svg {{
+  display: inline-block;
+  height: auto;
+  max-width: 100%;
+  overflow: visible;
+}}
+
+.oriha-plantuml--error,
+.oriha-math--error,
+.oriha-mermaid--error {{
+  overflow: hidden;
+  padding: 16px;
+}}
+
+.oriha-plantuml__error-title,
+.oriha-math__error-title,
+.oriha-mermaid__error-title {{
+  color: var(--oriha-color-danger);
+  font-size: var(--oriha-font-size-code-block);
+  font-weight: 700;
+  margin: 0;
+}}
+
+.oriha-plantuml__error-message,
+.oriha-math__error-message,
+.oriha-mermaid__error-message {{
+  color: var(--oriha-color-muted);
+  font-size: var(--oriha-font-size-small);
+  margin: 6px 0 0;
+}}
+
+.oriha-plantuml__source,
+.oriha-math__source,
+.oriha-mermaid__source {{
+  background: var(--oriha-code-bg);
+  border: 1px solid var(--oriha-code-border);
+  border-radius: var(--oriha-code-radius);
+  color: var(--oriha-code-text);
+  font-size: var(--oriha-font-size-small);
+  line-height: 1.45;
+  margin: 12px 0 0;
+  overflow: auto;
+  padding: var(--oriha-code-padding);
+}}
+
+.oriha-plantuml__source code,
+.oriha-math__source code,
+.oriha-mermaid__source code {{
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  white-space: pre;
+}}
+
+.oriha-footnote-ref {{
+  font-size: 0.78em;
+  line-height: 0;
+  vertical-align: super;
+}}
+
+.oriha-footnote-ref__link {{
+  text-decoration: none;
+}}
+
+.oriha-footnotes {{
+  border-top: 1px solid var(--oriha-color-border);
+  color: var(--oriha-color-muted);
+  font-size: var(--oriha-font-size-small);
+  margin: 32px 0 0;
+  padding-top: 16px;
+}}
+
+.oriha-footnotes__title {{
+  font-size: var(--oriha-font-size-small);
+  font-weight: 700;
+  margin: 0 0 8px;
+}}
+
+.oriha-footnotes__list {{
+  margin: 0;
+  padding-left: 1.5em;
+}}
+
+.oriha-footnotes__item {{
+  padding-left: 0.25em;
+}}
+
+.oriha-footnotes__backref {{
+  text-decoration: none;
+}}
+
+.oriha-image {{
+  background: var(--oriha-table-bg);
+  border-radius: var(--oriha-table-radius);
+  box-shadow: var(--oriha-table-shadow);
+  display: block;
+  margin: var(--oriha-table-margin);
+  max-width: 100%;
+  overflow: hidden;
+}}
+
+.oriha-image__img {{
+  display: block;
+  height: auto;
+  max-width: 100%;
+}}
+
+.oriha-image__caption {{
+  background: var(--oriha-code-header-bg);
+  box-sizing: border-box;
+  color: var(--oriha-code-text);
+  font-size: var(--oriha-font-size-small);
+  font-weight: 600;
+  line-height: 1.35;
+  min-height: 36px;
+  padding: 10px 12px;
+}}
+
+.oriha-inline-image,
+.oriha-document img:not(.oriha-watermark__image):not(.oriha-image__img):not(.oriha-inline-image) {{
+  border-radius: var(--oriha-table-radius);
+  box-shadow: var(--oriha-table-shadow);
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}}
+
+.oriha-watermark {{
+  align-items: center;
+  bottom: 16px;
+  color: var(--oriha-watermark-text);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--oriha-font-size-watermark);
+  gap: 4px;
+  left: 50%;
+  line-height: 1.2;
+  opacity: var(--oriha-watermark-opacity);
+  pointer-events: none;
+  position: fixed;
+  text-align: center;
+  transform: translateX(-50%);
+  z-index: 1;
+}}
+
+.oriha-watermark__image {{
+  display: block;
+  height: 44px;
+  opacity: var(--oriha-watermark-qr-opacity);
+  width: 44px;
+}}
+
+.oriha-watermark__text {{
+  display: block;
+  white-space: nowrap;
+}}
+

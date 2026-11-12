@@ -1,0 +1,319 @@
+{
+  "$schema": "./registry.schema.json",
+  "version": 1,
+  "source": {
+    "provider": "google-fonts-css2",
+    "baseUrl": "https://fonts.googleapis.com/css2",
+    "display": "swap",
+    "policy": {
+      "allowTextParameter": false,
+      "allowPerDocumentSubset": false
+    }
+  },
+  "fonts": [
+    {
+      "id": "hachi-maru-pop",
+      "label": "Hachi Maru Pop",
+      "family": "Hachi Maru Pop",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Hachi+Maru+Pop",
+        "css2Family": "Hachi+Maru+Pop:wght@400;700"
+      }
+    },
+    {
+      "id": "ibm-plex-mono",
+      "label": "IBM Plex Mono",
+      "family": "IBM Plex Mono",
+      "kinds": [
+        "code"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/IBM+Plex+Mono",
+        "css2Family": "IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "inconsolata",
+      "label": "Inconsolata",
+      "family": "Inconsolata",
+      "kinds": [
+        "code"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Inconsolata",
+        "css2Family": "Inconsolata:wght@400;500;700"
+      }
+    },
+    {
+      "id": "inter",
+      "label": "Inter",
+      "family": "Inter",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Inter",
+        "css2Family": "Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "jetbrains-mono",
+      "label": "JetBrains Mono",
+      "family": "JetBrains Mono",
+      "kinds": [
+        "code"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/JetBrains+Mono",
+        "css2Family": "JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "lato",
+      "label": "Lato",
+      "family": "Lato",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Lato",
+        "css2Family": "Lato:ital,wght@0,400;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "libre-baskerville",
+      "label": "Libre Baskerville",
+      "family": "Libre Baskerville",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Libre+Baskerville",
+        "css2Family": "Libre+Baskerville:ital,wght@0,400;0,700;1,400"
+      }
+    },
+    {
+      "id": "m-plus-1-code",
+      "label": "M PLUS 1 Code",
+      "family": "M PLUS 1 Code",
+      "kinds": [
+        "code"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/M+PLUS+1+Code",
+        "css2Family": "M+PLUS+1+Code:wght@400;700"
+      }
+    },
+    {
+      "id": "merriweather",
+      "label": "Merriweather",
+      "family": "Merriweather",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Merriweather",
+        "css2Family": "Merriweather:ital,wght@0,400;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "montserrat",
+      "label": "Montserrat",
+      "family": "Montserrat",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Montserrat",
+        "css2Family": "Montserrat:ital,wght@0,400;0,600;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "noto-sans",
+      "label": "Noto Sans",
+      "family": "Noto Sans",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Noto+Sans",
+        "css2Family": "Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "noto-sans-mono",
+      "label": "Noto Sans Mono",
+      "family": "Noto Sans Mono",
+      "kinds": [
+        "code"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Noto+Sans+Mono",
+        "css2Family": "Noto+Sans+Mono:wght@400;500;700"
+      }
+    },
+    {
+      "id": "open-sans",
+      "label": "Open Sans",
+      "family": "Open Sans",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Open+Sans",
+        "css2Family": "Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "oswald",
+      "label": "Oswald",
+      "family": "Oswald",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Oswald",
+        "css2Family": "Oswald:wght@400;500;600;700"
+      }
+    },
+    {
+      "id": "playfair-display",
+      "label": "Playfair Display",
+      "family": "Playfair Display",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Playfair+Display",
+        "css2Family": "Playfair+Display:ital,wght@0,400;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "poppins",
+      "label": "Poppins",
+      "family": "Poppins",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Poppins",
+        "css2Family": "Poppins:ital,wght@0,400;0,600;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "roboto",
+      "label": "Roboto",
+      "family": "Roboto",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Roboto",
+        "css2Family": "Roboto:ital,wght@0,400;0,500;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "roboto-mono",
+      "label": "Roboto Mono",
+      "family": "Roboto Mono",
+      "kinds": [
+        "code"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Roboto+Mono",
+        "css2Family": "Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "roboto-slab",
+      "label": "Roboto Slab",
+      "family": "Roboto Slab",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Roboto+Slab",
+        "css2Family": "Roboto+Slab:wght@400;500;600;700"
+      }
+    },
+    {
+      "id": "source-code-pro",
+      "label": "Source Code Pro",
+      "family": "Source Code Pro",
+      "kinds": [
+        "code"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Source+Code+Pro",
+        "css2Family": "Source+Code+Pro:ital,wght@0,400;0,500;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "source-sans-3",
+      "label": "Source Sans 3",
+      "family": "Source Sans 3",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Source+Sans+3",
+        "css2Family": "Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "source-serif-4",
+      "label": "Source Serif 4",
+      "family": "Source Serif 4",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Source+Serif+4",
+        "css2Family": "Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "space-mono",
+      "label": "Space Mono",
+      "family": "Space Mono",
+      "kinds": [
+        "code"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Space+Mono",
+        "css2Family": "Space+Mono:ital,wght@0,400;0,700;1,400;1,700"
+      }
+    },
+    {
+      "id": "zen-maru-gothic",
+      "label": "Zen Maru Gothic",
+      "family": "Zen Maru Gothic",
+      "kinds": [
+        "heading",
+        "body"
+      ],
+      "source": {
+        "specimenUrl": "https://fonts.google.com/specimen/Zen+Maru+Gothic",
+        "css2Family": "Zen+Maru+Gothic:wght@400;700"
+      }
+    }
+  ]
+}

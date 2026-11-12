@@ -1,0 +1,47 @@
+[
+  {
+    "name": "STIX Two Math",
+    "version": "2.13-b171",
+    "type": "file",
+    "reference": "urn:oriha:asset:stix-two-math",
+    "files": ["crates/latex/assets/fonts/STIXTwoMath-Regular.otf"],
+    "license": "OFL-1.1",
+    "evidence": "Unmodified STIX Two Math v2.13b171 font is compiled into oriha-latex for SVG rendering. Upstream, exact SHA-256, attribution and the complete OFL are retained in crates/latex/assets/fonts."
+  },
+  {
+    "name": "WHATWG character-reference vocabulary",
+    "version": "sha256-d741d877ac77c4194c4ad526b5b4a19aef8dfe411ab840a466891cdbb9f362e6",
+    "type": "file",
+    "reference": "urn:oriha:data:whatwg-character-references",
+    "files": ["crates/core/src/character_reference/names.rs"],
+    "license": "BSD-3-Clause",
+    "evidence": "The compiled Rust table contains semicolon-terminated names derived from the pinned WHATWG entities input. The original data, source hash and attribution are retained in crates/core/entity-data; the raw JSON is a generation input rather than a runtime resource."
+  },
+  {
+    "name": "GitHub gemoji aliases",
+    "version": "0eca75db9301421efc8710baf7a7576793ae452a",
+    "type": "file",
+    "reference": "urn:oriha:data:github-gemoji",
+    "files": ["crates/core/src/emoji/generated/shortcodes.rs"],
+    "license": "MIT",
+    "evidence": "The compiled merged shortcode table contains aliases from the pinned GitHub gemoji commit. It shares a generated Rust file with Unicode-derived data; original inputs and separate upstream rights remain in crates/core/emoji-data."
+  },
+  {
+    "name": "Unicode CLDR English emoji names",
+    "version": "48.2.0",
+    "type": "file",
+    "reference": "urn:oriha:data:unicode-cldr",
+    "files": ["crates/core/src/emoji/generated/shortcodes.rs"],
+    "license": "Unicode-3.0",
+    "evidence": "The compiled merged shortcode table also contains names derived from CLDR 48.2.0 English annotations, filtered through Unicode Emoji 16.0. The raw CLDR and emoji-test inputs are retained for regeneration and are not read at runtime."
+  },
+  {
+    "name": "Unicode Emoji allowlist",
+    "version": "16.0",
+    "type": "file",
+    "reference": "urn:oriha:data:unicode-emoji",
+    "files": ["crates/core/src/emoji/generated/shortcodes.rs"],
+    "license": "Unicode-3.0",
+    "evidence": "Unicode Emoji 16.0 determines which CLDR entries enter the compiled merged shortcode table. Shared-file attribution overlaps intentionally; pinned source data and its license are retained in crates/core/emoji-data."
+  }
+]

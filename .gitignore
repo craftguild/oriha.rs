@@ -1,0 +1,53 @@
+# Local agent integration and task state
+/.claude/
+/.codex/
+/.cursor/
+/.beads/
+/.dolt/
+/.craftguild/
+/.private/
+/.ac-wakeup
+/.agentchat-wakeup
+*.gate.lock*
+.beads-credential-key
+
+# Local environment and editor settings
+.env
+.env.*
+!.env.example
+!.env.*.example
+.direnv/
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
+
+# Build caches and temporary output
+target/
+node_modules/
+__pycache__/
+*.py[cod]
+*.rs.bk
+/.tmp/
+/tmp/
+
+# Oriha generated assets and native build output
+/.astro/
+/packages/expo-oriha/.craftguild/
+/packages/expo-oriha/sbom/
+/packages/expo-oriha/ios/native/
+/packages/expo-oriha/ios/generated/
+/packages/expo-oriha/macos/generated/
+/packages/expo-oriha/macos/native/
+/packages/expo-oriha/android/src/main/jniLibs/
+/packages/expo-oriha/android/src/main/java/uniffi/
+/packages/expo-oriha/android/build/
+/packages/expo-oriha/dist/
+/packages/expo-oriha/*.tgz
+/plantuml
+/plantuml-*.jar

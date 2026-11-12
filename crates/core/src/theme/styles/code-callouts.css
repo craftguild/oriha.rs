@@ -1,0 +1,296 @@
+.oriha-code-block {{
+  background: transparent;
+  color: var(--oriha-syntax-base);
+  font-size: var(--oriha-font-size-code-block);
+  line-height: 1.45;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  tab-size: 2;
+}}
+
+.oriha-code-block code {{
+  background: transparent;
+  border: 0;
+  color: inherit;
+  display: grid;
+  grid-template-columns: calc(4ch + 24px) minmax(0, 1fr);
+  min-width: 0;
+  padding: 0;
+}}
+
+.oriha-code-gutter {{
+  background: var(--oriha-code-gutter-bg);
+  box-sizing: border-box;
+  color: var(--oriha-code-line-number);
+  display: block;
+  padding: 10px 0;
+  user-select: none;
+}}
+
+.oriha-code-line-number {{
+  display: block;
+  line-height: inherit;
+  padding: 0 12px;
+  text-align: right;
+}}
+
+.oriha-code-scroll {{
+  display: block;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}}
+
+.oriha-code-lines {{
+  display: block;
+  min-width: max-content;
+  padding: 10px 16px;
+}}
+
+.oriha-code-line {{
+  display: block;
+  line-height: inherit;
+  min-height: 1.45em;
+  min-height: 1lh;
+}}
+
+.oriha-code-line-content {{
+  line-height: inherit;
+  white-space: pre;
+}}
+
+.oriha-code-line-number,
+.oriha-code-line-content .token {{
+  line-height: inherit;
+}}
+
+.oriha-blockquote {{
+  border-left: var(--oriha-blockquote-border-width) solid var(--oriha-color-blockquote-border);
+  color: var(--oriha-color-muted);
+  margin-left: var(--oriha-blockquote-margin-left);
+  padding-left: var(--oriha-blockquote-padding-left);
+}}
+
+.oriha-hr {{
+  background: var(--oriha-color-border);
+  border: 0;
+  height: 0.25em;
+  margin: 24px 0;
+}}
+
+.oriha-list {{
+  margin-top: 0;
+  margin-left: 0;
+  margin-bottom: var(--oriha-paragraph-margin-bottom);
+  padding-left: 1.25em;
+}}
+
+ol.oriha-list {{
+  padding-left: 1.65em;
+}}
+
+.oriha-list .oriha-list {{
+  margin-bottom: 0;
+}}
+
+.oriha-list-item {{
+  margin-bottom: 0.25em;
+}}
+
+.oriha-task-list-item {{
+  align-items: flex-start;
+  display: flex;
+  gap: 0.45em;
+  list-style: none;
+}}
+
+.oriha-task-list {{
+  margin-left: 0;
+  padding-left: 0;
+}}
+
+.oriha-task-checkbox {{
+  background: var(--oriha-table-bg);
+  border: 1.5px solid var(--oriha-color-border);
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: inline-grid;
+  flex: 0 0 auto;
+  height: 1em;
+  margin: calc((1lh - 1em) / 2) 0 0;
+  place-content: center;
+  width: 1em;
+}}
+
+.oriha-task-checkbox--checked {{
+  background: var(--oriha-task-checkbox-accent);
+  border-color: var(--oriha-task-checkbox-accent);
+}}
+
+.oriha-task-checkbox--checked::after {{
+  border-color: var(--oriha-task-checkbox-check);
+  border-style: solid;
+  border-width: 0 1.6px 1.6px 0;
+  content: "";
+  height: 0.45em;
+  transform: rotate(45deg) translateY(-0.04em);
+  width: 0.22em;
+}}
+
+.oriha-table-scroll-wrapper {{
+  background: var(--oriha-table-bg);
+  border: {table_wrapper_border_css}
+  border-radius: var(--oriha-table-radius);
+  box-shadow: var(--oriha-table-shadow);
+  margin: var(--oriha-table-margin);
+  overflow-x: auto;
+  overflow-y: hidden;
+}}
+
+.oriha-table-scroll-wrapper .oriha-table {{
+  background: var(--oriha-table-bg);
+  border-collapse: collapse;
+  border-spacing: 0;
+  box-shadow: none;
+  display: table;
+  margin: 0;
+  min-width: max-content;
+  width: 100%;
+}}
+
+.oriha-document table:not(.oriha-table) {{
+  background: var(--oriha-table-bg);
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: table;
+  margin: var(--oriha-table-margin);
+  width: 100%;
+}}
+
+.oriha-table tr:nth-child(2n),
+.oriha-document table:not(.oriha-table) tr:nth-child(2n) {{
+  background: var(--oriha-table-alt-bg);
+}}
+
+.oriha-table th,
+.oriha-table td,
+.oriha-document table:not(.oriha-table) th,
+.oriha-document table:not(.oriha-table) td {{
+  box-sizing: border-box;
+  color: var(--oriha-color-text);
+  line-height: 1.45;
+  padding: 8px 13px;
+  white-space: nowrap;
+}}
+
+.oriha-table th,
+.oriha-document table:not(.oriha-table) th {{
+  background: var(--oriha-table-header-bg);
+  color: var(--oriha-color-heading);
+  font-weight: 600;
+  height: 36px;
+  line-height: 1.35;
+  padding: 0 13px;
+}}
+
+{full_table_data_css}
+
+{table_border_css}
+
+.oriha-callout {{
+  --oriha-callout-bg: var(--oriha-callout-generic-bg);
+  --oriha-callout-header-bg: var(--oriha-callout-generic-header-bg);
+  --oriha-callout-text: var(--oriha-callout-generic-text);
+  background: var(--oriha-callout-bg);
+  border: 1px solid var(--oriha-callout-header-bg);
+  border-radius: var(--oriha-callout-radius);
+  box-shadow: var(--oriha-callout-shadow);
+  overflow: hidden;
+}}
+
+.oriha-callout + .oriha-callout {{
+  margin-top: 1em;
+}}
+
+.oriha-callout__title {{
+  align-items: center;
+  background: var(--oriha-callout-header-bg);
+  box-sizing: border-box;
+  color: var(--oriha-callout-text);
+  display: flex;
+  font-weight: 700;
+  gap: 8px;
+  line-height: 1.35;
+  min-height: 36px;
+  padding: 0 13px;
+  white-space: nowrap;
+}}
+
+.oriha-callout__icon {{
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 16px;
+  justify-content: center;
+  width: 16px;
+}}
+
+.oriha-callout__icon svg {{
+  fill: currentColor;
+  height: 16px;
+  width: 16px;
+}}
+
+.oriha-callout__title-text {{
+  min-width: 0;
+}}
+
+.oriha-callout__body {{
+  background: var(--oriha-callout-content-bg);
+  padding: 1em;
+}}
+
+.oriha-callout--note {{
+  --oriha-callout-bg: var(--oriha-callout-note-bg);
+  --oriha-callout-header-bg: var(--oriha-callout-note-header-bg);
+  --oriha-callout-text: var(--oriha-callout-note-text);
+}}
+
+.oriha-callout--tip {{
+  --oriha-callout-bg: var(--oriha-callout-tip-bg);
+  --oriha-callout-header-bg: var(--oriha-callout-tip-header-bg);
+  --oriha-callout-text: var(--oriha-callout-tip-text);
+}}
+
+.oriha-callout--important {{
+  --oriha-callout-bg: var(--oriha-callout-important-bg);
+  --oriha-callout-header-bg: var(--oriha-callout-important-header-bg);
+  --oriha-callout-text: var(--oriha-callout-important-text);
+}}
+
+.oriha-callout--warning {{
+  --oriha-callout-bg: var(--oriha-callout-warning-bg);
+  --oriha-callout-header-bg: var(--oriha-callout-warning-header-bg);
+  --oriha-callout-text: var(--oriha-callout-warning-text);
+}}
+
+.oriha-callout--caution {{
+  --oriha-callout-bg: var(--oriha-callout-caution-bg);
+  --oriha-callout-header-bg: var(--oriha-callout-caution-header-bg);
+  --oriha-callout-text: var(--oriha-callout-caution-text);
+}}
+
+.oriha-foreign-html,
+.oriha-foreign-html-wrapper {{
+  box-sizing: border-box;
+  margin: var(--oriha-table-margin);
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}}
+
+.oriha-math-block,
+.oriha-mermaid,
+.oriha-plantuml,

@@ -1,0 +1,897 @@
+schema_version = 2
+rust_output_layout = "standard"
+standards_version = "0.1.0"
+
+[[releases]]
+id = "oriha"
+initial_version = "0.1.0"
+tag_prefix = "v"
+notes = "docs/releases"
+paths = ["Cargo.toml", "Cargo.lock", "crates", "packages/expo-oriha", "Makefile", "tools", "scripts", "assets", "docs", "standards", "craftguild.toml", "README.md", "THIRD_PARTY_NOTICES.md", "LICENSE", "LICENSE-MIT", "LICENSE-APACHE", ".github", "rust-toolchain.toml"]
+[[releases.cargo]]
+manifest = "Cargo.toml"
+lockfile = "Cargo.lock"
+workspace = true
+packages = ["oriha", "oriha-core", "oriha-diagram", "oriha-i18n", "oriha-latex", "oriha-mermaid", "oriha-native-bridge", "oriha-plantuml", "oriha-stats-client", "oriha-stats-ingest", "oriha-stats-schema", "oriha-stats-viewer", "oriha-uniffi-bindgen", "oriha-wasm", "oriha-windows-bridge"]
+[[releases.npm]]
+manifest = "packages/expo-oriha/package.json"
+lockfile = "packages/expo-oriha/package-lock.json"
+
+[[releases]]
+id = "font-registry"
+initial_version = "0.1.0"
+tag_prefix = "font-registry-v"
+notes = "docs/releases/font-registry"
+paths = ["packages/font-registry"]
+[[releases.npm]]
+manifest = "packages/font-registry/package.json"
+lockfile = "packages/font-registry/package-lock.json"
+
+[[releases]]
+id = "expo-preview"
+initial_version = "0.1.0"
+tag_prefix = "expo-preview-v"
+notes = "docs/releases/expo-preview"
+paths = ["examples/expo-preview"]
+[[releases.npm]]
+manifest = "examples/expo-preview/package.json"
+lockfile = "examples/expo-preview/package-lock.json"
+
+[[policies]]
+kind = "publication"
+repository = "craftguild/oriha.rs"
+manifest = "Cargo.toml"
+npm_lockfiles = ["packages/expo-oriha/package-lock.json", "packages/font-registry/package-lock.json", "examples/expo-preview/package-lock.json"]
+
+[[policies]]
+kind = "dependencies"
+manifest = "Cargo.toml"
+[policies.layers]
+"oriha" = ["oriha-core"]
+"oriha-core" = ["oriha-i18n", "oriha-latex", "oriha-mermaid", "oriha-plantuml"]
+"oriha-diagram" = []
+"oriha-i18n" = []
+"oriha-latex" = []
+"oriha-mermaid" = ["oriha-diagram"]
+"oriha-native-bridge" = ["oriha-core", "oriha-i18n", "oriha-stats-client"]
+"oriha-plantuml" = ["oriha-diagram"]
+"oriha-stats-client" = ["oriha-core", "oriha-stats-schema"]
+"oriha-stats-ingest" = ["oriha-core", "oriha-stats-schema"]
+"oriha-stats-schema" = ["oriha-core"]
+"oriha-stats-viewer" = ["oriha-core"]
+"oriha-uniffi-bindgen" = []
+"oriha-wasm" = ["oriha-core"]
+"oriha-windows-bridge" = ["oriha-native-bridge"]
+
+[[artifacts]]
+id = "oriha-cli"
+command = "oriha"
+project = "oriha.rs"
+kind = "rust"
+manifest = "Cargo.toml"
+lockfile = "Cargo.lock"
+package = "oriha"
+inputs = ["crates/cli/assets/banner.txt", "Makefile", "tools/standards.sh", "standards/engine.json", "standards/launcher.py", "standards/make/common.mk", "rust-toolchain.toml"]
+supplemental = "assets/cli-supplemental.json"
+[artifacts.build]
+toolchain = "1.95.0"
+
+[[artifacts]]
+id = "expo-js"
+command = "expo-oriha-js"
+project = "oriha.rs"
+kind = "frontend"
+manifest = "packages/expo-oriha/package.json"
+lockfile = "packages/expo-oriha/package-lock.json"
+package = "expo-oriha"
+target = "react-native"
+inputs = ["packages/expo-oriha/tsdown.config.mts", "packages/expo-oriha/scripts/bundle-evidence.mjs", "packages/expo-oriha/scripts/build-js-evidence.mjs", "packages/expo-oriha/scripts/generate-third-party-licenses.mjs"]
+input_dirs = ["packages/expo-oriha/.craftguild/bundle/inputs"]
+supplemental = "packages/expo-oriha/.craftguild/bundle/supplemental.json"
+
+[artifacts.bundle]
+lockfile = "packages/expo-oriha/package-lock.json"
+metafile = "packages/expo-oriha/.craftguild/bundle/metafile.json"
+directory = "packages/expo-oriha/dist"
+root = "packages/expo-oriha"
+command = ["node", "packages/expo-oriha/scripts/build-js-evidence.mjs"]
+
+[[artifacts]]
+id = "font-registry"
+command = "oriha-font-registry"
+project = "oriha.rs"
+kind = "frontend"
+manifest = "packages/font-registry/package.json"
+lockfile = "packages/font-registry/package-lock.json"
+package = "oriha-font-registry"
+target = "vercel-nodejs24"
+inputs = ["packages/font-registry/astro.config.mjs", "packages/font-registry/registry.config.json", "packages/font-registry/scripts/build-evidence.mjs", "packages/font-registry/scripts/bundle-evidence.mjs", "packages/font-registry/scripts/deployment-injection.mjs", "packages/font-registry/scripts/deployment-notices.mjs", "packages/font-registry/scripts/registry-assets.mjs", "packages/font-registry/scripts/build-registry.ts", "packages/font-registry/scripts/registry-provenance.ts"]
+input_dirs = ["packages/font-registry/generated", "packages/font-registry/licenses", "packages/font-registry/.craftguild/bundle/inputs"]
+supplemental = "packages/font-registry/.craftguild/bundle/supplemental.json"
+[artifacts.bundle]
+lockfile = "packages/font-registry/package-lock.json"
+metafile = "packages/font-registry/.craftguild/bundle/metafile.json"
+directory = "packages/font-registry/.vercel/output"
+root = "packages/font-registry"
+command = ["node", "packages/font-registry/scripts/build-evidence.mjs"]
+
+[[generated]]
+owner = "oriha-character-references"
+manifest = "assets/generated-character-references.json"
+output_root = "crates/core/src/character_reference"
+reproduce = ["python3", "crates/core/scripts/generate-character-references.py", "--output-dir", "{output}"]
+rust_size_exception = true
+
+[[adapters]]
+language = "rust"
+test = ["cargo", "test", "--locked", "--release", "--workspace", "--all-targets"]
+format = ["python3", "tools/rust-format.py"]
+lint = ["cargo", "clippy", "--locked", "--release", "--workspace", "--all-targets", "--", "-D", "warnings"]
+
+[[adapters]]
+language = "npm"
+test = ["node", "tools/npm-checks.mjs", "test"]
+lint = ["node", "tools/npm-checks.mjs", "lint"]
+typecheck = ["node", "tools/npm-checks.mjs", "typecheck"]
+
+[[commands]]
+id = "release-version-ownership"
+purpose = "Validate all Cargo/npm release authorities and candidate edits in memory without signing or changing versions"
+phase = "check"
+argv = ["sh", "tools/standards.sh", "check-release-config"]
+
+[[commands]]
+id = "block-exhaustiveness"
+purpose = "Keep parser/render block enum handling exhaustive"
+phase = "check"
+argv = ["python3", "scripts/check-block-exhaustiveness.py"]
+
+[[commands]]
+id = "rust-dependency-audit"
+purpose = "Retain advisory, version-ban, license and source audits for the locked Rust graph"
+phase = "check"
+argv = ["cargo", "deny", "check", "advisories", "bans", "licenses", "sources"]
+
+[[commands]]
+id = "third-party-notices"
+purpose = "Reproduce the selected native target graphs and bundled font/data/icon license inventory"
+phase = "check"
+argv = ["python3", "tools/check-licenses.py"]
+
+[[commands]]
+id = "font-license-provenance"
+purpose = "Validate the complete configured font license inventory and pinned upstream source hashes without network"
+phase = "check"
+argv = ["node", "tools/check-font-licenses.mjs"]
+
+[[commands]]
+id = "javascript-distribution"
+purpose = "Verify the operation-prepared ESM/CJS/declarations, actual module evidence and selected SBOM"
+phase = "check"
+argv = ["sh", "tools/standards.sh", "verify-frontend", "--artifact", "expo-js"]
+
+[[commands]]
+id = "native-binding-checksums"
+purpose = "Generate isolated Swift/Kotlin bindings and compare their ABI checksums with the actual host library"
+phase = "check"
+argv = ["python3", "tools/check-bindings.py"]
+
+[[commands]]
+id = "image-data-urls"
+purpose = "Decode real rendered data URL images and verify browser source selection"
+phase = "check"
+argv = ["python3", "scripts/check-image-data-urls.py"]
+
+[[commands]]
+id = "font-registry-runtime"
+purpose = "Exercise the real generated deployment on an owned ephemeral port and compare registry/font/license bytes and headers"
+phase = "acceptance"
+argv = ["node", "tools/check-font-runtime.mjs"]
+
+[[generated]]
+owner = "oriha-expo-bridge-and-icons"
+manifest = ".craftguild/ownership/expo.json"
+output_root = "packages/expo-oriha/generated"
+reproduce = ["node", "tools/generate-expo.mjs", "--output-dir", "{output}"]
+
+[[generated]]
+owner = "oriha-emoji-shortcodes"
+manifest = "assets/generated-emoji-shortcodes.json"
+output_root = "crates/core/src/emoji/generated"
+reproduce = ["node", "crates/core/scripts/generate-emoji-shortcodes.mjs", "--output-dir", "{output}"]
+rust_size_exception = true
+
+
+# Explicit source roles start
+
+[[sources]]
+pattern = "{Makefile,eslint.config.mjs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = ".github/workflows/{bench.yml,cli-assets.yml,coverage.yml,fuzz.yml,installer-acceptance.yml,swift-binding-assets.yml,version.yml}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+
+
+[[sources]]
+pattern = "crates/cli/build.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/cli/src/{main.rs,presentation.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/benches/render_bench.rs"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "crates/core/examples/{adoption_cost.rs,annotate_mentions.rs,derive_blocks.rs,repeated_consumer.rs,responsive_images.rs,source_cost.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/scripts/{generate-character-references.py,generate-emoji-shortcodes.mjs,profile-repeated-consumer.py,summarize-repeated-consumer.py}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/{annotations.rs,blocks.rs,character_reference.rs,export_html.rs,footnotes.rs,hook_mapping.rs,html.rs,ir.rs,lib.rs,mapping.rs,patch.rs,render.rs,source.rs,syntax_highlight.rs,theme.rs,types.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/blocks/{budget.rs,html_budget.rs,inline.rs,structured.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/character_reference/names.rs"
+role = "generated"
+reason = "Canonical generated source with complete ownership, pinned input hashes and isolated reproduction"
+
+[[sources]]
+pattern = "crates/core/src/emoji/mod.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/emoji/generated/shortcodes.rs"
+role = "generated"
+reason = "Canonical generated source with complete ownership, pinned input hashes and isolated reproduction"
+
+[[sources]]
+pattern = "crates/core/src/export_html/{document.rs,html_scan.rs,minify.rs,rewrite.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/export_html/rewrite/css.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/parser/{core.rs,cursor.rs,inline.rs,mod.rs,normalize.rs,rules.rs,traits.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/parser/core/{detection.rs,footnotes.rs,inline_population.rs,references.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/parser/inline/{autolinks.rs,builder.rs,delimiters.rs,html_syntax.rs,leaf_syntax.rs,links.rs,recursion.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/parser/inline/tests.rs"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "crates/core/src/parser/rules/{callouts.rs,code_blocks.rs,headings.rs,html_blocks.rs,list_markers.rs,lists.rs,paragraphs.rs,quotes.rs,references.rs,tables.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/patch/{operations.rs,snapshots.rs,stable_ids.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/render/{block_output.rs,block_renderer.rs,code.rs,containers.rs,context.rs,diagrams.rs,engine.rs,entry_points.rs,errors.rs,extensions.rs,finalize.rs,footnote_html.rs,footnote_ids.rs,image_presentation.rs,images.rs,inline.rs,inline_text.rs,math.rs,measurements.rs,parsed.rs,prepared.rs,presented_image.rs,references.rs,tables_lists.rs,traversal.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/render/{footnote_ids_tests.rs,image_presentation_tests.rs,references_tests.rs,spec_html.rs,tests.rs}"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "crates/core/src/render/block_output/{rendered.rs,validate.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/syntax_highlight/{html.rs,languages.rs,lexemes.rs,programming.rs,structured.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/theme/{catalogs.rs,css_layout.rs,fonts.rs,palettes.rs,syntax_palettes.rs,variables.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/theme/styles/{code-callouts.css,diagrams-watermark.css,document.css,syntax.css}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/types/{document.rs,measurements.rs,options.rs,patch.rs,prepared.rs,stats.rs,stats_kinds.rs,stats_tests.rs,watermark_tests.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/tests/{adoption_remediation.rs,autolinks.rs,block_output.rs,block_output_review.rs,block_output_safety.rs,callouts.rs,character_references.rs,code_block_options.rs,commonmark_spec.rs,emoji.rs,image_presentation.rs,image_presentation_limits.rs,image_presentation_urls.rs,json_contract.rs,latex.rs,mermaid.rs,oriha_rename.rs,plantuml.rs,rendered_urls.rs,robustness.rs,source_annotations.rs,source_annotations_review.rs}"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "crates/diagram/src/lib.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/i18n/src/lib.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/i18n/src/locales/{en.rs,es.rs,fr.rs,ja.rs,ko.rs,mod.rs,zh_hans.rs,zh_hant.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/latex/src/{ast.rs,font.rs,ir.rs,layout.rs,lib.rs,opentype.rs,parser.rs,render.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/latex/src/layout/{boxes.rs,fractions.rs,grids.rs,metrics.rs,scripts.rs,text.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/latex/src/opentype/{binary.rs,cff.rs,cmap.rs,geometry.rs,math_tables.rs,type2.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/latex/src/parser/environments.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/mermaid/src/{backend.rs,lib.rs,parser.rs,pipeline.rs,text_layout.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/mermaid/src/backends/{flowchart.rs,mod.rs,sequence.rs,state.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/mermaid/src/backends/flowchart/{layout.rs,measurements.rs,parsing.rs,render.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/mermaid/src/backends/sequence/{parsing.rs,render.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/mermaid/src/backends/state/{layout.rs,render.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/mermaid/src/pipeline/{detection.rs,theme.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/native-bridge/build.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/native-bridge/src/{conversions.rs,diagnostics.rs,lib.rs,plan_policy.rs,render.rs,settings.rs,stats.rs,types.rs,usage_analytics.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/native-bridge/src/tests.rs"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "crates/native-bridge/src/bin/oriha-native-bridge-manifest.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/native-bridge/src/bin/manifest/{enums.rs,functions.rs,records.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/native-bridge/src/bin/manifest/records/{analytics.rs,diagnostics.rs,measurements.rs,prepared.rs,rendering.rs,settings.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/native-bridge/src/conversions/{analytics.rs,measurements.rs,patches.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/native-bridge/src/render/html_export.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/native-bridge/src/types/{analytics.rs,measurements.rs,options.rs,settings.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/scripts/{sequence_index.html,update_sequence_fixtures.py}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/src/{backend.rs,class_diagram.rs,layout.rs,lib.rs,main.rs,parser.rs,pipeline.rs,render.rs,sequence.rs,text_layout.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/src/backends/{class.rs,mod.rs,sequence.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/src/class_diagram/{parser.rs,render.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/src/layout/{autonumber.rs,composition.rs,messages.rs,notes.rs,participants.rs,semantic_events.rs,vertical.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/src/parser/{arrows.rs,directives.rs,document_ir.rs,endpoints.rs,messages.rs,notes.rs,participants.rs,semantic_events.rs,statements.rs,text.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/src/pipeline/{detection.rs,measurements.rs,style.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/src/render/{activity_events.rs,arrows.rs,groups.rs,measurements.rs,message_attributes.rs,messages.rs,names.rs,notes.rs,page.rs,participant_shapes.rs,participants.rs,semantic_events.rs,structural_events.rs,text.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/src/sequence/messages.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/src/text_layout/{layout.rs,markup.rs,measurement.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/plantuml/tests/{public_api.rs,sequence.rs,sequence_fixtures.rs}"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "crates/plantuml/tests/fixtures/sequence/{001-golden.svg,001.svg,002-golden.svg,002.svg,003-golden.svg,003.svg,004-golden.svg,004.svg,005-golden.svg,005.svg,006-golden.svg,006.svg,007-golden.svg,007.svg,008-golden.svg,008.svg,009-golden.svg,009.svg,010-golden.svg,010.svg,011-golden.svg,011.svg,012-golden.svg,012.svg,013-golden.svg,013.svg,014-golden.svg,014.svg,015-golden.svg,015.svg,016-golden.svg,016.svg,017-golden.svg,017.svg,018-golden.svg,018.svg,019-golden.svg,019.svg,020-golden.svg,020.svg,021-golden.svg,021.svg,022-golden.svg,022.svg,023-golden.svg,023.svg,024-golden.svg,024.svg,025-golden.svg,025.svg,026-golden.svg,026.svg,027-golden.svg,027.svg,028-golden.svg,028.svg,029-golden.svg,029.svg,030-golden.svg,030.svg,031-golden.svg,031.svg,032-golden.svg,032.svg,033-golden.svg,033.svg,034-golden.svg,034.svg,035-golden.svg,035.svg,036-golden.svg,036.svg,037-golden.svg,037.svg,038-golden.svg,038.svg,039-golden.svg,039.svg,040-golden.svg,040.svg,041-golden.svg,041.svg,042-golden.svg,042.svg,043-golden.svg,043.svg,044-golden.svg,044.svg,045-golden.svg,045.svg,046-golden.svg,046.svg,047-golden.svg,047.svg,048-golden.svg,048.svg,049-golden.svg,049.svg,050-golden.svg,050.svg,051-golden.svg,051.svg,052-golden.svg,052.svg,053-golden.svg,053.svg,054-golden.svg,054.svg,055-golden.svg,055.svg,056-golden.svg,056.svg,057-golden.svg,057.svg,058-golden.svg,058.svg,059-golden.svg,059.svg,060-golden.svg,060.svg,061-golden.svg,061.svg,062-golden.svg,062.svg,063-golden.svg,063.svg,064-golden.svg,064.svg,065-golden.svg,065.svg,066-golden.svg,066.svg,067-golden.svg,067.svg,068-golden.svg,068.svg,069-golden.svg,069.svg,070-golden.svg,070.svg,071-golden.svg,071.svg,072-golden.svg,072.svg,073-golden.svg,073.svg,074-golden.svg,074.svg,075-golden.svg,075.svg,076-golden.svg,076.svg,077-golden.svg,077.svg,078-golden.svg,078.svg,079-golden.svg,079.svg,080-golden.svg,080.svg,081-golden.svg,081.svg,082-golden.svg,082.svg,083-golden.svg,083.svg,084-golden.svg,084.svg,085-golden.svg,085.svg,086-golden.svg,086.svg,087-golden.svg,087.svg,index.html}"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "crates/stats-client/src/{envelope.rs,lib.rs,payload.rs,types.rs,workflow.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/stats-client/src/workflow/delivery.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/stats-client/tests/outbox.rs"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "crates/stats-ingest/src/{app.rs,config.rs,lib.rs,main.rs,state_store.rs,writer.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/stats-schema/src/lib.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/stats-schema/tests/validation.rs"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "crates/stats-viewer/src/{aggregate.rs,error.rs,lib.rs,main.rs,model.rs,reader.rs,report.rs,time.rs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/stats-viewer/tests/{production_archive.rs,report.rs}"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "crates/uniffi-bindgen/src/main.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/wasm/build.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/wasm/src/lib.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/windows-bridge/build.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/windows-bridge/src/lib.rs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "examples/expo-preview/{eslint.config.js,index.js,metro.config.js}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "examples/expo-preview/app/index.tsx"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "examples/expo-preview/components/{gauge-button.tsx,premium-cta-banner.tsx,premium-sparkle-icon.tsx}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "examples/expo-preview/components/showcase/{OrihaShowcase.tsx,showcaseAnalytics.tsx,showcaseComponents.tsx,showcaseConfig.ts,showcaseFonts.tsx,showcaseRuntime.tsx,showcaseSettings.tsx,showcaseStyles.tsx,showcaseVersion.tsx}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "examples/expo-preview/lib/{paywall-eyecatch-markdown.ts,sample-markdown.ts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "examples/expo-preview/test/*.test.ts"
+role = "test"
+reason = "Sample network configuration regression tests"
+
+[[sources]]
+pattern = "fuzz/fuzz_targets/{render.rs,render_json.rs}"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "packages/expo-oriha/{ExpoOriha.podspec,tsdown.config.mts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/android/build.gradle"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/android/src/main/java/co/progressiveworks/oriha/{ExpoOrihaModule.kt,OrihaRustBridge.kt}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/generated/{generatedBridgeEnums.ts,generatedBridgeTypes.ts,generatedHeroicons.ts}"
+role = "generated"
+reason = "Canonical generated source with complete ownership, pinned input hashes and isolated reproduction"
+
+[[sources]]
+pattern = "packages/expo-oriha/ios/{ExpoOrihaModule.swift,OrihaRustBridge.swift}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/scripts/{build-js-evidence.mjs,build-package.mjs,build-rust-android.mjs,build-rust-ios.mjs,build-rust-macos.mjs,bundle-evidence.mjs,compose-package-sbom.mjs,generate-bridge-types.mjs,generate-heroicons.mjs,generate-third-party-licenses.mjs,generate-uniffi-bindings.mjs,native-build-utils.mjs,pack-dry-run.mjs,release-git-state.mjs,release-security-check.mjs,release.mjs,sbom-composition.mjs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/src/{index.ts,types.ts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/src/bridge/{ExpoOrihaModule.ts,json.ts,render.ts,version.ts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/src/fonts/{fontRegistry.ts,fontRegistryCss.ts,fontRegistryModel.ts,fontRegistryNormalization.ts,fontRegistryStorage.ts,fontRegistryStoragePort.ts,fontRegistryTransfer.ts,fontRegistryTypes.ts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/src/preview/{OrihaPreview.tsx,orihaPreviewDebug.ts,orihaPreviewHtml.ts,orihaPreviewPatchController.ts,orihaPreviewPdf.ts,previewDebugExport.tsx,previewLinks.tsx,previewLogs.tsx,previewPdfExport.tsx,previewRenderController.tsx,previewRenderEffect.tsx,previewRendering.tsx,previewStyles.tsx,previewViewerEvents.tsx,stableSerialize.ts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/src/provider/{OrihaEnums.ts,OrihaProvider.tsx,measurementBatchSource.ts,measurementDiagramSource.ts,measurementDocument.tsx,measurementFontSource.ts,measurementHtmlSource.ts,measurementResultSource.ts,measurementStyleSource.ts,providerContext.tsx,providerFonts.tsx,providerMeasurement.tsx,providerOverlays.tsx,providerStyles.tsx}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/src/runtime/expoRuntimeI18n.ts"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/src/settings/{orihaRenderSettings.ts,renderSettingsModel.ts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/src/usage-analytics/{usageAnalytics.ts,usageAnalyticsOutbox.ts,usageAnalyticsOutboxCore.ts,usageAnalyticsOutboxStore.ts,usageAnalyticsOutboxTransport.ts,usageAnalyticsReporter.ts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/expo-oriha/test/{fontRegistryCss.test.mjs,fontRegistryStorage.test.mjs,fontRegistryStoragePort.test.mjs,orihaPreviewCore.test.mjs,usageAnalyticsOutbox.test.mjs}"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "packages/font-registry/astro.config.mjs"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/font-registry/fixtures/google-css/fixture-sans.css"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "packages/font-registry/scripts/{build-evidence.mjs,build-registry.ts,bundle-evidence.mjs,deployment-injection.mjs,deployment-notices.mjs,font-add.ts,registry-assets.mjs,registry-provenance.ts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/font-registry/src/{middleware.ts,registry-types.ts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/font-registry/src/pages/{index.astro,index.json.ts}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/font-registry/src/pages/fonts/\\[...path\\].ts"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/font-registry/src/styles/global.css"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "packages/font-registry/test/deployment-injection.test.mjs"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "scripts/{acceptance.py,check-block-exhaustiveness.py,check-image-data-urls.py,check-uniffi-checksums.py,install.py,measure-adoption.py,repeat-source-cost.py,summarize-adoption.py,sync-cargo-version.mjs}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "tools/{artifacts.sh,browser-result.mjs,check-bindings.py,check-font-licenses.mjs,check-font-runtime.mjs,check-licenses.py,generate-expo.mjs,npm-checks.mjs,rust-format.py,standards.sh,library-entry.py,expo-ownership.py,android-compiler.py,tokei.py}"
+role = "implementation"
+reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "tools/benchmarks/{0001-adoption-baseline.rs,0001-baseline.rs}"
+role = "test"
+reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
+
+[[sources]]
+pattern = "vendor/askama_derive/src/{config.rs,generator.rs,heritage.rs,html.rs,input.rs,integration.rs,lib.rs,tests.rs}"
+role = "vendored"
+reason = "Third-party compatibility dependency with retained upstream license and patch provenance"
+
+[[sources]]
+pattern = "vendor/askama_derive/src/generator/{expr.rs,filter.rs,node.rs}"
+role = "vendored"
+reason = "Third-party compatibility dependency with retained upstream license and patch provenance"
+
+[[sources]]
+pattern = "vendor/askama_derive/templates/{a.html,b.html,include1.html,include2.html,include3.html}"
+role = "vendored"
+reason = "Third-party compatibility dependency with retained upstream license and patch provenance"
+
+[[sources]]
+pattern = "vendor/askama_derive/templates/sub/{b.html,c.html}"
+role = "vendored"
+reason = "Third-party compatibility dependency with retained upstream license and patch provenance"
+
+[[sources]]
+pattern = "vendor/askama_derive/templates/sub/sub1/d.html"
+role = "vendored"
+reason = "Third-party compatibility dependency with retained upstream license and patch provenance"
+
+# Explicit source roles end
+
+[[artifacts]]
+id = "native-bridge"
+command = "oriha-native-bridge"
+project = "oriha.rs"
+kind = "rust"
+manifest = "Cargo.toml"
+lockfile = "Cargo.lock"
+package = "oriha-native-bridge"
+supplemental = "assets/cli-supplemental.json"
+inputs = ["tools/artifacts.sh", "packages/expo-oriha/scripts/native-build-utils.mjs", "packages/expo-oriha/scripts/build-rust-ios.mjs", "packages/expo-oriha/scripts/build-rust-android.mjs", "packages/expo-oriha/scripts/build-rust-macos.mjs", "packages/expo-oriha/scripts/generate-uniffi-bindings.mjs", "standards/engine.json", "standards/launcher.py", "standards/make/common.mk", "tools/android-compiler.py", "rust-toolchain.toml"]
+[artifacts.build]
+toolchain = "1.95.0"
+[[artifacts.build.targets]]
+target = "aarch64-linux-android"
+compiler = ["python3", "tools/android-compiler.py"]
+[[artifacts.build.targets]]
+target = "armv7-linux-androideabi"
+compiler = ["python3", "tools/android-compiler.py"]
+[[artifacts.build.targets]]
+target = "x86_64-linux-android"
+compiler = ["python3", "tools/android-compiler.py"]
+[artifacts.build.library]
+name = "oriha_native_bridge"
+formats = ["cdylib", "staticlib", "rlib"]
+[artifacts.build.library.properties]
+"oriha:library-target" = "oriha_native_bridge"
+"oriha:graph-scope" = "Selected target and effective features; normal Cargo dependencies only. Excludes development, build and proc-macro edges. Native system SDK dependencies are not inferred."
+
+[[artifacts]]
+id = "wasm"
+command = "oriha-wasm"
+project = "oriha.rs"
+kind = "rust"
+manifest = "Cargo.toml"
+lockfile = "Cargo.lock"
+package = "oriha-wasm"
+supplemental = "assets/cli-supplemental.json"
+inputs = ["tools/artifacts.sh", "standards/engine.json", "standards/launcher.py", "standards/make/common.mk", "rust-toolchain.toml"]
+[artifacts.build]
+toolchain = "1.95.0"
+[artifacts.build.library]
+name = "oriha_wasm"
+formats = ["cdylib", "rlib"]
+[artifacts.build.library.properties]
+"oriha:library-target" = "oriha_wasm"
+"oriha:graph-scope" = "Selected target and effective features; normal Cargo dependencies only. Excludes development, build and proc-macro edges. Native system SDK dependencies are not inferred."
+
+[[artifacts]]
+id = "windows-bridge"
+command = "oriha-windows-bridge"
+project = "oriha.rs"
+kind = "rust"
+manifest = "Cargo.toml"
+lockfile = "Cargo.lock"
+package = "oriha-windows-bridge"
+supplemental = "assets/cli-supplemental.json"
+inputs = ["tools/artifacts.sh", "standards/engine.json", "standards/launcher.py", "standards/make/common.mk", "rust-toolchain.toml"]
+[artifacts.build]
+toolchain = "1.95.0"
+dependencies = ["native-bridge"]
+[artifacts.build.library]
+name = "oriha_windows_bridge"
+formats = ["cdylib", "staticlib", "rlib"]
+[artifacts.build.library.properties]
+"oriha:library-target" = "oriha_windows_bridge"
+"oriha:graph-scope" = "Selected target and effective features; normal Cargo dependencies only. Excludes development, build and proc-macro edges. Native system SDK dependencies are not inferred."
+
+[[operations]]
+name = "test"
+artifact = "oriha-cli"
+prepare = ["wasm", "windows-bridge", "oriha-cli"]
+build = ["native-bridge"]
+[[operations.hooks]]
+id = "expo-ownership"
+stage = "evidence"
+argv = ["python3", "tools/expo-ownership.py"]
+inputs = ["assets/expo-generation.json", "tools/expo-ownership.py", "rust-toolchain.toml"]
+output_dirs = [".craftguild/ownership"]
+
+[[operations]]
+name = "check"
+artifact = "oriha-cli"
+prepare = ["wasm", "windows-bridge", "oriha-cli", "expo-js"]
+build = ["native-bridge"]
+[[operations.hooks]]
+id = "expo-ownership"
+stage = "evidence"
+argv = ["python3", "tools/expo-ownership.py"]
+inputs = ["assets/expo-generation.json", "tools/expo-ownership.py", "rust-toolchain.toml"]
+output_dirs = [".craftguild/ownership"]
+
+[[commands]]
+id = "cli-standalone"
+purpose = "Retain offline renderer CLI grammar, exact SBOM and staged install"
+phase = "acceptance"
+argv = ["python3", "scripts/acceptance.py"]
+
+[[sources]]
+pattern = "crates/cli/tests/**"
+role = "test"
+reason = "Rust tests of the actual CLI artifact; helpers and assertions are test-only"
+
+[[sources]]
+pattern = "standards/**"
+role = "vendored"
+reason = "Shared initializer-managed entry verified against the unique pinned engine reference; no copied rules or binaries"
+
+[[sources]]
+pattern = "crates/{native-bridge,wasm,windows-bridge}/src/distribution.rs"
+role = "implementation"
+reason = "Reachable native library SBOM byte accessors without typed ABI changes"
+
+[[installers]]
+artifact = "oriha-cli"
+repository = "craftguild/oriha.rs"
+release_group = "oriha"
+output = "scripts/install.sh"
+
+[[sources]]
+pattern = "scripts/install.sh"
+role = "implementation"
+reason = "Common generated download installer; measured shell implementation"

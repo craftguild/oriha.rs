@@ -1,0 +1,10 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "podspecPath": "ExpoOriha.podspec",
+    "modules": ["ExpoOrihaModule"]
+  },
+  "android": {
+    "modules": ["co.progressiveworks.oriha.ExpoOrihaModule"]
+  }
+}

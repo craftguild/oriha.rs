@@ -1,0 +1,9 @@
+/* latin */
+@font-face {
+  font-family: 'Fixture Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../font-files/fixture-sans-latin.font-fixture) format('woff2');
+  unicode-range: U+0000-00FF;
+}

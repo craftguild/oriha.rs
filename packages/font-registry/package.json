@@ -1,0 +1,32 @@
+{
+  "name": "@progressiveworks-co/font-registry",
+  "version": "0.1.0",
+  "description": "Static font registry for Oriha font installers",
+  "author": "Progressive Works, Inc.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./registry-types": "./src/registry-types.ts"
+  },
+  "scripts": {
+    "build": "sh ../../tools/standards.sh build --artifact font-registry",
+    "build:registry": "tsx scripts/build-registry.ts",
+    "build:registry:server": "tsx scripts/build-registry.ts --dist generated",
+    "dev": "astro dev",
+    "font:add": "tsx scripts/font-add.ts",
+    "preview": "astro preview",
+    "test:fixtures": "tsx scripts/build-registry.ts --config fixtures/registry.fixture.json --dist .tmp/fixture-dist --css-fixture-dir fixtures/google-css --font-fixture-dir fixtures/font-files",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@astrojs/vercel": "^11.0.18",
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/node": "^25.6.0",
+    "astro": "^7.4.5",
+    "tailwindcss": "^4.2.4",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.5"
+  },
+  "license": "(MIT OR Apache-2.0)"
+}

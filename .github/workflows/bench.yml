@@ -1,0 +1,38 @@
+name: Bench
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bench-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  bench:
+    runs-on: warp-ubuntu-2404-x64-4x
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      !startsWith(github.event.head_commit.message, 'chore: prepare v')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run render benchmarks
+        run: cargo bench -p oriha-core --bench render_bench -- --output-format bencher | tee bench-output.txt
+
+      - name: Retain benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: render-benchmarks
+          path: bench-output.txt
+          if-no-files-found: error

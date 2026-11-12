@@ -1,0 +1,3197 @@
+{
+  "schemaVersion": 1,
+  "enums": [
+    {
+      "name": "RenderMode",
+      "variants": [
+        {
+          "name": "StyledHtml",
+          "value": "styledHtml"
+        },
+        {
+          "name": "SemanticHtml",
+          "value": "semanticHtml"
+        }
+      ]
+    },
+    {
+      "name": "AppearanceStyle",
+      "variants": [
+        {
+          "name": "Rich",
+          "value": "rich"
+        },
+        {
+          "name": "Simple",
+          "value": "simple"
+        }
+      ]
+    },
+    {
+      "name": "TableBorderStyle",
+      "variants": [
+        {
+          "name": "None",
+          "value": "none"
+        },
+        {
+          "name": "Inner",
+          "value": "inner"
+        },
+        {
+          "name": "All",
+          "value": "all"
+        },
+        {
+          "name": "Vertical",
+          "value": "vertical"
+        },
+        {
+          "name": "Horizontal",
+          "value": "horizontal"
+        }
+      ]
+    },
+    {
+      "name": "RenderDiagnosticSeverity",
+      "variants": [
+        {
+          "name": "Info",
+          "value": "info"
+        },
+        {
+          "name": "Warning",
+          "value": "warning"
+        },
+        {
+          "name": "Error",
+          "value": "error"
+        }
+      ]
+    },
+    {
+      "name": "RenderDiagnosticEngine",
+      "variants": [
+        {
+          "name": "Core",
+          "value": "core"
+        },
+        {
+          "name": "Bridge",
+          "value": "bridge"
+        }
+      ]
+    },
+    {
+      "name": "RenderAssetKind",
+      "variants": [
+        {
+          "name": "Svg",
+          "value": "svg"
+        },
+        {
+          "name": "Css",
+          "value": "css"
+        },
+        {
+          "name": "Other",
+          "value": "other"
+        }
+      ]
+    },
+    {
+      "name": "RenderPatchStrategy",
+      "variants": [
+        {
+          "name": "Incremental",
+          "value": "incremental"
+        },
+        {
+          "name": "ReplaceAll",
+          "value": "replaceAll"
+        }
+      ]
+    },
+    {
+      "name": "RenderPatchFallbackReason",
+      "variants": [
+        {
+          "name": "MissingSnapshot",
+          "value": "missingSnapshot"
+        },
+        {
+          "name": "IncompatibleSnapshot",
+          "value": "incompatibleSnapshot"
+        },
+        {
+          "name": "TailChanged",
+          "value": "tailChanged"
+        },
+        {
+          "name": "OutputTruncated",
+          "value": "outputTruncated"
+        },
+        {
+          "name": "InvalidInput",
+          "value": "invalidInput"
+        },
+        {
+          "name": "EnginePanic",
+          "value": "enginePanic"
+        }
+      ]
+    },
+    {
+      "name": "BridgeFeature",
+      "variants": [
+        {
+          "name": "Gfm",
+          "value": "gfm"
+        },
+        {
+          "name": "SyntaxHighlight",
+          "value": "syntaxHighlight"
+        },
+        {
+          "name": "DarkMode",
+          "value": "darkMode"
+        },
+        {
+          "name": "Tables",
+          "value": "tables"
+        },
+        {
+          "name": "TaskLists",
+          "value": "taskLists"
+        },
+        {
+          "name": "Footnotes",
+          "value": "footnotes"
+        },
+        {
+          "name": "RawHtml",
+          "value": "rawHtml"
+        },
+        {
+          "name": "PdfExport",
+          "value": "pdfExport"
+        },
+        {
+          "name": "Callouts",
+          "value": "callouts"
+        },
+        {
+          "name": "RemovePdfWatermark",
+          "value": "removePdfWatermark"
+        },
+        {
+          "name": "PrioritySupport",
+          "value": "prioritySupport"
+        },
+        {
+          "name": "Plantuml",
+          "value": "plantuml"
+        },
+        {
+          "name": "Mermaid",
+          "value": "mermaid"
+        },
+        {
+          "name": "Math",
+          "value": "math"
+        },
+        {
+          "name": "SyntaxThemeCustomization",
+          "value": "syntaxThemeCustomization"
+        },
+        {
+          "name": "FontCustomization",
+          "value": "fontCustomization"
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsOutboxCommandKind",
+      "variants": [
+        {
+          "name": "LoadEnvelopes",
+          "value": "loadEnvelopes"
+        },
+        {
+          "name": "WriteEnvelope",
+          "value": "writeEnvelope"
+        },
+        {
+          "name": "DeleteEnvelope",
+          "value": "deleteEnvelope"
+        },
+        {
+          "name": "PurgeEnvelopes",
+          "value": "purgeEnvelopes"
+        },
+        {
+          "name": "SendHttp",
+          "value": "sendHttp"
+        }
+      ]
+    },
+    {
+      "name": "Plan",
+      "variants": [
+        {
+          "name": "Free",
+          "value": "free"
+        },
+        {
+          "name": "Premium",
+          "value": "premium"
+        }
+      ]
+    },
+    {
+      "name": "ColorScheme",
+      "variants": [
+        {
+          "name": "Light",
+          "value": "light"
+        },
+        {
+          "name": "Dark",
+          "value": "dark"
+        }
+      ]
+    },
+    {
+      "name": "SyntaxTheme",
+      "variants": [
+        {
+          "name": "GitHubLight",
+          "value": "github-light"
+        },
+        {
+          "name": "GitHubDark",
+          "value": "github-dark"
+        },
+        {
+          "name": "SolarizedLight",
+          "value": "solarized-light"
+        },
+        {
+          "name": "SolarizedDark",
+          "value": "solarized-dark"
+        },
+        {
+          "name": "GruvboxLight",
+          "value": "gruvbox-light"
+        },
+        {
+          "name": "GruvboxDark",
+          "value": "gruvbox-dark"
+        },
+        {
+          "name": "CatppuccinLatte",
+          "value": "catppuccin-latte"
+        },
+        {
+          "name": "CatppuccinMocha",
+          "value": "catppuccin-mocha"
+        },
+        {
+          "name": "AyuLight",
+          "value": "ayu-light"
+        },
+        {
+          "name": "AyuDark",
+          "value": "ayu-dark"
+        },
+        {
+          "name": "TokyoNightDay",
+          "value": "tokyo-night-day"
+        },
+        {
+          "name": "TokyoNight",
+          "value": "tokyo-night"
+        },
+        {
+          "name": "RosePineDawn",
+          "value": "rose-pine-dawn"
+        },
+        {
+          "name": "RosePine",
+          "value": "rose-pine"
+        },
+        {
+          "name": "HighContrastLight",
+          "value": "high-contrast-light"
+        },
+        {
+          "name": "HighContrastDark",
+          "value": "high-contrast-dark"
+        },
+        {
+          "name": "Custom",
+          "value": "custom"
+        }
+      ]
+    },
+    {
+      "name": "HeadingFont",
+      "variants": [
+        {
+          "name": "SystemDefault",
+          "value": "system-default"
+        },
+        {
+          "name": "Custom",
+          "value": "custom"
+        }
+      ]
+    },
+    {
+      "name": "BodyFont",
+      "variants": [
+        {
+          "name": "SystemDefault",
+          "value": "system-default"
+        },
+        {
+          "name": "Custom",
+          "value": "custom"
+        }
+      ]
+    },
+    {
+      "name": "CodeFont",
+      "variants": [
+        {
+          "name": "SystemDefault",
+          "value": "system-default"
+        },
+        {
+          "name": "Custom",
+          "value": "custom"
+        }
+      ]
+    }
+  ],
+  "stringUnions": [
+    {
+      "name": "OrihaBuiltinLocale",
+      "values": [
+        "en",
+        "es",
+        "fr",
+        "ja",
+        "ko",
+        "zh-Hans",
+        "zh-Hant"
+      ]
+    },
+    {
+      "name": "RenderPatchOperationKind",
+      "values": [
+        "replaceAll",
+        "replaceBlocks"
+      ]
+    }
+  ],
+  "records": [
+    {
+      "name": "FontFamilySpec",
+      "fields": [
+        {
+          "name": "family",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "fallbacks",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "primitive",
+              "name": "string"
+            }
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "BridgeOption",
+      "fields": [
+        {
+          "name": "id",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "label",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "description",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "family",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "recommended",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "BridgeFontOption",
+      "fields": [
+        {
+          "name": "id",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "label",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "description",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "family",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "recommended",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": true
+        },
+        {
+          "name": "fontFamily",
+          "typeRef": {
+            "kind": "nullable",
+            "item": {
+              "kind": "named",
+              "name": "FontFamilySpec"
+            }
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "BridgeRenderInput",
+      "fields": [
+        {
+          "name": "markdown",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "locale",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "plan",
+          "typeRef": {
+            "kind": "named",
+            "name": "Plan"
+          },
+          "optional": false
+        },
+        {
+          "name": "renderingOptions",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeRenderingOptions"
+          },
+          "optional": false
+        },
+        {
+          "name": "print",
+          "typeRef": {
+            "kind": "named",
+            "name": "PrintOptions"
+          },
+          "optional": true
+        },
+        {
+          "name": "renderMode",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderMode"
+          },
+          "optional": false
+        },
+        {
+          "name": "watermark",
+          "typeRef": {
+            "kind": "named",
+            "name": "WatermarkOptions"
+          },
+          "optional": true
+        },
+        {
+          "name": "sourceAttributes",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "tableOfContents",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "typeRef": {
+            "kind": "named",
+            "name": "Viewport"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "BridgeSettingsInput",
+      "fields": [
+        {
+          "name": "locale",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "plan",
+          "typeRef": {
+            "kind": "named",
+            "name": "Plan"
+          },
+          "optional": false
+        },
+        {
+          "name": "renderingOptions",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeRenderingOptions"
+          },
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderMode"
+          },
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "typeRef": {
+            "kind": "named",
+            "name": "Viewport"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "BridgeRenderingOptions",
+      "fields": [
+        {
+          "name": "colorScheme",
+          "typeRef": {
+            "kind": "named",
+            "name": "ColorScheme"
+          },
+          "optional": false
+        },
+        {
+          "name": "appearanceStyle",
+          "typeRef": {
+            "kind": "named",
+            "name": "AppearanceStyle"
+          },
+          "optional": false
+        },
+        {
+          "name": "syntaxTheme",
+          "typeRef": {
+            "kind": "named",
+            "name": "SyntaxTheme"
+          },
+          "optional": false
+        },
+        {
+          "name": "customSyntaxTheme",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "headingFont",
+          "typeRef": {
+            "kind": "named",
+            "name": "HeadingFont"
+          },
+          "optional": false
+        },
+        {
+          "name": "customHeadingFont",
+          "typeRef": {
+            "kind": "named",
+            "name": "FontFamilySpec"
+          },
+          "optional": true
+        },
+        {
+          "name": "bodyFont",
+          "typeRef": {
+            "kind": "named",
+            "name": "BodyFont"
+          },
+          "optional": false
+        },
+        {
+          "name": "customBodyFont",
+          "typeRef": {
+            "kind": "named",
+            "name": "FontFamilySpec"
+          },
+          "optional": true
+        },
+        {
+          "name": "bodyFontSizePx",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "codeFont",
+          "typeRef": {
+            "kind": "named",
+            "name": "CodeFont"
+          },
+          "optional": false
+        },
+        {
+          "name": "customCodeFont",
+          "typeRef": {
+            "kind": "named",
+            "name": "FontFamilySpec"
+          },
+          "optional": true
+        },
+        {
+          "name": "tableBorderStyle",
+          "typeRef": {
+            "kind": "named",
+            "name": "TableBorderStyle"
+          },
+          "optional": false
+        },
+        {
+          "name": "roundedCorners",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "shadows",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "fullTableData",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "blockBorders",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "BridgeEffectiveSettingsInput",
+      "fields": [
+        {
+          "name": "locale",
+          "typeRef": {
+            "kind": "named",
+            "name": "OrihaBuiltinLocale"
+          },
+          "optional": false
+        },
+        {
+          "name": "plan",
+          "typeRef": {
+            "kind": "named",
+            "name": "Plan"
+          },
+          "optional": false
+        },
+        {
+          "name": "renderingOptions",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeRenderingOptions"
+          },
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderMode"
+          },
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "typeRef": {
+            "kind": "named",
+            "name": "Viewport"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "BridgeControlAvailability",
+      "fields": [
+        {
+          "name": "enabled",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "reason",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "BridgeSettingsControls",
+      "fields": [
+        {
+          "name": "plan",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeControlAvailability"
+          },
+          "optional": false
+        },
+        {
+          "name": "colorScheme",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeControlAvailability"
+          },
+          "optional": false
+        },
+        {
+          "name": "syntaxTheme",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeControlAvailability"
+          },
+          "optional": false
+        },
+        {
+          "name": "headingFont",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeControlAvailability"
+          },
+          "optional": false
+        },
+        {
+          "name": "bodyFont",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeControlAvailability"
+          },
+          "optional": false
+        },
+        {
+          "name": "codeFont",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeControlAvailability"
+          },
+          "optional": false
+        },
+        {
+          "name": "tableBorderStyle",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeControlAvailability"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "BridgeAvailableOptions",
+      "fields": [
+        {
+          "name": "plan",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "BridgeOption"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "colorScheme",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "BridgeOption"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "syntaxTheme",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "BridgeOption"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "headingFont",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "BridgeFontOption"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "bodyFont",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "BridgeFontOption"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "codeFont",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "BridgeFontOption"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "tableBorderStyle",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "BridgeOption"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "locale",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "BridgeOption"
+            }
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "BridgeResolvedSettings",
+      "fields": [
+        {
+          "name": "resolvedLocale",
+          "typeRef": {
+            "kind": "named",
+            "name": "OrihaBuiltinLocale"
+          },
+          "optional": false
+        },
+        {
+          "name": "effectiveInput",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeEffectiveSettingsInput"
+          },
+          "optional": false
+        },
+        {
+          "name": "controls",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeSettingsControls"
+          },
+          "optional": false
+        },
+        {
+          "name": "availableOptions",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeAvailableOptions"
+          },
+          "optional": false
+        },
+        {
+          "name": "features",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "BridgeFeature"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "diagnostics",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "RenderDiagnostic"
+            }
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "PrintOptions",
+      "fields": [
+        {
+          "name": "pageSize",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "margin",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "WatermarkOptions",
+      "fields": [
+        {
+          "name": "text",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "imageSrc",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "opacity",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "RenderOptions",
+      "fields": [
+        {
+          "name": "watermark",
+          "typeRef": {
+            "kind": "named",
+            "name": "WatermarkOptions"
+          },
+          "optional": true
+        },
+        {
+          "name": "sourceAttributes",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": true
+        },
+        {
+          "name": "tableOfContents",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "ExportOptions",
+      "fields": [
+        {
+          "name": "watermark",
+          "typeRef": {
+            "kind": "named",
+            "name": "WatermarkOptions"
+          },
+          "optional": true
+        },
+        {
+          "name": "sourceAttributes",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": true
+        },
+        {
+          "name": "tableOfContents",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": true
+        },
+        {
+          "name": "print",
+          "typeRef": {
+            "kind": "named",
+            "name": "PrintOptions"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "HtmlExportOptions",
+      "fields": [
+        {
+          "name": "minify",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": true
+        },
+        {
+          "name": "obfuscate",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": true
+        },
+        {
+          "name": "preserveHeadingAnchors",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": true
+        },
+        {
+          "name": "stripOrihaDataAttributes",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "ExportHtmlInput",
+      "fields": [
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeRenderInput"
+          },
+          "optional": false
+        },
+        {
+          "name": "options",
+          "typeRef": {
+            "kind": "named",
+            "name": "HtmlExportOptions"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "Viewport",
+      "fields": [
+        {
+          "name": "width",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "RenderOutput",
+      "fields": [
+        {
+          "name": "html",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "css",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "stats",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderStats"
+          },
+          "optional": false
+        },
+        {
+          "name": "diagnostics",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "RenderDiagnostic"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "assets",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "RenderAsset"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "sourceMap",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "RenderedBlock"
+            }
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "ExportHtmlOutput",
+      "fields": [
+        {
+          "name": "html",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "stats",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderStats"
+          },
+          "optional": false
+        },
+        {
+          "name": "diagnostics",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "RenderDiagnostic"
+            }
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "RenderPatchOutput",
+      "fields": [
+        {
+          "name": "output",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderOutput"
+          },
+          "optional": false
+        },
+        {
+          "name": "snapshot",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderSnapshot"
+          },
+          "optional": false
+        },
+        {
+          "name": "strategy",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderPatchStrategy"
+          },
+          "optional": false
+        },
+        {
+          "name": "fallbackReason",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderPatchFallbackReason"
+          },
+          "optional": true
+        },
+        {
+          "name": "patches",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "RenderPatchOperation"
+            }
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "RenderPatchOperation",
+      "fields": [
+        {
+          "name": "op",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderPatchOperationKind"
+          },
+          "optional": false
+        },
+        {
+          "name": "html",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "removeStableIds",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "primitive",
+              "name": "string"
+            }
+          },
+          "optional": true
+        },
+        {
+          "name": "insertAfterStableId",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "insertBeforeStableId",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "RenderSnapshot",
+      "fields": [
+        {
+          "name": "schemaVersion",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "settingsFingerprint",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "nextStableIndex",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "blocks",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "RenderSnapshotBlock"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "tailHash",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "tailHtmlByteLength",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "outputResourceFingerprint",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "RenderSnapshotBlock",
+      "fields": [
+        {
+          "name": "stableId",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "kind",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "sourceHash",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "htmlHash",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "sourceRange",
+          "typeRef": {
+            "kind": "named",
+            "name": "SourceRange"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "RenderStats",
+      "fields": [
+        {
+          "name": "schemaVersion",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "totalBlocks",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "blocksByKind",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "KindCount"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "headingsByLevel",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "KindCount"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "codeBlocksByLanguageKind",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "KindCount"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "calloutsByKind",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "KindCount"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "lockedFeaturesByKind",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "KindCount"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "unsupportedByKind",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "KindCount"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "issuesByKind",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "KindCount"
+            }
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "KindCount",
+      "fields": [
+        {
+          "name": "kind",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "count",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsOutboxConfig",
+      "fields": [
+        {
+          "name": "ingestUrl",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "apiKey",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "requestTimeoutMs",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "maxQueuedEvents",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "retentionMs",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsRenderPayloadInput",
+      "fields": [
+        {
+          "name": "platform",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "appVersion",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "buildVersion",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "locale",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "subscriptionPlan",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "stats",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderStats"
+          },
+          "optional": false
+        },
+        {
+          "name": "eventId",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsStoredEnvelope",
+      "fields": [
+        {
+          "name": "id",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "envelopeJson",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "SendHttpContext",
+      "fields": [
+        {
+          "name": "url",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "method",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "timeoutMs",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "headers",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "HttpHeader"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "body",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "HttpHeader",
+      "fields": [
+        {
+          "name": "name",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "value",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsOutboxStartInput",
+      "fields": [
+        {
+          "name": "config",
+          "typeRef": {
+            "kind": "named",
+            "name": "UsageAnalyticsOutboxConfig"
+          },
+          "optional": false
+        },
+        {
+          "name": "isDeliveryEnabled",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "deliveryGeneration",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsOutboxEnqueueStartInput",
+      "fields": [
+        {
+          "name": "config",
+          "typeRef": {
+            "kind": "named",
+            "name": "UsageAnalyticsOutboxConfig"
+          },
+          "optional": false
+        },
+        {
+          "name": "renderPayload",
+          "typeRef": {
+            "kind": "named",
+            "name": "UsageAnalyticsRenderPayloadInput"
+          },
+          "optional": false
+        },
+        {
+          "name": "isDeliveryEnabled",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "deliveryGeneration",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsOutboxDeliveryStateInput",
+      "fields": [
+        {
+          "name": "isDeliveryEnabled",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "deliveryGeneration",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsOutboxResumeInput",
+      "fields": [
+        {
+          "name": "stepToken",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "results",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "UsageAnalyticsOutboxCommandResult"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "isDeliveryEnabled",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "deliveryGeneration",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsOutboxStep",
+      "fields": [
+        {
+          "name": "stepToken",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "commands",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "UsageAnalyticsOutboxCommand"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "nextDrainDelayMs",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "isComplete",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsOutboxCommand",
+      "fields": [
+        {
+          "name": "id",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "kind",
+          "typeRef": {
+            "kind": "named",
+            "name": "UsageAnalyticsOutboxCommandKind"
+          },
+          "optional": false
+        },
+        {
+          "name": "envelopeId",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "envelopeJson",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "httpContext",
+          "typeRef": {
+            "kind": "named",
+            "name": "SendHttpContext"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "UsageAnalyticsOutboxCommandResult",
+      "fields": [
+        {
+          "name": "commandId",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "succeeded",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "boolean"
+          },
+          "optional": false
+        },
+        {
+          "name": "storedEnvelopes",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "UsageAnalyticsStoredEnvelope"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "statusCode",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "RenderDiagnostic",
+      "fields": [
+        {
+          "name": "severity",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderDiagnosticSeverity"
+          },
+          "optional": false
+        },
+        {
+          "name": "code",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "message",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "sourceRange",
+          "typeRef": {
+            "kind": "named",
+            "name": "SourceRange"
+          },
+          "optional": true
+        },
+        {
+          "name": "blockId",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "engine",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderDiagnosticEngine"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "SourceRange",
+      "fields": [
+        {
+          "name": "startLine",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "startColumn",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "endLine",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "endColumn",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "RenderAsset",
+      "fields": [
+        {
+          "name": "id",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "kind",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderAssetKind"
+          },
+          "optional": false
+        },
+        {
+          "name": "mimeType",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "content",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "RenderedBlock",
+      "fields": [
+        {
+          "name": "id",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "kind",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "sourceRange",
+          "typeRef": {
+            "kind": "named",
+            "name": "SourceRange"
+          },
+          "optional": false
+        },
+        {
+          "name": "metadata",
+          "typeRef": {
+            "kind": "map",
+            "name": "string",
+            "item": {
+              "kind": "primitive",
+              "name": "string"
+            }
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "TextMeasurementStyle",
+      "fields": [
+        {
+          "name": "fontFamily",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "fontSize",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "fontWeight",
+          "typeRef": {
+            "kind": "union",
+            "items": [
+              {
+                "kind": "primitive",
+                "name": "string"
+              },
+              {
+                "kind": "primitive",
+                "name": "number"
+              }
+            ]
+          },
+          "optional": true
+        },
+        {
+          "name": "fontStyle",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "lineHeight",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "letterSpacing",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "textTransform",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "textDecorationLine",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "color",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "width",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "maxWidth",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        }
+      ],
+      "indexSignature": {
+        "keyName": "key",
+        "keyType": "string",
+        "valueType": {
+          "kind": "union",
+          "items": [
+            {
+              "kind": "primitive",
+              "name": "string"
+            },
+            {
+              "kind": "primitive",
+              "name": "number"
+            },
+            {
+              "kind": "undefined"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "TextMeasurementRun",
+      "fields": [
+        {
+          "name": "id",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "text",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "style",
+          "typeRef": {
+            "kind": "named",
+            "name": "TextMeasurementStyle"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "TextMeasurementRequest",
+      "fields": [
+        {
+          "name": "id",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "engine",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "kind",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "text",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "style",
+          "typeRef": {
+            "kind": "named",
+            "name": "TextMeasurementStyle"
+          },
+          "optional": true
+        },
+        {
+          "name": "fontFamily",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "fontSize",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "fontWeight",
+          "typeRef": {
+            "kind": "union",
+            "items": [
+              {
+                "kind": "primitive",
+                "name": "string"
+              },
+              {
+                "kind": "primitive",
+                "name": "number"
+              }
+            ]
+          },
+          "optional": true
+        },
+        {
+          "name": "fontStyle",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "runs",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "TextMeasurementRun"
+            }
+          },
+          "optional": true
+        },
+        {
+          "name": "width",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "maxWidth",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "wrapMode",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "TextMeasurementBatch",
+      "fields": [
+        {
+          "name": "requests",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "TextMeasurementRequest"
+            }
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "TextMeasurementRect",
+      "fields": [
+        {
+          "name": "x",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "y",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "width",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "height",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "TextMeasurementRunResult",
+      "fields": [
+        {
+          "name": "id",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": true
+        },
+        {
+          "name": "index",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "width",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "height",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "rects",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "TextMeasurementRect"
+            }
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "TextMeasurementResult",
+      "fields": [
+        {
+          "name": "id",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "width",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "height",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "lineCount",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "left",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "right",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "rawWidth",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": true
+        },
+        {
+          "name": "runs",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "TextMeasurementRunResult"
+            }
+          },
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "NativeBridgeVersionInfo",
+      "fields": [
+        {
+          "name": "version",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        },
+        {
+          "name": "gitShortHash",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "string"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "PreparedMarkdownLayout",
+      "fields": [
+        {
+          "name": "version",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeRenderInput"
+          },
+          "optional": false
+        },
+        {
+          "name": "textMeasurements",
+          "typeRef": {
+            "kind": "named",
+            "name": "TextMeasurementBatch"
+          },
+          "optional": false
+        },
+        {
+          "name": "policyDiagnostics",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "RenderDiagnostic"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "policyStats",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderStats"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "PreparedMarkdownPatch",
+      "fields": [
+        {
+          "name": "version",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "previousSnapshot",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderSnapshot"
+          },
+          "optional": true
+        },
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeRenderInput"
+          },
+          "optional": false
+        },
+        {
+          "name": "textMeasurements",
+          "typeRef": {
+            "kind": "named",
+            "name": "TextMeasurementBatch"
+          },
+          "optional": false
+        },
+        {
+          "name": "policyDiagnostics",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "RenderDiagnostic"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "policyStats",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderStats"
+          },
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "PreparedHtmlExport",
+      "fields": [
+        {
+          "name": "version",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          },
+          "optional": false
+        },
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeRenderInput"
+          },
+          "optional": false
+        },
+        {
+          "name": "options",
+          "typeRef": {
+            "kind": "named",
+            "name": "HtmlExportOptions"
+          },
+          "optional": false
+        },
+        {
+          "name": "textMeasurements",
+          "typeRef": {
+            "kind": "named",
+            "name": "TextMeasurementBatch"
+          },
+          "optional": false
+        },
+        {
+          "name": "policyDiagnostics",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "RenderDiagnostic"
+            }
+          },
+          "optional": false
+        },
+        {
+          "name": "policyStats",
+          "typeRef": {
+            "kind": "named",
+            "name": "RenderStats"
+          },
+          "optional": false
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "nativeBridgeVersionInfo",
+      "params": [],
+      "returns": {
+        "kind": "named",
+        "name": "NativeBridgeVersionInfo"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "prepareMarkdownLayout",
+      "params": [
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeRenderInput"
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "PreparedMarkdownLayout"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "prepareMarkdownPatch",
+      "params": [
+        {
+          "name": "previousSnapshot",
+          "typeRef": {
+            "kind": "nullable",
+            "item": {
+              "kind": "named",
+              "name": "RenderSnapshot"
+            }
+          }
+        },
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeRenderInput"
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "PreparedMarkdownPatch"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "prepareHtmlExport",
+      "params": [
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeRenderInput"
+          }
+        },
+        {
+          "name": "options",
+          "typeRef": {
+            "kind": "union",
+            "items": [
+              {
+                "kind": "named",
+                "name": "HtmlExportOptions"
+              },
+              {
+                "kind": "undefined"
+              }
+            ]
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "PreparedHtmlExport"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "resolveRenderSettings",
+      "params": [
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "BridgeSettingsInput"
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "BridgeResolvedSettings"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "renderPreparedMarkdown",
+      "params": [
+        {
+          "name": "layout",
+          "typeRef": {
+            "kind": "named",
+            "name": "PreparedMarkdownLayout"
+          }
+        },
+        {
+          "name": "measureResults",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "TextMeasurementResult"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "RenderOutput"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "renderPreparedMarkdownPatch",
+      "params": [
+        {
+          "name": "preparedPatch",
+          "typeRef": {
+            "kind": "named",
+            "name": "PreparedMarkdownPatch"
+          }
+        },
+        {
+          "name": "measureResults",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "TextMeasurementResult"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "RenderPatchOutput"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "renderPreparedHtmlExport",
+      "params": [
+        {
+          "name": "preparedExport",
+          "typeRef": {
+            "kind": "named",
+            "name": "PreparedHtmlExport"
+          }
+        },
+        {
+          "name": "measureResults",
+          "typeRef": {
+            "kind": "array",
+            "item": {
+              "kind": "named",
+              "name": "TextMeasurementResult"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "ExportHtmlOutput"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "usageAnalyticsOutboxStartEnqueue",
+      "params": [
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "UsageAnalyticsOutboxEnqueueStartInput"
+          }
+        },
+        {
+          "name": "nowMs",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "UsageAnalyticsOutboxStep"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "usageAnalyticsOutboxStartDrain",
+      "params": [
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "UsageAnalyticsOutboxStartInput"
+          }
+        },
+        {
+          "name": "nowMs",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "UsageAnalyticsOutboxStep"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "usageAnalyticsOutboxStartDeliveryStateChange",
+      "params": [
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "UsageAnalyticsOutboxDeliveryStateInput"
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "UsageAnalyticsOutboxStep"
+      },
+      "asyncResult": true
+    },
+    {
+      "name": "usageAnalyticsOutboxResume",
+      "params": [
+        {
+          "name": "input",
+          "typeRef": {
+            "kind": "named",
+            "name": "UsageAnalyticsOutboxResumeInput"
+          }
+        },
+        {
+          "name": "nowMs",
+          "typeRef": {
+            "kind": "primitive",
+            "name": "number"
+          }
+        }
+      ],
+      "returns": {
+        "kind": "named",
+        "name": "UsageAnalyticsOutboxStep"
+      },
+      "asyncResult": true
+    }
+  ],
+  "catalogs": []
+}

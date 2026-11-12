@@ -1,0 +1,166 @@
+name: Swift Binding Assets
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to upload assets to, for example v0.1.0"
+        required: true
+        type: string
+      create_release:
+        description: "Create the GitHub release if it does not exist"
+        required: false
+        default: true
+        type: boolean
+  release:
+    types:
+      - published
+
+permissions:
+  contents: write
+
+concurrency:
+  group: swift-binding-assets-${{ github.event_name == 'release' && github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build macOS Swift binding assets
+    runs-on: warp-macos-26-arm64-6x
+    env:
+      RELEASE_TAG: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.tag }}
+      RUSTUP_TOOLCHAIN: 1.95.0
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ env.RELEASE_TAG }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: packages/expo-oriha/package-lock.json
+
+      - name: Install npm dependencies
+        run: npm ci --ignore-scripts
+        working-directory: packages/expo-oriha
+
+      - name: Install Rust targets
+        run: |
+          rustup toolchain install 1.95.0 --profile minimal
+          rustup target add --toolchain 1.95.0 aarch64-apple-darwin x86_64-apple-darwin
+
+      - name: Prepare pinned engine and host library
+        run: |
+          make setup
+          cargo fetch --locked
+          make build ARTIFACT=native-bridge
+
+      - name: Generate UniFFI bindings
+        run: node scripts/generate-uniffi-bindings.mjs
+        working-directory: packages/expo-oriha
+
+      - name: Build macOS XCFramework
+        run: node scripts/build-rust-macos.mjs
+        working-directory: packages/expo-oriha
+        env:
+          MACOS_RUST_TARGETS: aarch64-apple-darwin x86_64-apple-darwin
+
+      - name: Package Swift binding assets
+        id: package
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
+          VERSION="${RELEASE_TAG#v}"
+          SOURCE_SHA="$(git rev-parse HEAD)"
+          SHORT_SHA="$(git rev-parse --short=12 HEAD)"
+          PACKAGE_DIR="target/swift-binding-assets/OrihaNativeBridge-${VERSION}"
+          ZIP_PATH="target/swift-binding-assets/OrihaNativeBridge-${VERSION}-macos.zip"
+          CHECKSUM_PATH="${ZIP_PATH}.sha256"
+
+          rm -rf target/swift-binding-assets
+          mkdir -p "${PACKAGE_DIR}/generated"
+
+          cp -R \
+            packages/expo-oriha/macos/native/OrihaNativeBridge.xcframework \
+            "${PACKAGE_DIR}/OrihaNativeBridge.xcframework"
+          cp \
+            packages/expo-oriha/macos/generated/oriha_native_bridge.swift \
+            packages/expo-oriha/macos/generated/oriha_native_bridgeFFI.h \
+            packages/expo-oriha/macos/generated/oriha_native_bridgeFFI.modulemap \
+            packages/expo-oriha/macos/generated/module.modulemap \
+            "${PACKAGE_DIR}/generated/"
+
+          for target in aarch64-apple-darwin x86_64-apple-darwin; do
+            record=".craftguild/native-outputs/oriha-native-bridge/${target}"
+            sh tools/artifacts.sh verify --library native-bridge --target "$target" --record "$record/prepared.json"
+            mkdir -p "${PACKAGE_DIR}/sbom/${target}"
+            cp "$record/bom.json" "$record/artifacts.json" "${PACKAGE_DIR}/sbom/${target}/"
+          done
+          NATIVE_LIBRARY="$(find "${PACKAGE_DIR}/OrihaNativeBridge.xcframework" -type f -name liboriha_native_bridge.a)"
+          NATIVE_SHA="$(shasum -a 256 "$NATIVE_LIBRARY" | awk '{print $1}')"
+
+          cat > "${PACKAGE_DIR}/manifest.json" <<EOF
+          {
+            "name": "OrihaNativeBridge",
+            "version": "${VERSION}",
+            "tag": "${RELEASE_TAG}",
+            "gitSha": "${SOURCE_SHA}",
+            "gitShortSha": "${SHORT_SHA}",
+            "platform": "macos",
+            "nativeArchiveSha256": "${NATIVE_SHA}",
+            "targetSbomDirectory": "sbom",
+            "artifacts": {
+              "xcframework": "OrihaNativeBridge.xcframework",
+              "swiftBinding": "generated/oriha_native_bridge.swift"
+            }
+          }
+          EOF
+
+          ditto -c -k --keepParent "${PACKAGE_DIR}" "${ZIP_PATH}"
+          shasum -a 256 "${ZIP_PATH}" > "${CHECKSUM_PATH}"
+
+          {
+            echo "release_tag=${RELEASE_TAG}"
+            echo "source_sha=${SOURCE_SHA}"
+            echo "asset_name=$(basename "${ZIP_PATH}")"
+            echo "asset_path=${ZIP_PATH}"
+            echo "checksum_asset_name=$(basename "${CHECKSUM_PATH}")"
+            echo "checksum_asset_path=${CHECKSUM_PATH}"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.package.outputs.asset_name }}
+          path: |
+            ${{ steps.package.outputs.asset_path }}
+            ${{ steps.package.outputs.checksum_asset_path }}
+          if-no-files-found: error
+
+      - name: Create GitHub release
+        if: github.event_name == 'workflow_dispatch' && inputs.create_release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ steps.package.outputs.source_sha }}
+        run: |
+          gh release view "${{ steps.package.outputs.release_tag }}" >/dev/null 2>&1 || \
+            gh release create "${{ steps.package.outputs.release_tag }}" \
+              --target "${SOURCE_SHA}" \
+              --title "${{ steps.package.outputs.release_tag }}" \
+              --notes "Swift binding assets for ${{ steps.package.outputs.release_tag }}"
+
+      - name: Upload GitHub release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "${{ steps.package.outputs.release_tag }}" \
+            "${{ steps.package.outputs.asset_path }}" \
+            "${{ steps.package.outputs.checksum_asset_path }}" \
+            --clobber

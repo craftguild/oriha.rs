@@ -1,0 +1,118 @@
+---
+import "../styles/global.css";
+import registry from "../../registry.config.json";
+import type { FontRegistryConfig } from "../registry-types";
+
+type FontKind = "heading" | "body" | "code";
+
+const kinds: FontKind[] = ["heading", "body", "code"];
+const fontRegistry = registry as FontRegistryConfig;
+const fonts = [...fontRegistry.fonts].sort((a, b) => a.label.localeCompare(b.label));
+const byKind = new Map(
+  kinds.map((kind) => [kind, fonts.filter((font) => font.kinds.includes(kind))]),
+);
+const totalKindAssignments = fonts.reduce((count, font) => count + font.kinds.length, 0);
+const stats = [
+  ["Fonts", fonts.length],
+  ["Kind Links", totalKindAssignments],
+  ["Heading", byKind.get("heading")?.length ?? 0],
+  ["Body", byKind.get("body")?.length ?? 0],
+  ["Code", byKind.get("code")?.length ?? 0],
+] as const;
+---
+
+<html lang="en" class="bg-stone-50 text-slate-900">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Oriha installable font registry."
+    />
+    <title>Font Registry</title>
+  </head>
+  <body class="min-h-screen">
+    <main class="mx-auto flex w-full max-w-6xl flex-col gap-10 px-5 py-10 sm:px-8 lg:py-14">
+      <header>
+        <p class="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+          Oriha
+        </p>
+        <h1 class="text-4xl font-bold tracking-normal text-slate-900 sm:text-5xl">
+          Font Registry
+        </h1>
+        <p class="mt-5 text-pretty text-base leading-7 text-stone-600">
+          Installable font packs available for explicit local download. Runtime preview and render
+          flows should use installed local files only.
+        </p>
+      </header>
+
+      <section class="rounded-lg bg-white shadow-sm">
+        <dl class="grid grid-cols-3 gap-x-6 gap-y-5 p-5 sm:flex sm:flex-wrap sm:gap-x-10">
+          {
+            stats.map(([label, value]) => (
+              <div class="sm:min-w-0 sm:flex-1 sm:basis-0">
+                <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">
+                  {label}
+                </dt>
+                <dd class="mt-1 text-3xl font-semibold text-slate-900">{value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="border-t border-stone-100 px-5 py-4">
+          <dl>
+            <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">
+              Index
+            </dt>
+            <dd class="mt-2 font-mono text-sm text-stone-700">
+              <a class="underline decoration-stone-300 underline-offset-4 hover:text-emerald-700" href="/index.json">
+                /index.json
+              </a>
+            </dd>
+          </dl>
+        </div>
+      </section>
+
+      <section class="overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
+        <div class="overflow-x-auto">
+          <div class="min-w-[720px]">
+            <div class="grid grid-cols-[25%_25%_50%] border-b border-stone-200 bg-stone-100 text-xs font-semibold uppercase tracking-[0.14em] text-stone-600">
+              <div class="px-4 py-3">Font</div>
+              <div class="px-4 py-3">Kinds</div>
+              <div class="px-4 py-3">Google Fonts Source</div>
+            </div>
+            <div class="divide-y divide-stone-100">
+              {
+                fonts.map((font) => (
+                  <div class="grid grid-cols-[25%_25%_50%] items-center text-sm">
+                    <div class="px-4 py-3">
+                      <div class="font-medium text-slate-900">{font.label}</div>
+                      <code class="mt-1 block text-xs text-stone-500">{font.id}</code>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 px-4 py-3">
+                      {font.kinds.map((kind) => (
+                        <span class="rounded-full bg-stone-100 px-2.5 py-1 text-xs font-medium text-stone-700">
+                          {kind}
+                        </span>
+                      ))}
+                    </div>
+                    <div class="overflow-hidden px-4 py-3">
+                      <a
+                        class="block truncate font-mono text-xs text-emerald-800 underline decoration-emerald-200 underline-offset-4"
+                        href={font.source.specimenUrl}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {font.source.specimenUrl}
+                      </a>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

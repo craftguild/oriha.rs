@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "packages": [
+    {
+      "name": "piccolore",
+      "version": "0.1.3",
+      "license": "ISC",
+      "file": "licenses/piccolore-0.1.3-ISC.txt",
+      "sha256": "6582629e2979466878f6014313dcc2f3756c9616148682227ce3063dde310750",
+      "source": "https://raw.githubusercontent.com/alexeyraspopov/picocolors/7249f8c5d4825550f70bc1ea98652639933d3bbd/LICENSE",
+      "evidence": "piccolore 0.1.3 declares ISC and identifies itself as a temporary fork of picocolors in its published README. It omits a separate license file. Retain the original upstream copyright/permission text and the fork metadata together."
+    }
+  ]
+}

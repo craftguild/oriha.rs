@@ -1,0 +1,182 @@
+[
+  {
+    "name": "fenced note default title",
+    "markdown": ":::note\nBody\n:::\n",
+    "html_contains": [
+      "data-oriha-block-kind=\"callout\"",
+      "data-oriha-callout-kind=\"note\"",
+      "<div class=\"oriha-callout__title\"><span class=\"oriha-callout__icon\"",
+      "<span class=\"oriha-callout__title-text\">Note</span>",
+      ">Body</p>"
+    ],
+    "html_not_contains": [],
+    "callout_counts": { "note": 1 }
+  },
+  {
+    "name": "fenced unknown kind stays generic",
+    "markdown": ":::custom-kind\nBody\n:::\n",
+    "html_contains": [
+      "class=\"oriha-callout\"",
+      "data-oriha-callout-kind=\"custom-kind\"",
+      "<div class=\"oriha-callout__title\"><span class=\"oriha-callout__title-text\">Custom-kind</span></div>"
+    ],
+    "html_not_contains": [
+      "oriha-callout--custom-kind",
+      "oriha-callout__icon"
+    ],
+    "callout_counts": { "other": 1 }
+  },
+  {
+    "name": "mdn note default title",
+    "markdown": "> [!NOTE]\n> Body\n",
+    "html_contains": [
+      "data-oriha-block-kind=\"callout\"",
+      "data-oriha-callout-kind=\"note\"",
+      "<div class=\"oriha-callout__title\"><span class=\"oriha-callout__icon\"",
+      "<span class=\"oriha-callout__title-text\">Note</span>",
+      ">Body</p>"
+    ],
+    "html_not_contains": [],
+    "callout_counts": { "note": 1 }
+  },
+  {
+    "name": "mdn title after marker",
+    "markdown": "> [!NOTE] Custom title\n> Body\n",
+    "html_contains": [
+      "data-oriha-callout-kind=\"note\"",
+      "<div class=\"oriha-callout__title\"><span class=\"oriha-callout__icon\"",
+      "<span class=\"oriha-callout__title-text\">Custom title</span>",
+      ">Body</p>"
+    ],
+    "html_not_contains": [],
+    "callout_counts": { "note": 1 }
+  },
+  {
+    "name": "mdn title after colon",
+    "markdown": "> [!NOTE]: Custom title\n> Body\n",
+    "html_contains": [
+      "data-oriha-callout-kind=\"note\"",
+      "<div class=\"oriha-callout__title\"><span class=\"oriha-callout__icon\"",
+      "<span class=\"oriha-callout__title-text\">Custom title</span>",
+      ">Body</p>"
+    ],
+    "html_not_contains": [],
+    "callout_counts": { "note": 1 }
+  },
+  {
+    "name": "callout body has multiple paragraphs",
+    "markdown": ":::note\nFirst paragraph.\n\nSecond paragraph.\n:::\n",
+    "html_contains": [
+      "data-oriha-callout-kind=\"note\"",
+      ">First paragraph.</p>",
+      ">Second paragraph.</p>"
+    ],
+    "html_not_contains": [],
+    "callout_counts": { "note": 1 }
+  },
+  {
+    "name": "callout body has inline formatting",
+    "markdown": ":::note\nBody with *emphasis*, **strong**, ~~strike~~, and [link](https://example.com).\n:::\n",
+    "html_contains": [
+      "<em>emphasis</em>",
+      "<strong>strong</strong>",
+      "<del>strike</del>",
+      "<a href=\"https://example.com\">link</a>"
+    ],
+    "html_not_contains": [],
+    "callout_counts": { "note": 1 }
+  },
+  {
+    "name": "fenced callout body has nested blocks",
+    "markdown": ":::note\n- fenced item\n\n```rust\nlet fenced_value = 41;\n```\n\n| Label | Value |\n| ----- | ----- |\n| fenced | table cell |\n:::\n",
+    "html_contains": [
+      "data-oriha-callout-kind=\"note\"",
+      "fenced item",
+      "data-oriha-block-kind=\"codeBlock\"",
+      "let fenced_value = 41;",
+      "class=\"oriha-table-scroll-wrapper\"",
+      "<table class=\"oriha-table\">",
+      "<th>Label</th>",
+      "<th>Value</th>",
+      "<td>fenced</td>",
+      "<td>table cell</td>"
+    ],
+    "html_not_contains": [],
+    "callout_counts": { "note": 1 }
+  },
+  {
+    "name": "mdn callout body has nested blocks",
+    "markdown": "> [!NOTE]\n> - mdn item\n>\n> ```rust\n> let mdn_value = 42;\n> ```\n>\n> | Label | Value |\n> | ----- | ----- |\n> | mdn | table cell |\n",
+    "html_contains": [
+      "data-oriha-callout-kind=\"note\"",
+      "mdn item",
+      "data-oriha-block-kind=\"codeBlock\"",
+      "let mdn_value = 42;",
+      "class=\"oriha-table-scroll-wrapper\"",
+      "<table class=\"oriha-table\">",
+      "<th>Label</th>",
+      "<th>Value</th>",
+      "<td>mdn</td>",
+      "<td>table cell</td>"
+    ],
+    "html_not_contains": [],
+    "callout_counts": { "note": 1 }
+  },
+  {
+    "name": "unsupported mdn marker remains blockquote",
+    "markdown": "> [!FOO]\n> Body\n",
+    "html_contains": [
+      "data-oriha-block-kind=\"blockQuote\"",
+      "[!FOO]",
+      "Body"
+    ],
+    "html_not_contains": [
+      "data-oriha-block-kind=\"callout\""
+    ],
+    "callout_counts": {}
+  },
+  {
+    "name": "callouts disabled preserves source shape",
+    "markdown": "> [!NOTE]\n> Body\n",
+    "callouts_enabled": false,
+    "html_contains": [
+      "data-oriha-block-kind=\"blockQuote\"",
+      "[!NOTE]",
+      "Body"
+    ],
+    "html_not_contains": [
+      "data-oriha-block-kind=\"callout\""
+    ],
+    "callout_counts": {}
+  },
+  {
+    "name": "mdn quoted callout may nest another mdn callout",
+    "markdown": "> [!NOTE] Outer\n> Outer body.\n> > [!WARNING] Inner\n> > Inner body.\n",
+    "html_contains": [
+      "data-oriha-callout-kind=\"note\"",
+      "<span class=\"oriha-callout__title-text\">Outer</span>",
+      "Outer body.",
+      "data-oriha-callout-kind=\"warning\"",
+      "<span class=\"oriha-callout__title-text\">Inner</span>",
+      "Inner body."
+    ],
+    "html_not_contains": [],
+    "callout_counts": { "note": 1, "warning": 1 }
+  },
+  {
+    "name": "fenced callouts with same fence cannot nest",
+    "markdown": ":::note Outer\nOuter body.\n:::warning Inner\nInner body.\n:::\n:::\n",
+    "html_contains": [
+      "data-oriha-callout-kind=\"note\"",
+      "<span class=\"oriha-callout__title-text\">Outer</span>",
+      "Outer body.",
+      ":::warning Inner",
+      "Inner body.",
+      "<p"
+    ],
+    "html_not_contains": [
+      "data-oriha-callout-kind=\"warning\""
+    ],
+    "callout_counts": { "note": 1 }
+  }
+]

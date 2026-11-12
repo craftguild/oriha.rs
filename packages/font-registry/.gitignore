@@ -1,0 +1,10 @@
+/dist/
+/generated/
+/.astro/
+/.vercel/
+/.tmp/
+/.craftguild/
+/node_modules/
+/public/index.json
+/public/fonts/
+.vercel

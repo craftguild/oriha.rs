@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "owner": "oriha-character-references",
+  "generator_revision": "1ac2d4fcda4b6dc3f19e6faed5728dbdd51e1f232073bc505a3b4e61538b3b8a",
+  "inputs": {
+    "crates/core/scripts/generate-character-references.py": "1ac2d4fcda4b6dc3f19e6faed5728dbdd51e1f232073bc505a3b4e61538b3b8a",
+    "crates/core/entity-data/whatwg-entities.json": "d741d877ac77c4194c4ad526b5b4a19aef8dfe411ab840a466891cdbb9f362e6",
+    "crates/core/entity-data/LICENSE-WHATWG": "85dc6f5ccb57a6fe8c33d158f9fc8fc7ee5655a5d3db2cdd131c6a3d0f48a864"
+  },
+  "files": {
+    "crates/core/src/character_reference/names.rs": "190c1322e2f9f41e9cfd75a147c5a3742ae329054e24842ab23d4897daf93de2"
+  }
+}

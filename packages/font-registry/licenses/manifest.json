@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/google/fonts",
+  "revision": "bbda7253fc363238b05d97515ca71f8ae49c4fa9",
+  "fonts": [
+    {
+      "id": "hachi-maru-pop",
+      "family": "Hachi Maru Pop",
+      "license": "OFL-1.1",
+      "file": "licenses/hachi-maru-pop-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/hachimarupop/OFL.txt",
+      "sha256": "8d3c434650e84f42ddb33e9b5929089ea51c39b231b798dacb33087d5f05d9f1"
+    },
+    {
+      "id": "ibm-plex-mono",
+      "family": "IBM Plex Mono",
+      "license": "OFL-1.1",
+      "file": "licenses/ibm-plex-mono-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/ibmplexmono/OFL.txt",
+      "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da"
+    },
+    {
+      "id": "inconsolata",
+      "family": "Inconsolata",
+      "license": "OFL-1.1",
+      "file": "licenses/inconsolata-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/inconsolata/OFL.txt",
+      "sha256": "29bd0cfd0fb2a45f9b057c834a057724bae1f63b525a8ac83d3e7525706d9f80"
+    },
+    {
+      "id": "inter",
+      "family": "Inter",
+      "license": "OFL-1.1",
+      "file": "licenses/inter-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/inter/OFL.txt",
+      "sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57"
+    },
+    {
+      "id": "jetbrains-mono",
+      "family": "JetBrains Mono",
+      "license": "OFL-1.1",
+      "file": "licenses/jetbrains-mono-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/jetbrainsmono/OFL.txt",
+      "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d"
+    },
+    {
+      "id": "lato",
+      "family": "Lato",
+      "license": "OFL-1.1",
+      "file": "licenses/lato-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/lato/OFL.txt",
+      "sha256": "74ba064d03f1f1c4a952da936c3eb71866c34404916734de3cae73b34357e59e"
+    },
+    {
+      "id": "libre-baskerville",
+      "family": "Libre Baskerville",
+      "license": "OFL-1.1",
+      "file": "licenses/libre-baskerville-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/librebaskerville/OFL.txt",
+      "sha256": "3624eddd4c8f8a908130a417ae7cd089c9da69899c4e0ca1a5217d0a6fae16fd"
+    },
+    {
+      "id": "m-plus-1-code",
+      "family": "M PLUS 1 Code",
+      "license": "OFL-1.1",
+      "file": "licenses/m-plus-1-code-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/mplus1code/OFL.txt",
+      "sha256": "04971e3fcee60b247395150d93b3616f6a0b092572332c96187b472976553abc"
+    },
+    {
+      "id": "merriweather",
+      "family": "Merriweather",
+      "license": "OFL-1.1",
+      "file": "licenses/merriweather-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/merriweather/OFL.txt",
+      "sha256": "715bd349bfa6116f99e351e1548321dcfa25b91df65502d22ca8d624557697d2"
+    },
+    {
+      "id": "montserrat",
+      "family": "Montserrat",
+      "license": "OFL-1.1",
+      "file": "licenses/montserrat-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/montserrat/OFL.txt",
+      "sha256": "8b7141c03fa4f8d44e6345d5d4931709290f0f67875e452e95ac1fd3a027802e"
+    },
+    {
+      "id": "noto-sans",
+      "family": "Noto Sans",
+      "license": "OFL-1.1",
+      "file": "licenses/noto-sans-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/notosans/OFL.txt",
+      "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a"
+    },
+    {
+      "id": "noto-sans-mono",
+      "family": "Noto Sans Mono",
+      "license": "OFL-1.1",
+      "file": "licenses/noto-sans-mono-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/notosansmono/OFL.txt",
+      "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a"
+    },
+    {
+      "id": "open-sans",
+      "family": "Open Sans",
+      "license": "OFL-1.1",
+      "file": "licenses/open-sans-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/opensans/OFL.txt",
+      "sha256": "fbbbcfef55318de350562559b671360de6d597112ecc5c73881b05092db89602"
+    },
+    {
+      "id": "oswald",
+      "family": "Oswald",
+      "license": "OFL-1.1",
+      "file": "licenses/oswald-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/oswald/OFL.txt",
+      "sha256": "0fd731a904b729a4e02eaf5e8ebd06783edd9abe400e8882760160230675b652"
+    },
+    {
+      "id": "playfair-display",
+      "family": "Playfair Display",
+      "license": "OFL-1.1",
+      "file": "licenses/playfair-display-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/playfairdisplay/OFL.txt",
+      "sha256": "566be814f8e96e93dfa16101331557eb6b5467e9e03f627c0910fe93ca12300e"
+    },
+    {
+      "id": "poppins",
+      "family": "Poppins",
+      "license": "OFL-1.1",
+      "file": "licenses/poppins-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/poppins/OFL.txt",
+      "sha256": "6be04893d770899a015649c7aa3b582f871b272f8747a92b78b17c3e5c8b2573"
+    },
+    {
+      "id": "roboto",
+      "family": "Roboto",
+      "license": "OFL-1.1",
+      "file": "licenses/roboto-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/roboto/OFL.txt",
+      "sha256": "061402327a96aadb0bfb694a960ed289ecd38d383e396243831ab81feb109c41"
+    },
+    {
+      "id": "roboto-mono",
+      "family": "Roboto Mono",
+      "license": "OFL-1.1",
+      "file": "licenses/roboto-mono-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/robotomono/OFL.txt",
+      "sha256": "50ab8dd54680d3473f649c9db86fece88434d097c7834475c1c72d2f8c429215"
+    },
+    {
+      "id": "roboto-slab",
+      "family": "Roboto Slab",
+      "license": "Apache-2.0",
+      "file": "licenses/roboto-slab-LICENSE.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/apache/robotoslab/LICENSE.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "id": "source-code-pro",
+      "family": "Source Code Pro",
+      "license": "OFL-1.1",
+      "file": "licenses/source-code-pro-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/sourcecodepro/OFL.txt",
+      "sha256": "cb30d3086a8b3ce0b9e3690bf48d6620402b61160bc658076f95180ccd9e9dae"
+    },
+    {
+      "id": "source-sans-3",
+      "family": "Source Sans 3",
+      "license": "OFL-1.1",
+      "file": "licenses/source-sans-3-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/sourcesans3/OFL.txt",
+      "sha256": "09746787287a289323b0ec3cff4d1a4a801331b82b7207c1e186f5d26619a392"
+    },
+    {
+      "id": "source-serif-4",
+      "family": "Source Serif 4",
+      "license": "OFL-1.1",
+      "file": "licenses/source-serif-4-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/sourceserif4/OFL.txt",
+      "sha256": "5f94c3fd3a23131a417ab5a0c8452de57e70c3cfb9f604d88241f7065ebf9fd9"
+    },
+    {
+      "id": "space-mono",
+      "family": "Space Mono",
+      "license": "OFL-1.1",
+      "file": "licenses/space-mono-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/spacemono/OFL.txt",
+      "sha256": "8e4ee42b2553e1e01504e61cb0d46d148cd8c9e5eacaa3622a7df2d4f2955b9f"
+    },
+    {
+      "id": "zen-maru-gothic",
+      "family": "Zen Maru Gothic",
+      "license": "OFL-1.1",
+      "file": "licenses/zen-maru-gothic-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/bbda7253fc363238b05d97515ca71f8ae49c4fa9/ofl/zenmarugothic/OFL.txt",
+      "sha256": "2a20cf7ce1909d8ee1e949095d340f7d7656705f7c810a2d6faf56800ad0cb3d"
+    }
+  ]
+}

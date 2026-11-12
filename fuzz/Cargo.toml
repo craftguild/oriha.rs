@@ -1,0 +1,34 @@
+[package]
+name = "oriha-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+rust-version = "1.95"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+oriha-core = { path = "../crates/core" }
+
+# Standalone package: keep fuzz-only dependencies and nightly-only workflows
+# out of regular workspace builds.
+[workspace]
+
+[[bin]]
+name = "render"
+path = "fuzz_targets/render.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "render_json"
+path = "fuzz_targets/render_json.rs"
+test = false
+doc = false
+bench = false
+
+[profile.release]
+debug = 1

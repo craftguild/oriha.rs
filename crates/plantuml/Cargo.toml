@@ -1,0 +1,23 @@
+[package]
+rust-version.workspace = true
+license.workspace = true
+name = "oriha-plantuml"
+authors.workspace = true
+edition.workspace = true
+publish.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[features]
+cli = ["dep:clap"]
+
+[[bin]]
+name = "oriha-plantuml"
+required-features = ["cli"]
+
+[dependencies]
+clap = { workspace = true, optional = true }
+oriha-diagram.workspace = true
+
+[dev-dependencies]
+roxmltree = "0.20"

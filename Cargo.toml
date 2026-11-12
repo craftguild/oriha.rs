@@ -1,0 +1,66 @@
+[workspace]
+members = [
+    "crates/cli",
+    "crates/core",
+    "crates/diagram",
+    "crates/i18n",
+    "crates/native-bridge",
+    "crates/latex",
+    "crates/mermaid",
+    "crates/plantuml",
+    "crates/stats-client",
+    "crates/stats-ingest",
+    "crates/stats-schema",
+    "crates/stats-viewer",
+    "crates/uniffi-bindgen",
+    "crates/wasm",
+    "crates/windows-bridge",
+]
+exclude = ["vendor/askama_derive"]
+resolver = "2"
+
+[workspace.package]
+rust-version = "1.95"
+license = "MIT OR Apache-2.0"
+authors = ["Progressive Works, Inc."]
+edition = "2021"
+publish = false
+repository = "https://github.com/craftguild/oriha.rs"
+version = "0.1.0"
+
+[workspace.dependencies]
+craftguild-cli = { git = "https://github.com/craftguild/standards.rs", rev = "6852b210a9a614920bc5be2187f2705f46db978d" }
+craftguild-cli-build = { git = "https://github.com/craftguild/standards.rs", rev = "6852b210a9a614920bc5be2187f2705f46db978d" }
+craftguild-core = { git = "https://github.com/craftguild/standards.rs", rev = "6852b210a9a614920bc5be2187f2705f46db978d" }
+clap = { version = "4.5.51", features = ["derive"] }
+axum = { version = "0.8", features = ["json", "tokio", "http1"] }
+chrono = { version = "0.4", features = ["clock", "serde"] }
+cxx = "1"
+cxx-build = "1"
+hex = "0.4"
+hmac = "0.12"
+oriha-core = { path = "crates/core" }
+oriha-diagram = { path = "crates/diagram" }
+oriha-i18n = { path = "crates/i18n" }
+oriha-native-bridge = { path = "crates/native-bridge" }
+oriha-latex = { path = "crates/latex" }
+oriha-mermaid = { path = "crates/mermaid" }
+oriha-plantuml = { path = "crates/plantuml" }
+oriha-stats-client = { path = "crates/stats-client" }
+oriha-stats-schema = { path = "crates/stats-schema" }
+qrcode = "0.14"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+tempfile = "3"
+tokio = { version = "1.53.3", features = ["fs", "io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
+tower = { version = "0.5", features = ["util"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
+uniffi = { version = "0.31.1", default-features = false }
+uuid = { version = "1", features = ["v4", "serde"] }
+wasm-bindgen = "0.2.120"
+
+# Keep the existing UniFFI ABI while replacing its unmaintained build-time parser.
+[patch.crates-io]
+askama_derive = { path = "vendor/askama_derive" }

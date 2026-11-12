@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PlantUML sequence fixture visual index</title>
+  <style>
+    :root {{
+      color-scheme: light;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #cbd5e1;
+      --supported: #166534;
+      --supported-bg: #dcfce7;
+      --unsupported: #991b1b;
+      --unsupported-bg: #fee2e2;
+      --accent: #2563eb;
+    }}
+    * {{
+      box-sizing: border-box;
+    }}
+    body {{
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }}
+    a {{
+      color: var(--accent);
+      text-decoration: none;
+    }}
+    a:hover {{
+      text-decoration: underline;
+    }}
+    .page-header {{
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+    }}
+    .header-row {{
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }}
+    h1 {{
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }}
+    .counts {{
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+    }}
+    .controls {{
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }}
+    button {{
+      min-height: 32px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+    }}
+    button[aria-pressed="true"] {{
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+    }}
+    main {{
+      padding: 24px;
+    }}
+    .case-list {{
+      display: grid;
+      gap: 20px;
+    }}
+    .case {{
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      overflow: hidden;
+    }}
+    .case[hidden] {{
+      display: none;
+    }}
+    .case-header {{
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }}
+    .case-title {{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }}
+    h2 {{
+      margin: 0;
+      font-size: 16px;
+    }}
+    .summary {{
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }}
+    .badge {{
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }}
+    .badge.supported {{
+      color: var(--supported);
+      background: var(--supported-bg);
+    }}
+    .badge.unsupported {{
+      color: var(--unsupported);
+      background: var(--unsupported-bg);
+    }}
+    .links {{
+      display: flex;
+      gap: 10px;
+      justify-content: end;
+      flex-wrap: wrap;
+      font-size: 13px;
+      white-space: nowrap;
+    }}
+    .pair {{
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0;
+    }}
+    figure {{
+      margin: 0;
+      min-width: 0;
+      border-right: 1px solid var(--border);
+    }}
+    figure:last-child {{
+      border-right: 0;
+    }}
+    figcaption {{
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }}
+    .svg-frame {{
+      min-height: 300px;
+      max-height: 680px;
+      overflow: auto;
+      background: #fff;
+    }}
+    .svg-frame img {{
+      display: block;
+      width: 100%;
+      min-width: 520px;
+      height: auto;
+    }}
+    .error {{
+      margin: 0;
+      padding: 12px 16px;
+      border-top: 1px solid #fecaca;
+      color: var(--unsupported);
+      background: #fff5f5;
+      font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-wrap: anywhere;
+    }}
+    details {{
+      border-top: 1px solid var(--border);
+      background: #fcfdff;
+    }}
+    summary {{
+      padding: 10px 16px;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }}
+    pre {{
+      margin: 0;
+      padding: 0 16px 16px;
+      overflow: auto;
+      color: #1e293b;
+      font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre;
+    }}
+    @media (max-width: 960px) {{
+      main {{
+        padding: 12px;
+      }}
+      .page-header {{
+        padding: 12px;
+      }}
+      .pair {{
+        grid-template-columns: 1fr;
+      }}
+      figure {{
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }}
+      figure:last-child {{
+        border-bottom: 0;
+      }}
+      .case-header {{
+        grid-template-columns: 1fr;
+      }}
+      .links {{
+        justify-content: start;
+      }}
+    }}
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div class="header-row">
+      <h1>PlantUML sequence fixtures</h1>
+      <div class="counts">
+        <span>{total} total</span>
+        <span>{supported} supported</span>
+        <span>{unsupported} unsupported</span>
+      </div>
+    </div>
+    <div class="controls" aria-label="Fixture filters">
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="supported" aria-pressed="false">Supported</button>
+      <button type="button" data-filter="unsupported" aria-pressed="false">Unsupported</button>
+    </div>
+  </header>
+  <main>
+    <div class="case-list">
+{case_markup}
+    </div>
+  </main>
+  <script>
+    const buttons = Array.from(document.querySelectorAll("[data-filter]"));
+    const cases = Array.from(document.querySelectorAll(".case"));
+    for (const button of buttons) {{
+      button.addEventListener("click", () => {{
+        const filter = button.dataset.filter;
+        for (const item of cases) {{
+          item.hidden = filter !== "all" && item.dataset.status !== filter;
+        }}
+        for (const candidate of buttons) {{
+          candidate.setAttribute("aria-pressed", String(candidate === button));
+        }}
+      }});
+    }}
+  </script>
+</body>
+</html>

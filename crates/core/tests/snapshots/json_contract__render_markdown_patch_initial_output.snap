@@ -1,0 +1,122 @@
+---
+source: crates/core/tests/json_contract.rs
+expression: output
+---
+{
+  "fallbackReason": "missingSnapshot",
+  "output": {
+    "assets": [],
+    "diagnostics": [],
+    "html": "<article class=\"oriha-document\" data-oriha-theme=\"rich-light\"><h1 id=\"title\" class=\"oriha-heading oriha-heading--h1\" data-oriha-block-kind=\"heading\" data-oriha-block-id=\"1\" data-oriha-heading-level=\"1\" data-oriha-stable-id=\"oriha-b-1\">Title</h1><p id=\"2\" class=\"oriha-paragraph\" data-oriha-block-kind=\"paragraph\" data-oriha-stable-id=\"oriha-b-2\">Alpha</p><p id=\"3\" class=\"oriha-paragraph\" data-oriha-block-kind=\"paragraph\" data-oriha-stable-id=\"oriha-b-3\">Beta</p></article>",
+    "sourceMap": [
+      {
+        "id": "1",
+        "kind": "heading",
+        "sourceRange": {
+          "endColumn": 7,
+          "endLine": 1,
+          "startColumn": 1,
+          "startLine": 1
+        }
+      },
+      {
+        "id": "2",
+        "kind": "paragraph",
+        "sourceRange": {
+          "endColumn": 5,
+          "endLine": 3,
+          "startColumn": 1,
+          "startLine": 3
+        }
+      },
+      {
+        "id": "3",
+        "kind": "paragraph",
+        "sourceRange": {
+          "endColumn": 4,
+          "endLine": 5,
+          "startColumn": 1,
+          "startLine": 5
+        }
+      }
+    ],
+    "stats": {
+      "blocksByKind": [
+        {
+          "count": 2,
+          "kind": "paragraph"
+        },
+        {
+          "count": 1,
+          "kind": "heading"
+        }
+      ],
+      "calloutsByKind": [],
+      "codeBlocksByLanguageKind": [],
+      "headingsByLevel": [
+        {
+          "count": 1,
+          "kind": "h1"
+        }
+      ],
+      "issuesByKind": [],
+      "lockedFeaturesByKind": [],
+      "schemaVersion": 1,
+      "totalBlocks": 3,
+      "unsupportedByKind": []
+    }
+  },
+  "patches": [
+    {
+      "html": "<article class=\"oriha-document\" data-oriha-theme=\"rich-light\"><h1 id=\"title\" class=\"oriha-heading oriha-heading--h1\" data-oriha-block-kind=\"heading\" data-oriha-block-id=\"1\" data-oriha-heading-level=\"1\" data-oriha-stable-id=\"oriha-b-1\">Title</h1><p id=\"2\" class=\"oriha-paragraph\" data-oriha-block-kind=\"paragraph\" data-oriha-stable-id=\"oriha-b-2\">Alpha</p><p id=\"3\" class=\"oriha-paragraph\" data-oriha-block-kind=\"paragraph\" data-oriha-stable-id=\"oriha-b-3\">Beta</p></article>",
+      "op": "replaceAll"
+    }
+  ],
+  "snapshot": {
+    "blocks": [
+      {
+        "htmlHash": "e2334dee3f380bf3",
+        "kind": "heading",
+        "sourceHash": "3620fd9aa3d3c4a0",
+        "sourceRange": {
+          "endColumn": 7,
+          "endLine": 1,
+          "startColumn": 1,
+          "startLine": 1
+        },
+        "stableId": "oriha-b-1"
+      },
+      {
+        "htmlHash": "4397226c0a7cd92d",
+        "kind": "paragraph",
+        "sourceHash": "4fda04cbc245e18b",
+        "sourceRange": {
+          "endColumn": 5,
+          "endLine": 3,
+          "startColumn": 1,
+          "startLine": 3
+        },
+        "stableId": "oriha-b-2"
+      },
+      {
+        "htmlHash": "b93e903c9d6e55f5",
+        "kind": "paragraph",
+        "sourceHash": "a0b562a796b69487",
+        "sourceRange": {
+          "endColumn": 4,
+          "endLine": 5,
+          "startColumn": 1,
+          "startLine": 5
+        },
+        "stableId": "oriha-b-3"
+      }
+    ],
+    "nextStableIndex": 4,
+    "outputResourceFingerprint": "0f261daf3e694973",
+    "schemaVersion": 3,
+    "settingsFingerprint": "dcde0c71b36a6ce6",
+    "tailHash": "cbf29ce484222325",
+    "tailHtmlByteLength": 0
+  },
+  "strategy": "replaceAll"
+}

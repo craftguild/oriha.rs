@@ -1,0 +1,11 @@
+[package]
+rust-version.workspace = true
+license.workspace = true
+name = "oriha-latex"
+authors.workspace = true
+edition.workspace = true
+publish.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[dependencies]

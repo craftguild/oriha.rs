@@ -1,0 +1,84 @@
+{
+  "name": "@craftguild/expo-oriha",
+  "version": "0.1.0",
+  "description": "Expo module for the Oriha Rust core",
+  "author": "Progressive Works, Inc.",
+  "license": "(MIT OR Apache-2.0)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/craftguild/oriha.rs.git",
+    "directory": "packages/expo-oriha"
+  },
+  "homepage": "https://github.com/craftguild/oriha.rs/tree/main/packages/expo-oriha#readme",
+  "bugs": {
+    "url": "https://github.com/craftguild/oriha.rs/issues"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.mts",
+        "require": "./dist/index.d.cts"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "android",
+    "dist",
+    "ios",
+    "licenses",
+    "sbom",
+    "expo-module.config.json",
+    "ExpoOriha.podspec",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSE",
+    "LICENSE-MIT",
+    "LICENSE-APACHE"
+  ],
+  "scripts": {
+    "release": "node scripts/release.mjs",
+    "test": "node --no-warnings --experimental-strip-types --test \"test/**/*.test.mjs\"",
+    "build": "node scripts/build-package.mjs"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "expo-crypto": "*",
+    "expo-file-system": "*",
+    "expo-print": "*",
+    "expo-sharing": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-svg": "*",
+    "react-native-webview": "*"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.0",
+    "expo-crypto": "~15.0.8",
+    "expo-file-system": "~19.0.22",
+    "expo-modules-core": "3.0.30",
+    "expo-print": "~15.0.8",
+    "expo-sharing": "~14.0.8",
+    "heroicons": "^2.2.0",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-svg": "15.12.1",
+    "react-native-webview": "^13.16.1",
+    "tsdown": "^0.22.0",
+    "typescript": "~5.9.2"
+  },
+  "overrides": {
+    "postcss": "8.5.16",
+    "uuid": "11.1.1"
+  }
+}
