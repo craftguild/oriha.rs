@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "group": "oriha",
+  "config_hash": "c3b6c2154973f5858e09b89a7675dc554055c5fded2668f69aff6efa73ec9aad",
+  "head": "5ee74d1e4d8e0f5e73a5fc31f772812289571755",
+  "base": null,
+  "current": "0.1.0",
+  "next": "0.1.0",
+  "tag": "v0.1.0",
+  "bump": "none",
+  "mode": "normal",
+  "prepared": false,
+  "receipt_path": "docs/releases/v0.1.0.json",
+  "notes": "# v0.1.0\n\nGroup: `oriha`\n\nCompare: `repository root (initial release)` → `5ee74d1e4d8e0f5e73a5fc31f772812289571755`\n\n## Changes\n\n- feat: initial import (5ee74d1e4d8e0f5e73a5fc31f772812289571755)\n",
+  "changes": [
+    {
+      "path": "docs/releases/v0.1.0.md",
+      "before": null,
+      "after": "c966bf1828025cacc64d36818f016f7636ba0bf1adc7d33000d98a9a92c48e6d"
+    }
+  ]
+}
