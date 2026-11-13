@@ -15,7 +15,7 @@ contains development, build and other workspace dependencies.
 | Heroicons 2.2.0 | Six generated solid icons used by the Expo provider | MIT; included in the [Expo notices](packages/expo-oriha/THIRD_PARTY_NOTICES.md) |
 | Rolldown 1.0.1 runtime helpers | Generated helpers that contribute bytes to the Expo JavaScript bundle | MIT; retained in the [Expo license inventory](packages/expo-oriha/licenses/rolldown-LICENSE) |
 | Askama derive 0.14.0 | Patched build-time dependency for the existing UniFFI ABI | MIT OR Apache-2.0; original license files remain in [the vendored source](vendor/askama_derive) |
-| CraftGuild standards engine/packages 0.6.1 (rules baseline 0.1.0) | Shared CLI presentation, preparation and quality tools | MIT OR Apache-2.0; pinned to `6852b210a9a614920bc5be2187f2705f46db978d` in Cargo and the [fixed engine reference](standards/engine.json) |
+| CraftGuild standards engine/packages 0.6.2 (rules baseline 0.1.0) | Shared CLI presentation, preparation and quality tools | MIT OR Apache-2.0; pinned to `be63eefb44a850a01f4cc065c66fff2fe558ee18` in Cargo and the [fixed engine reference](standards/engine.json) |
 | Configured font registry families | Separately downloaded CSS2/WOFF2 assets, outside the Expo npm payload | Original OFL-1.1 or Apache-2.0 terms and full pinned texts in the [font license inventory](packages/font-registry/licenses/manifest.json) |
 | piccolore 0.1.3 | Registry runtime terminal formatting dependency | ISC; the published fork omits a separate license file, so its metadata and the [original upstream notice](packages/font-registry/licenses/runtime-notices.json) are retained together |
 

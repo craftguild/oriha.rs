@@ -1,8 +1,6 @@
 # Artifact preparation and provenance
 
-[ADR 0004](../adr/0004-standards-v0.5-integration.md) defines v0.6.1 integration
-and its local completion criteria. Earlier v0.2.0 results remain historical;
-current qualification is recorded against the final source in Beads.
+[ADR 0004](../adr/0004-standards-v0.5-integration.md) defines v0.6.2 integration and its local completion criteria. Earlier v0.2.0 results remain historical; current qualification is recorded against the final source in Beads.
 
 Oriha's application package is `@craftguild/expo-oriha`. Its npm name
 and version remain separate from the pinned Craftguild standards version.
@@ -48,11 +46,7 @@ artifact association records and the containing package inventory provide the
 subsequent output hashes. Keep those boundaries explicit to avoid self-hashing
 cycles or describing a helper executable as a library.
 
-Standards engine v0.6.1 at revision
-`6852b210a9a614920bc5be2187f2705f46db978d` owns executable and library
-preparation, compilation, output verification and receipts. Configuration schema
-2 declares actual Cargo library names and formats; the normative rules baseline
-remains 0.1.0. Oriha does not maintain a parallel Rust execution adapter.
+Standards engine v0.6.2 at revision `be63eefb44a850a01f4cc065c66fff2fe558ee18` owns executable and library preparation, compilation, output verification and receipts. Configuration schema 2 declares actual Cargo library names and formats; the normative rules baseline remains 0.1.0. Oriha does not maintain a parallel Rust execution adapter.
 
 The Makefile includes `standards/make/common.mk` and forwards product aliases.
 The thin launcher verifies the unique `standards/engine.json` and cached full

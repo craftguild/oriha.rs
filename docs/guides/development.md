@@ -10,17 +10,7 @@ missing/stale records; they never recursively run Cargo.
 
 ## Tools and commands
 
-The entry selects standards engine v0.6.1 at complete public HTTPS revision
-`6852b210a9a614920bc5be2187f2705f46db978d`, recorded in
-`standards/engine.json`. The normative rules baseline remains 0.1.0.
-Explicit `make setup` verifies and caches the matching macOS ARM64 or Linux x86_64
-GNU engine under `.craftguild/engine/`; `make prime` renders its offline rules.
-The committed thin Make/Python entry needs no sibling checkout, global engine or
-copied rules/binary archive. Ordinary operations never acquire/update that engine.
-Use `cargo fetch --locked` and the locked npm installations explicitly before
-offline builds. Engine setup needs Python 3 and curl. Install Rust 1.95.0 through rustup, tokei 15.0.0,
-cargo-deny and Node 24+. `make check` additionally needs the three npm projects'
-locked installations and Chrome/Chromium for image decoding.
+The entry selects standards engine v0.6.2 at complete public HTTPS revision `be63eefb44a850a01f4cc065c66fff2fe558ee18`, recorded in `standards/engine.json`. The normative rules baseline remains 0.1.0. Explicit `make setup` verifies and caches the matching macOS ARM64 or Linux x86_64 GNU engine under `.craftguild/engine/`; `make prime` renders its offline rules. The committed thin Make/Python entry needs no sibling checkout, global engine or copied rules/binary archive. Ordinary operations never acquire/update that engine. Use `cargo fetch --locked` and the locked npm installations explicitly before offline builds. Engine setup needs Python 3 and curl. Install Rust 1.95.0 through rustup, tokei 15.0.0, cargo-deny and Node 24+. `make check` additionally needs the three npm projects' locked installations and Chrome/Chromium for image decoding.
 
 | Entry | Scope |
 | --- | --- |

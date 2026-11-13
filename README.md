@@ -53,11 +53,7 @@ registry is optional.
 
 ## Build requirements
 
-Source builds use Rust/Cargo **1.95.0**, a native linker, Git, Make, Python 3
-and curl. First-party Rust crates declare minimum Rust **1.95**. The repository
-fixes standards **v0.6.1** in `standards/engine.json`; explicit `make setup`
-restores its verified cache on macOS arm64 or Linux x86_64 GNU. A global
-standards command is unnecessary after checkout.
+Source builds use Rust/Cargo **1.95.0**, a native linker, Git, Make, Python 3 and curl. First-party Rust crates declare minimum Rust **1.95**. The repository fixes standards **v0.6.2** in `standards/engine.json`; explicit `make setup` restores its verified cache on macOS arm64 or Linux x86_64 GNU. A global standards command is unnecessary after checkout.
 
 Full checks also need rustfmt, Clippy, tokei **15.0.0**, cargo-deny, Node.js
 **24+**, Chrome/Chromium and the three locked development dependency trees:

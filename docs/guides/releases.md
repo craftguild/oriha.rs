@@ -8,11 +8,7 @@
 | `font-registry` | Private registry package, 0.1.0 | `font-registry-v` | Independent registry deployment |
 | `expo-preview` | Private demo package, 0.1.0 | `expo-preview-v` | Independent example app |
 
-The standards engine is pinned to v0.6.1; its normative rules baseline remains
-0.1.0. Neither sets product versions.
-Cargo members inherit the workspace version. Font registry and demo manifests
-are not bumped with the Oriha package. The demo's local package link is resolved
-within this repository, without a separately published adoption revision.
+The standards engine is pinned to v0.6.2; its normative rules baseline remains 0.1.0. Neither sets product versions. Cargo members inherit the workspace version. Font registry and demo manifests are not bumped with the Oriha package. The demo's local package link is resolved within this repository, without a separately published adoption revision.
 
 ## Local preparation
 
