@@ -11,6 +11,12 @@ Rust engine preserves source locations for editors and annotations; the
 `@craftguild/expo-oriha` package brings that engine to Expo applications.
 A local `oriha` command provides the same parsing and rendering workflows.
 
+> [!WARNING]
+> This project has not reached version 1.0 and may be unstable.
+> Its behavior and specifications may change, and upgrades may require manual migration.
+> Our team uses it in internal production systems to refine its design and implementation, but it may not meet your requirements.
+> Please keep these limitations in mind when using it.
+
 ## Quick start
 
 Release binaries are available for Linux x86_64 GNU and macOS arm64 from
