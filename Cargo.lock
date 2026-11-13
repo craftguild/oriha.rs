@@ -1407,7 +1407,7 @@ checksum = "d6790f58c7ff633d8771f42965289203411a5e5c68388703c06e14f24770b41e"
 
 [[package]]
 name = "oriha"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
  "craftguild-cli",
@@ -1419,7 +1419,7 @@ dependencies = [
 
 [[package]]
 name = "oriha-core"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "criterion",
  "insta",
@@ -1434,19 +1434,19 @@ dependencies = [
 
 [[package]]
 name = "oriha-diagram"
-version = "0.1.0"
+version = "0.1.1"
 
 [[package]]
 name = "oriha-i18n"
-version = "0.1.0"
+version = "0.1.1"
 
 [[package]]
 name = "oriha-latex"
-version = "0.1.0"
+version = "0.1.1"
 
 [[package]]
 name = "oriha-mermaid"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "oriha-diagram",
  "serde",
@@ -1455,7 +1455,7 @@ dependencies = [
 
 [[package]]
 name = "oriha-native-bridge"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "craftguild-cli-build",
  "oriha-core",
@@ -1468,7 +1468,7 @@ dependencies = [
 
 [[package]]
 name = "oriha-plantuml"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
  "oriha-diagram",
@@ -1477,7 +1477,7 @@ dependencies = [
 
 [[package]]
 name = "oriha-stats-client"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "oriha-core",
  "oriha-stats-schema",
@@ -1489,7 +1489,7 @@ dependencies = [
 
 [[package]]
 name = "oriha-stats-ingest"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "axum",
  "chrono",
@@ -1510,7 +1510,7 @@ dependencies = [
 
 [[package]]
 name = "oriha-stats-schema"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "oriha-core",
  "serde",
@@ -1520,7 +1520,7 @@ dependencies = [
 
 [[package]]
 name = "oriha-stats-viewer"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "chrono",
  "clap",
@@ -1532,14 +1532,14 @@ dependencies = [
 
 [[package]]
 name = "oriha-uniffi-bindgen"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "uniffi",
 ]
 
 [[package]]
 name = "oriha-wasm"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "craftguild-cli-build",
  "oriha-core",
@@ -1548,7 +1548,7 @@ dependencies = [
 
 [[package]]
 name = "oriha-windows-bridge"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "craftguild-cli-build",
  "cxx",

@@ -26,7 +26,7 @@ authors = ["Progressive Works, Inc."]
 edition = "2021"
 publish = false
 repository = "https://github.com/craftguild/oriha.rs"
-version = "0.1.0"
+version = "0.1.1"
 
 [workspace.dependencies]
 craftguild-cli = { git = "https://github.com/craftguild/standards.rs", rev = "be63eefb44a850a01f4cc065c66fff2fe558ee18" }

@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "group": "oriha",
+  "config_hash": "c3b6c2154973f5858e09b89a7675dc554055c5fded2668f69aff6efa73ec9aad",
+  "head": "7240798c044d4c2d6e48eb9362938913132e108c",
+  "base": "v0.1.0",
+  "current": "0.1.0",
+  "next": "0.1.1",
+  "tag": "v0.1.1",
+  "bump": "patch",
+  "mode": "normal",
+  "prepared": false,
+  "receipt_path": "docs/releases/v0.1.1.json",
+  "notes": "# v0.1.1\n\nGroup: `oriha`\n\nCompare: `v0.1.0` → `7240798c044d4c2d6e48eb9362938913132e108c`\n\n## Changes\n\n- fix(readme): clarify pre-1.0 stability and upgrade expectations (7bcde2fc7187332cca3ac4aed9de8b3c337372ec)\n- fix(build): align release preparation with standards v0.6.2 (7240798c044d4c2d6e48eb9362938913132e108c)\n",
+  "changes": [
+    {
+      "path": "Cargo.toml",
+      "before": "16c36ce63c170cbfed0214fb8a84cf2803b4d65c2fdf0a6fb6c163c3d8aad0ef",
+      "after": "0915c0c8af9e6d47cb70b0ef18e13725408aa65d2663c3856ab7eabe1b090d2c"
+    },
+    {
+      "path": "Cargo.lock",
+      "before": "e9b87a951c846078db9b59d574e07614e57ca2d20ec1c5affe91ab51537b21b6",
+      "after": "824a1cf725308ca5e2b6475e709bd9b30fefc394e8a7ce4ae49f3e3130854cde"
+    },
+    {
+      "path": "packages/expo-oriha/package.json",
+      "before": "8995672e7b89396e528f6084181abf02de1acea69460a1dacf3842a3f9e7ff9e",
+      "after": "8b3a1a78604d947a9d1ef48f42e09aaa2f4b02d5d9d6969f6cd4e03c3f61abf8"
+    },
+    {
+      "path": "packages/expo-oriha/package-lock.json",
+      "before": "1a726ab828ad6fcb71246812b795f9333aff9f467d9220e08d62bcad62ef5385",
+      "after": "839434f1fbd25008b87e256e2bff76d218d47e0c44fae6012531dd334dfa3c53"
+    },
+    {
+      "path": "docs/releases/v0.1.1.md",
+      "before": null,
+      "after": "15877d76f8a93179c5df676c8a869e78dd53b760e2a798fa8c27441e20686a1e"
+    }
+  ]
+}
