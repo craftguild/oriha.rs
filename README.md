@@ -20,14 +20,14 @@ A local `oriha` command provides the same parsing and rendering workflows.
 ## Quick start
 
 Release binaries are available for Linux x86_64 GNU and macOS arm64 from
-[GitHub Releases](https://github.com/craftguild/oriha.rs/releases/tag/v0.1.0).
+[GitHub Releases](https://github.com/craftguild/oriha.rs/releases/latest).
 The installer needs POSIX sh, curl, and `sha256sum` or `shasum`. It verifies the
 downloaded checksum and installs to `~/.local/bin` by default.
 
 Install the CLI, then render a short document:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/craftguild/oriha.rs/v0.1.0/scripts/install.sh | sh -s -- --version 0.1.0
+curl -fsSL https://raw.githubusercontent.com/craftguild/oriha.rs/main/scripts/install.sh | sh
 BIN="$HOME/.local/bin/oriha"
 printf '# Hello\n\nA local Markdown document.\n' > document.md
 "$BIN" render document.md > document.html
@@ -38,9 +38,10 @@ Open `document.html` to see the rendered document. `inspect` reports the parsed
 structure. To embed the native renderer in an app, follow the
 [Expo package guide](packages/expo-oriha/README.md).
 
-Pass `--bindir /absolute/bin` after `--version 0.1.0` to choose another directory.
-Use `--uninstall` instead of `--version 0.1.0` to remove the command; pass the same
-`--bindir` for a custom destination. Add that directory to PATH for bare commands.
+The installer selects the latest published release.
+Pass `-s -- --bindir /absolute/bin` after `sh` to choose another directory.
+Use `-s -- --uninstall` after `sh` to remove the command; pass the same `--bindir` for a custom destination.
+Add that directory to PATH for bare commands.
 Each release includes target-specific `SHA256SUMS` files and a CLI SBOM.
 
 ## System requirements
