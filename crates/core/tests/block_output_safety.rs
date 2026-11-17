@@ -11,6 +11,24 @@ fn input(markdown: &str) -> RenderInput {
 fn value(o: BlockOutput) -> serde_json::Value {
     serde_json::to_value(o).unwrap()
 }
+fn node<'a>(v: &'a serde_json::Value, id: &serde_json::Value) -> &'a serde_json::Value {
+    v["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == *id)
+        .unwrap()
+}
+fn root(v: &serde_json::Value, index: usize) -> &serde_json::Value {
+    node(v, &v["rootIds"][index])
+}
+fn body_key(mode: BlockOutputMode) -> &'static str {
+    if mode == BlockOutputMode::Structured {
+        "nodes"
+    } else {
+        "blocks"
+    }
+}
 fn diagnostic(severity: Severity, message: &str) -> RenderDiagnostic {
     RenderDiagnostic {
         severity,
@@ -80,7 +98,7 @@ fn failures_and_diagnostics_are_bounded_and_never_partial_success() {
                 .add_hook(Modify(modification));
             let o = value(e.derive_blocks(input("one"), mode));
             assert_eq!(o["status"], "failed", "modification {modification}: {o}");
-            assert!(o["blocks"].as_array().unwrap().is_empty());
+            assert!(o[body_key(mode)].as_array().unwrap().is_empty());
             assert!(serde_json::to_vec(&o).unwrap().len() <= 1024);
             assert_eq!(o["diagnostics"].as_array().unwrap().len(), 1);
         }
@@ -207,8 +225,8 @@ fn retained_features_diagrams_math_and_decorations_follow_the_contract() {
         .unwrap()
         .contains("oriha-code-block"));
     let s = value(receiver.derive_parsed_blocks(&p, BlockOutputMode::Structured));
-    assert_eq!(s["blocks"][0]["kind"], "fencedCode");
-    assert!(s["blocks"][0]["text"]
+    assert_eq!(root(&s, 0)["kind"], "fencedCode");
+    assert!(root(&s, 0)["source"]
         .as_str()
         .unwrap()
         .contains("flowchart TD"));
@@ -233,7 +251,7 @@ fn empty_text_structural_nodes_and_recovery_remain_meaningful() {
         input("```\n```"),
         BlockOutputMode::Structured,
     ));
-    assert_eq!(o["blocks"][0]["text"], "");
+    assert_eq!(root(&o, 0)["source"], "");
     let engine = OrihaEngine::default().with_limits(EngineLimits {
         max_nesting_depth: 1,
         ..Default::default()
@@ -261,8 +279,12 @@ fn duplicate_footnotes_keep_ir_order_and_existing_resolution_precedence() {
     let e = OrihaEngine::default().add_hook(DuplicateNotes);
     let p = e.parse(input("ref[^n]\n\n[^n]: original"));
     let s = value(e.derive_parsed_blocks(&p, BlockOutputMode::Structured));
-    assert_eq!(s["footnotes"][0]["richText"][0]["text"], "first");
-    assert_eq!(s["footnotes"][1]["richText"][0]["text"], "last");
+    for (i, text) in ["first", "last"].iter().enumerate() {
+        let definition = node(&s, &s["footnoteIds"][i]);
+        assert_eq!(node(&s, &definition["childIds"][0])["text"], *text);
+    }
+    let reference = node(&s, &root(&s, 0)["childIds"][1]);
+    assert_eq!(reference["definitionId"], s["footnoteIds"][1]);
     let r = value(e.derive_parsed_blocks(&p, BlockOutputMode::Rendered));
     let section = r["blocks"][1]["html"].as_str().unwrap();
     assert!(section.contains("last"));
@@ -270,27 +292,23 @@ fn duplicate_footnotes_keep_ir_order_and_existing_resolution_precedence() {
 }
 
 #[test]
-fn owned_nullable_structured_positions_survive_wire_roundtrips() {
-    let BlockOutput::Structured(mut output) =
-        derive_blocks(input("**text**"), BlockOutputMode::Structured)
-    else {
-        unreachable!()
-    };
-    output.blocks.push(None);
-    if let StructuredBlockProperties::Paragraph { rich_text, .. } =
-        &mut output.blocks[0].as_mut().unwrap().content
-    {
-        rich_text.push(None);
-        rich_text[0].as_mut().unwrap().children.push(None);
-    }
-    output.blocks[0].as_mut().unwrap().children.push(None);
-    let wire = serde_json::to_value(&output).unwrap();
-    assert!(wire["blocks"][1].is_null());
-    assert!(wire["blocks"][0]["properties"]["richText"][1].is_null());
-    assert!(wire["blocks"][0]["properties"]["richText"][0]["children"][1].is_null());
-    assert!(wire["blocks"][0]["children"][0].is_null());
+fn structured_pool_is_nonnullable_and_roundtrips_without_an_old_tree() {
+    let output = derive_blocks(input("**text**"), BlockOutputMode::Structured);
+    let wire = value(output);
+    assert!(wire.get("blocks").is_none());
+    assert!(wire.get("references").is_none());
+    assert!(wire.get("footnotes").is_none());
+    assert!(wire["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .all(serde_json::Value::is_object));
     let roundtrip: StructuredBlockOutput = serde_json::from_value(wire.clone()).unwrap();
+    roundtrip.validate(100, 100, 2_000_000).unwrap();
     assert_eq!(serde_json::to_value(roundtrip).unwrap(), wire);
+    let mut bad = wire;
+    bad["nodes"][0] = serde_json::Value::Null;
+    assert!(serde_json::from_value::<StructuredBlockOutput>(bad).is_err());
 }
 
 #[test]
@@ -311,7 +329,7 @@ fn nested_inline_source_fails_safely_in_a_real_process() {
             for mode in [BlockOutputMode::Structured, BlockOutputMode::Rendered] {
                 let o = value(derive_blocks(input(&markdown), mode));
                 assert_eq!(o["status"], expected);
-                assert!(o["blocks"].as_array().unwrap().is_empty());
+                assert!(o[body_key(mode)].as_array().unwrap().is_empty());
             }
         }
         let ordinary = format!("{}x{}", "![".repeat(16), "](/image)".repeat(16));

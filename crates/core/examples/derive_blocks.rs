@@ -1,7 +1,7 @@
 //! cargo run -p oriha-core --example derive_blocks --release --locked
 use oriha_core::{
     derive_blocks, derive_parsed_blocks, parse, BlockOutput, BlockOutputMode, BlockOutputStatus,
-    RenderInput, StructuredBlockProperties,
+    DocumentNodeKind, RenderInput,
 };
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -17,18 +17,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         unreachable!()
     };
     assert_eq!(structured.status, BlockOutputStatus::Complete);
-    let heading = structured.blocks[0].as_ref().ok_or("missing heading")?;
-    let StructuredBlockProperties::Heading { level, rich_text } = &heading.content else {
+    let heading = structured
+        .nodes
+        .iter()
+        .find(|node| node.id == structured.root_ids[0])
+        .ok_or("missing heading")?;
+    let DocumentNodeKind::Heading {
+        level,
+        child_ids,
+        anchor,
+    } = &heading.content
+    else {
         return Err("expected typed heading".into());
     };
     assert_eq!(*level, 1);
-    assert_eq!(heading.text.as_deref(), Some("Hello Rust"));
-    assert_eq!(rich_text.len(), 2);
-    assert_eq!(
-        structured.references["r"].destination,
-        "https://example.com"
-    );
-    assert_eq!(structured.footnotes[0].label, "n");
+    assert_eq!(anchor, "hello-rust");
+    assert_eq!(child_ids.len(), 2);
+    assert_eq!(structured.reference_ids.len(), 1);
+    assert_eq!(structured.footnote_ids.len(), 1);
+    structured
+        .validate(10_000, 512, 2_000_000)
+        .map_err(|e| format!("{e:?}"))?;
     println!("{}", serde_json::to_string_pretty(&structured)?);
 
     let BlockOutput::Rendered(rendered) = derive_parsed_blocks(&parsed, BlockOutputMode::Rendered)

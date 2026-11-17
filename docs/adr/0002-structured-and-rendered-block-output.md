@@ -6,6 +6,8 @@
 - Detailed contract: [Block derivation design](../design/block-derivation.md)
 - [Verification methods](../guides/verification.md)
 
+[ADR 0005](0005-flat-structured-document-output.md) replaces this ADR's structured representation with a flat version-2 contract and optional typed preparation. The earlier structured provisions below are historical; the [current guide](../guides/0002-block-output.md) describes the new Rust implementation. Existing HTML and rendered-block version-1 contracts remain current. Consumer integration and verification are tracked separately.
+
 ## Context
 
 Content applications need semantic HTML per block, with renderer-owned parsing

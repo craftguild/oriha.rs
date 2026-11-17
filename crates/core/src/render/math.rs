@@ -83,7 +83,7 @@ pub(super) fn render_math_block_node(
     }
 
     match render_latex_source_svg(math_source, LatexRenderMode::Display, &context.appearance) {
-        Ok(RenderedLatex { svg }) => {
+        Ok(RenderedLatex { svg, .. }) => {
             register_bundled_math_font_asset(state);
             out.push_html(&format!(
                 r#"<figure id="{}" class="oriha-math-block" data-oriha-block-kind="mathBlock">{}</figure>"#,

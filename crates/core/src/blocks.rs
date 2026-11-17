@@ -1,14 +1,15 @@
 //! Owned, versioned block output. This schema is independent of document JSON.
-use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
 use crate::{RenderAsset, RenderDiagnostic};
 
 pub(crate) mod budget;
+mod document;
+mod graph;
 pub(crate) mod html_budget;
-pub(crate) mod inline;
-pub(crate) mod structured;
+pub use document::*;
+pub use graph::DocumentValidationError;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -34,18 +35,6 @@ pub enum BlockOutput {
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct StructuredBlockOutput {
-    pub schema_version: u32,
-    pub mode: BlockOutputMode,
-    pub status: BlockOutputStatus,
-    pub blocks: Vec<Option<StructuredBlock>>,
-    pub references: BTreeMap<String, StructuredReference>,
-    pub footnotes: Vec<StructuredFootnote>,
-    pub diagnostics: Vec<RenderDiagnostic>,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct RenderedBlockOutput {
     pub schema_version: u32,
     pub mode: BlockOutputMode,
@@ -53,81 +42,6 @@ pub struct RenderedBlockOutput {
     pub blocks: Vec<RenderedHtmlBlock>,
     pub assets: Vec<RenderAsset>,
     pub diagnostics: Vec<RenderDiagnostic>,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct StructuredBlock {
-    pub id: String,
-    pub text: Option<String>,
-    #[serde(flatten)]
-    pub content: StructuredBlockProperties,
-    pub children: Vec<Option<StructuredBlock>>,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-#[serde(
-    tag = "kind",
-    content = "properties",
-    rename_all = "camelCase",
-    rename_all_fields = "camelCase"
-)]
-pub enum StructuredBlockProperties {
-    Document {},
-    Paragraph {
-        rich_text: Vec<Option<RichText>>,
-        tight: bool,
-    },
-    Heading {
-        level: u8,
-        rich_text: Vec<Option<RichText>>,
-    },
-    FencedCode {
-        language: Option<String>,
-        info: String,
-        closed: bool,
-        indent: usize,
-    },
-    IndentedCode {
-        language: Option<String>,
-        info: String,
-        closed: bool,
-        indent: usize,
-    },
-    MathBlock {
-        display: bool,
-        closed: bool,
-    },
-    ThematicBreak {},
-    HtmlBlock {},
-    LinkReferenceDefinition {
-        source: String,
-    },
-    BlockQuote {},
-    List {
-        ordered: bool,
-        loose: bool,
-        marker: String,
-        start: Option<String>,
-    },
-    ListItem {
-        marker: String,
-        checked: Option<bool>,
-    },
-    GfmTable {
-        alignments: Vec<BlockTableAlignment>,
-        header: Vec<StructuredTableCell>,
-        rows: Vec<Vec<StructuredTableCell>>,
-    },
-    BlankLine {},
-    Callout {
-        kind: String,
-        title: Option<String>,
-    },
-    ForeignHtml {
-        origin: String,
-        trust_level: BlockTrustLevel,
-    },
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -145,75 +59,6 @@ pub enum BlockTrustLevel {
     Untrusted,
     Sanitized,
     Trusted,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct StructuredTableCell {
-    pub text: String,
-    pub rich_text: Vec<Option<RichText>>,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct StructuredReference {
-    pub destination: String,
-    pub title: Option<String>,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct StructuredFootnote {
-    pub label: String,
-    pub rich_text: Vec<Option<RichText>>,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct RichText {
-    pub text: Option<String>,
-    #[serde(flatten)]
-    pub content: RichTextProperties,
-    pub children: Vec<Option<RichText>>,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-#[serde(
-    tag = "kind",
-    content = "properties",
-    rename_all = "camelCase",
-    rename_all_fields = "camelCase"
-)]
-pub enum RichTextProperties {
-    Annotation {
-        kind: String,
-        id: String,
-        classes: Vec<String>,
-        data: BTreeMap<String, String>,
-    },
-    Text {},
-    Emoji {
-        shortcode: String,
-    },
-    Code {},
-    Math {},
-    Html {
-        tagfilter: bool,
-    },
-    SoftBreak {},
-    HardBreak {},
-    Emphasis {},
-    Strong {},
-    Strikethrough {},
-    Link {
-        url: String,
-        title: Option<String>,
-    },
-    Image {
-        url: String,
-        title: Option<String>,
-    },
-    FootnoteReference {
-        label: String,
-    },
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]

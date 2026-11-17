@@ -10,13 +10,22 @@ pub(super) fn render_mermaid_code_block(
     block_id: &str,
     context: &RenderContext,
 ) -> Result<MermaidSvg, MermaidError> {
-    let options = mermaid_options_for_appearance(&context.appearance);
-    Mermaid::new().render_with_measurements(
+    render_mermaid_source_svg(
         source,
         block_id,
-        &options,
+        &context.appearance,
         &context.mermaid_text_metrics,
     )
+}
+
+pub(super) fn render_mermaid_source_svg(
+    source: &str,
+    block_id: &str,
+    appearance: &AppearanceOptions,
+    metrics: &BTreeMap<String, MermaidMeasurementResult>,
+) -> Result<MermaidSvg, MermaidError> {
+    let options = mermaid_options_for_appearance(appearance);
+    Mermaid::new().render_with_measurements(source, block_id, &options, metrics)
 }
 
 pub(super) fn mermaid_options_for_appearance(appearance: &AppearanceOptions) -> MermaidOptions {
@@ -66,12 +75,7 @@ pub(super) fn render_plantuml_code_block(
     source: &str,
     context: &RenderContext,
 ) -> Result<PlantUmlBlockRender, PlantUmlError> {
-    let options = plantuml_options_for_appearance(&context.appearance);
-    let measurer = ExternalPlantUmlTextMeasurer {
-        measurements: &context.plantuml_text_metrics,
-        base_style: options.base_text_style(),
-    };
-    match PlantUml::new().render_with_text_measurer(source, &options, &measurer) {
+    match render_plantuml_source_svg(source, &context.appearance, &context.plantuml_text_metrics) {
         Ok(rendered) => Ok(PlantUmlBlockRender::Svg(rendered.svg)),
         Err(error @ PlantUmlError::UnsupportedDiagram { .. }) => {
             let title = render_message(context.locale, RenderMessage::UnsupportedPlantumlTitle);
@@ -81,6 +85,19 @@ pub(super) fn render_plantuml_code_block(
         }
         Err(error) => Err(error),
     }
+}
+
+pub(super) fn render_plantuml_source_svg(
+    source: &str,
+    appearance: &AppearanceOptions,
+    metrics: &BTreeMap<String, InlineTextMeasurementResult>,
+) -> Result<oriha_plantuml::PlantUmlSvg, PlantUmlError> {
+    let options = plantuml_options_for_appearance(appearance);
+    let measurer = ExternalPlantUmlTextMeasurer {
+        measurements: metrics,
+        base_style: options.base_text_style(),
+    };
+    PlantUml::new().render_with_text_measurer(source, &options, &measurer)
 }
 
 pub(super) fn plantuml_options_for_appearance(appearance: &AppearanceOptions) -> PlantUmlOptions {

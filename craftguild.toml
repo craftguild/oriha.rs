@@ -247,7 +247,7 @@ role = "implementation"
 reason = "First-party runtime, generator, packaging, example, build or verification implementation"
 
 [[sources]]
-pattern = "crates/core/src/blocks/{budget.rs,html_budget.rs,inline.rs,structured.rs}"
+pattern = "crates/core/src/blocks/{budget.rs,document.rs,graph.rs,html_budget.rs}"
 role = "implementation"
 reason = "First-party runtime, generator, packaging, example, build or verification implementation"
 
@@ -317,9 +317,14 @@ role = "test"
 reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
 
 [[sources]]
-pattern = "crates/core/src/render/block_output/{rendered.rs,validate.rs}"
+pattern = "crates/core/src/render/block_output/{document.rs,rendered.rs,validate.rs}"
 role = "implementation"
 reason = "First-party runtime, generator, packaging, example, build or verification implementation"
+
+[[sources]]
+pattern = "crates/core/src/render/block_output/document/{blocks.rs,inlines.rs,preparation.rs}"
+role = "implementation"
+reason = "Exhaustive typed IR projection and optional engine-owned render preparation"
 
 [[sources]]
 pattern = "crates/core/src/syntax_highlight/{html.rs,languages.rs,lexemes.rs,programming.rs,structured.rs}"
@@ -342,7 +347,7 @@ role = "implementation"
 reason = "First-party runtime, generator, packaging, example, build or verification implementation"
 
 [[sources]]
-pattern = "crates/core/tests/{adoption_remediation.rs,autolinks.rs,block_output.rs,block_output_review.rs,block_output_safety.rs,callouts.rs,character_references.rs,code_block_options.rs,commonmark_spec.rs,emoji.rs,image_presentation.rs,image_presentation_limits.rs,image_presentation_urls.rs,json_contract.rs,latex.rs,mermaid.rs,oriha_rename.rs,plantuml.rs,rendered_urls.rs,robustness.rs,source_annotations.rs,source_annotations_review.rs}"
+pattern = "crates/core/tests/{adoption_remediation.rs,autolinks.rs,block_output.rs,block_output_review.rs,block_output_safety.rs,callouts.rs,character_references.rs,code_block_options.rs,commonmark_spec.rs,document_graph.rs,document_preparation.rs,emoji.rs,image_presentation.rs,image_presentation_limits.rs,image_presentation_urls.rs,json_contract.rs,latex.rs,mermaid.rs,oriha_rename.rs,plantuml.rs,rendered_urls.rs,robustness.rs,source_annotations.rs,source_annotations_review.rs}"
 role = "test"
 reason = "Test-only module, fixture, benchmark or fuzz harness; not product runtime"
 

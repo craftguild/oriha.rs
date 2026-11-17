@@ -1,10 +1,12 @@
-# Structured and Rendered Block Derivation
+# Historical version-1 Structured and Rendered Block Derivation
 
 - Status: accepted contract; implementation tracked separately.
 - Date: 2026-11-01.
 - Baseline: oriha-core 0.2.5, repository revision `5307c0ca5d3852e2eb538b594abdfadbd06a1ef6`.
 - Decision: [ADR-0002](../adr/0002-structured-and-rendered-block-output.md).
 - Verification: [Verification methods](../guides/verification.md).
+
+Structured version-1 provisions below are historical and are being replaced by [ADR 0005](../adr/0005-flat-structured-document-output.md) and the [current Rust guide](../guides/0002-block-output.md). The rendered-block version-1 contract remains current. This document preserves the earlier design and does not define a structured compatibility API.
 
 ## Purpose and Ownership
 

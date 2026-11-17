@@ -3,6 +3,7 @@ use super::*;
 use crate::blocks::budget::{fits, Budget, DerivationError};
 use crate::blocks::*;
 
+mod document;
 mod rendered;
 mod validate;
 
@@ -15,7 +16,7 @@ pub fn derive_parsed_blocks(parsed: &ParsedDocument, mode: BlockOutputMode) -> B
 }
 
 impl OrihaEngine {
-    /// Parse once, then derive the selected owned schema-v1 representation.
+    /// Parse once, then derive the selected owned representation.
     pub fn derive_blocks(&self, input: RenderInput, mode: BlockOutputMode) -> BlockOutput {
         catch_engine_panic(
             std::panic::AssertUnwindSafe(|| self.derive_parsed_blocks(&self.parse(input), mode)),
@@ -37,6 +38,15 @@ impl OrihaEngine {
         parsed: &ParsedDocument,
         mode: BlockOutputMode,
     ) -> BlockOutput {
+        self.derive_parsed_blocks_with_options(parsed, mode, StructuredOptions::default())
+    }
+
+    pub fn derive_parsed_blocks_with_options(
+        &self,
+        parsed: &ParsedDocument,
+        mode: BlockOutputMode,
+        options: StructuredOptions,
+    ) -> BlockOutput {
         let limit = parsed.limits.max_output_bytes;
         catch_engine_panic(
             std::panic::AssertUnwindSafe(|| {
@@ -55,7 +65,7 @@ impl OrihaEngine {
                 }
                 let result =
                     validate::document(&parsed.document, parsed.limits).and_then(|()| match mode {
-                        BlockOutputMode::Structured => structured(parsed),
+                        BlockOutputMode::Structured => document::derive(parsed, options),
                         BlockOutputMode::Rendered => rendered::derive(self, parsed),
                     });
                 match result {
@@ -85,52 +95,6 @@ fn panic_error() -> DerivationError {
         code: "blocks.panic",
         message: "Block derivation caught an engine or extension panic",
     }
-}
-
-fn structured(parsed: &ParsedDocument) -> Result<BlockOutput, DerivationError> {
-    let mut b = Budget::new(parsed.limits.max_output_bytes);
-    let blocks =
-        crate::blocks::structured::blocks(&parsed.document.blocks, &parsed.context.source, &mut b)?;
-    let references = parsed
-        .document
-        .link_references
-        .iter()
-        .map(|(label, r)| {
-            b.reserve(8)?;
-            Ok((
-                b.copy(label)?,
-                StructuredReference {
-                    destination: b.copy(&r.destination)?,
-                    title: b.optional(r.title.as_deref())?,
-                },
-            ))
-        })
-        .collect::<Result<_, DerivationError>>()?;
-    let footnotes = parsed
-        .document
-        .footnotes
-        .iter()
-        .map(|f| {
-            b.reserve(24)?;
-            Ok(StructuredFootnote {
-                label: b.copy(&f.label)?,
-                rich_text: crate::blocks::inline::inlines(&f.children, &mut b)?,
-            })
-        })
-        .collect::<Result<_, DerivationError>>()?;
-    Ok(BlockOutput::Structured(StructuredBlockOutput {
-        schema_version: 1,
-        mode: BlockOutputMode::Structured,
-        status: BlockOutputStatus::Complete,
-        blocks,
-        references,
-        footnotes,
-        diagnostics: tree_diagnostics(
-            &parsed.document.blocks,
-            &parsed.state.diagnostics,
-            parsed.limits.max_output_bytes,
-        ),
-    }))
 }
 
 fn finish(output: BlockOutput, limit: usize) -> BlockOutput {
@@ -187,12 +151,14 @@ fn failure(
     ) -> BlockOutput {
         match mode {
             BlockOutputMode::Structured => BlockOutput::Structured(StructuredBlockOutput {
-                schema_version: 1,
+                schema_version: 2,
                 mode,
                 status,
-                blocks: Vec::new(),
-                references: BTreeMap::new(),
-                footnotes: Vec::new(),
+                root_ids: Vec::new(),
+                nodes: Vec::new(),
+                reference_ids: Vec::new(),
+                footnote_ids: Vec::new(),
+                fonts: Vec::new(),
                 diagnostics,
             }),
             BlockOutputMode::Rendered => BlockOutput::Rendered(RenderedBlockOutput {

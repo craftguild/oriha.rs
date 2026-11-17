@@ -13,9 +13,12 @@ pub use font::{
     MATH_FONT_FORMAT, MATH_FONT_MIME_TYPE,
 };
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct RenderedLatex {
     pub svg: String,
+    pub width: f32,
+    pub height: f32,
+    pub baseline: f32,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -59,9 +62,7 @@ pub fn render_latex_svg(
     let ast = parser::parse_latex(source)?;
     let ir = ir::lower_latex(&ast);
     let layout = layout::layout_latex(&ir, mode, body_font_size_px);
-    let svg = render::render_svg(&layout, mode);
-
-    Ok(RenderedLatex { svg })
+    Ok(render::render_svg(&layout, mode))
 }
 
 #[cfg(test)]

@@ -93,8 +93,8 @@ def main():
         shutil.copy2(ROOT / "Cargo.lock", work / "Cargo.lock")
         code, errors = check(work)
         assert code == 0, errors
-        probe(work, "BlockKind", ["blocks/structured.rs", "render/block_output/rendered.rs", "render/block_renderer.rs"])
-        probe(work, "InlineKind", ["blocks/inline.rs", "render/inline.rs"])
+        probe(work, "BlockKind", ["render/block_output/document/blocks.rs", "render/block_output/rendered.rs", "render/block_renderer.rs"])
+        probe(work, "InlineKind", ["render/block_output/document/inlines.rs", "render/inline.rs"])
         code, errors = check(work)
         assert code == 0, errors
         print("Actual source restored in temporary copy; both enum probes passed.")

@@ -3,7 +3,7 @@ use crate::LatexRenderMode;
 
 const FONT_STACK: &str = "'ORIHA STIX Two Math', 'STIX Two Math', 'Cambria Math', serif";
 
-pub(crate) fn render_svg(layout: &LatexLayout, mode: LatexRenderMode) -> String {
+pub(crate) fn render_svg(layout: &LatexLayout, mode: LatexRenderMode) -> crate::RenderedLatex {
     let padding = match mode {
         LatexRenderMode::Inline => 2.0,
         LatexRenderMode::Display => 6.0,
@@ -69,7 +69,12 @@ pub(crate) fn render_svg(layout: &LatexLayout, mode: LatexRenderMode) -> String 
     }
 
     svg.push_str("</svg>");
-    svg
+    crate::RenderedLatex {
+        svg,
+        width,
+        height,
+        baseline,
+    }
 }
 
 fn escape_text(text: &str) -> String {

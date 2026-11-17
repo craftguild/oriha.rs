@@ -73,6 +73,13 @@ impl FootnoteIds {
             })
     }
 
+    /// Duplicate definitions remain available in structured data, but only the
+    /// resolved definition uses the public semantic destination.
+    pub(super) fn retained_definition(&mut self, label: &str) -> String {
+        let base = format!("{}--retained", self.definition(label));
+        self.allocate(base.clone(), || base)
+    }
+
     pub(super) fn title(&mut self) -> String {
         if let Some(id) = &self.title {
             return id.clone();

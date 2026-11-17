@@ -291,7 +291,7 @@ pub(super) fn render_inline_math_or_literal_inner(
     appearance: &AppearanceOptions,
 ) -> String {
     match render_latex_source_svg(source, LatexRenderMode::Inline, appearance) {
-        Ok(RenderedLatex { svg }) => {
+        Ok(RenderedLatex { svg, .. }) => {
             if let Some(state) = state {
                 register_bundled_math_font_asset(state);
             }

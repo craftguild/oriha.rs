@@ -1,273 +1,108 @@
-# Rust block output, schema version 1
+# Rust structured documents and rendered blocks
 
-`oriha-core` provides owned structured trees and semantic HTML fragments from the
-same parser. This Rust API is included in the initial 0.1.0 source release.
-Existing document JSON,
-source-map `RenderedBlock`, `RenderMode`, prepared rendering, patching and export
-API and wire contracts are preserved. The inline HTML security correction below
-intentionally changes unsafe output when raw HTML is disabled. Bridges do not
-expose this API automatically.
+`oriha-core` derives a flat typed document (structured schema version 2) or semantic HTML root fragments (rendered schema version 1) from one retained parse. The structured version-1 tree and its DTOs have been replaced without a compatibility path. Ordinary document HTML, source-aware parsing, source-map `RenderedBlock`, native/JSON, prepared rendering, patching and export contracts retain their behavior. These Rust APIs are not automatically exposed by native bridges.
 
 ## Use the API
 
 ```rust
 use oriha_core::{
-    parse, derive_parsed_blocks, BlockOutput, BlockOutputMode,
-    BlockOutputStatus, RenderInput,
+    OrihaEngine, RenderInput, BlockOutput, BlockOutputMode,
+    BlockOutputStatus, DocumentNodeKind, StructuredOptions,
 };
 
-let parsed = parse(RenderInput {
+let engine = OrihaEngine::default();
+let parsed = engine.parse(RenderInput {
     markdown: "# Hello **Rust**".into(),
     ..Default::default()
 });
-let BlockOutput::Rendered(output) =
-    derive_parsed_blocks(&parsed, BlockOutputMode::Rendered)
-else { unreachable!() };
-assert_eq!(output.status, BlockOutputStatus::Complete);
-for block in &output.blocks {
-    if let Some(html) = block.html() {
-        // Supply HTML to your presentation layer, including empty strings.
-        println!("{html}");
-    }
+let BlockOutput::Structured(document) = engine.derive_parsed_blocks_with_options(
+    &parsed, BlockOutputMode::Structured,
+    StructuredOptions { syntax: true, ..Default::default() },
+) else { unreachable!() };
+assert_eq!(document.status, BlockOutputStatus::Complete);
+let heading = document.nodes.iter()
+    .find(|node| node.id == document.root_ids[0]).unwrap();
+if let DocumentNodeKind::Heading { level, child_ids, anchor } = &heading.content {
+    assert_eq!(*level, 1);
+    assert_eq!(anchor, "hello-rust");
+    assert_eq!(child_ids.len(), 2);
 }
 ```
 
-`derive_blocks(input, mode)` parses once and derives an owned result. Both
-functions are also methods on `OrihaEngine`. `derive_parsed_blocks` reuses
-the retained source, effective features, appearance, limits and parse-hook
-state. It makes no block-parser or inline-parser calls. A different deriving
-engine supplies its renderers and render hooks, while the parsed settings win.
-The result can outlive the source, parsed document and engine.
+`derive_blocks(input, mode)` parses once. The top-level `derive_parsed_blocks` and matching `OrihaEngine` methods reuse the retained source, parsing features, appearance, limits and parse-hook state. The default structured options are all off. `OrihaEngine::derive_parsed_blocks_with_options` prepares selected artifacts from that same parse; its options never change parsing features or structural identities. A different deriving engine supplies renderers and render hooks only for rendered mode. Owned results outlive the source, parsed document and engine.
 
-Rendered fragments also retain the [code-block presentation options](code-block-options.md).
-Their defaults match complete styled and semantic HTML; structured code
-properties are independent of these display switches.
+Run the compiled consumer example with `cargo run -p oriha-core --example derive_blocks --release --locked`. It exercises both representations, typed references/footnotes and serialization with actual engine output.
 
-Run the complete consumer example:
+## Flat structured document
 
-```sh
-cargo build -p oriha-core --release --locked
-cargo run -p oriha-core --example derive_blocks --release --locked
-```
+`StructuredBlockOutput` contains `schema_version: 2`, `mode: Structured`, `status`, `root_ids`, `nodes`, `reference_ids`, `footnote_ids`, `fonts` and typed `diagnostics`. JSON uses camelCase. Each entry and ID is non-null. Body roots are ordered; retained definitions are separate forest roots, not ordinary visible body blocks.
 
-The example exercises typed structured data, reference/footnote retention,
-rendered fragments, both entry points and JSON serialization using the release
-library. It asserts the results instead of providing fixture responses.
+Each `DocumentNode` has an opaque document-local `id` and a flattened tagged `DocumentNodeKind`. Actual required payloads live on the corresponding enum variant, without a generic property bag, unrelated optional fields or another per-kind lookup. Existing block IDs are preserved and reserved before assigning collision-free inline, row, cell and definition IDs. IDs are stable across optional preparation within one revision; they are not persistent editor or DOM identities.
 
-## Typed structured data
-
-`BlockOutput::Structured` contains `StructuredBlockOutput`: `schema_version`,
-`mode`, `status`, `blocks`, `references`, `footnotes` and `diagnostics`.
-Each `StructuredBlock` owns its `id`, nullable `text`, typed `content:
-StructuredBlockProperties`, and ordered nullable `children`.
-
-Serialization flattens `content` into `kind` and `properties`. Every property
-variant is a distinct Rust payload. A heading cannot carry list properties.
-No parser offsets, source mappings or normalization buffers enter this schema.
-
-| Kind | Properties |
+| Kind | Typed payload |
 | --- | --- |
-| `document`, `thematicBreak`, `htmlBlock`, `blockQuote`, `blankLine` | Empty object |
-| `paragraph` | `richText`, `tight` (tight-list paragraph) |
-| `heading` | `level`, `richText` |
-| `fencedCode`, `indentedCode` | Nullable `language`, `info`, `closed`, `indent` |
-| `mathBlock` | `display`, `closed` |
-| `linkReferenceDefinition` | Materialized `source` |
-| `list` | `ordered`, `loose`, `marker`, nullable `start` |
-| `listItem` | `marker`, nullable task `checked` |
-| `gfmTable` | `alignments`, `header`, `rows` |
-| `callout` | `kind`, nullable `title` |
-| `foreignHtml` | `origin`, `trustLevel` |
+| `document`, `blockQuote` | Ordered `childIds` |
+| `paragraph` | Inline `childIds`, `tight` |
+| `heading` | Inline `childIds`, `level`, producer `anchor` |
+| `fencedCode` | `source`, nullable decoded `language`, `info`, `closed`, `indent`, optional `highlighting` and `svg` |
+| `indentedCode` | Same code metadata and optional `highlighting` |
+| `mathBlock` | `source`, `display`, `closed`, optional `svg` |
+| `thematicBreak`, `blankLine` | Explicit semantic variant |
+| `htmlBlock`, `linkReferenceDefinition` | Retained `source` |
+| `list` | Item `childIds`, `ordered`, `loose`, `marker`, normalized decimal-string `start` or null |
+| `listItem` | Block `childIds`, `marker`, optional task `checked` |
+| `gfmTable` | `alignments` and ordered `rowIds` |
+| `tableRow` | `header` and ordered `cellIds` |
+| `tableCell` | Inline `childIds` |
+| `callout` | Block `childIds`, `calloutKind`, optional custom `title` |
+| `foreignHtml` | `source`, `origin`, `trustLevel` |
+| `text`, `emoji` | Visible `text`; emoji also has `shortcode` |
+| `code`, `math` | Literal `source`; math has optional `svg` |
+| `html` | Authored `source`, `tagfilter` |
+| `softBreak`, `hardBreak` | Explicit line-break semantic variant |
+| `annotation` | Inline `childIds`, `annotationKind`, `annotationId`, `classes`, scoped `data` |
+| `emphasis`, `strong`, `strikethrough` | Inline `childIds` |
+| `link`, `image` | `destination`, `normalizedDestination`, optional `title`, and label `childIds` or `altIds` |
+| `footnoteReference` | `label`, optional `definitionId`, `ordinal`, `anchor`, `definitionAnchor` |
+| `referenceDefinition` | Resolved `label`, `destination`, `normalizedDestination`, optional `title` |
+| `footnoteDefinition` | `label`, inline `childIds`, `anchor`, `visible`, optional `ordinal`, `backlinkIds` |
 
-Ordered `start` is a normalized decimal string; unordered lists use null. This
-preserves HTML start semantics even for programmatic markers beyond integer
-range. Table alignments are `none`, `left`, `center` or `right`. Header cells and
-row cells own `text` and `richText`. Trust levels are `untrusted`, `sanitized`
-and `trusted`; retaining a trust label does not authorize HTML execution.
+The projection exhaustively matches the actual block and inline IR enums without wildcard fallback. Adding a syntax variant fails compilation until its structured projection is explicitly implemented. Behavioral tests cover semantic changes within an existing variant. No Markdown reparse or HTML extraction is involved.
 
-Own text excludes child blocks. Paragraphs/headings project their inline tree;
-code/math/HTML carry their materialized values in `text`. Structural containers,
-tables, reference definitions and thematic/blank nodes have null own text.
-Empty text remains a string. Code uses the correct quote/list/callout source and
-indentation normalization; consumers need no source buffer or Markdown parser.
+Sources use the actual quote/list/callout normalization context. Inline text is already decoded; image alt content, annotations, foreign/authored HTML, unused definitions and duplicate footnotes remain present. Link-reference syntax is distinct from the retained resolved definition. Footnote resolution preserves last-definition precedence. `visible` preserves the renderer's main-flow definition snapshot; references in image alt or unused definitions do not become visible footnote references. Structural ownership is an ordered forest; semantic definition references do not own or recursively expand their targets.
 
-`RichText` has nullable leaf `text`, typed `content: RichTextProperties` and
-ordered nullable `children`. Its wire form also uses `kind` and `properties`:
+`document.validate(max_nodes, max_depth, max_bytes)` rejects unsupported versions, incomplete status, duplicate/empty IDs, missing or illegal targets, repeated/cyclic ownership, unreachable nodes, invalid font dependencies and exhausted limits. Consumers validate before walking an untrusted document. Producer derivation validates the graph before returning success.
 
-| Kind | Text / properties / children |
-| --- | --- |
-| `text`, `code`, `math` | Leaf value, empty properties |
-| `emoji` | Emoji leaf value, `shortcode` |
-| `html` | Authored leaf value, `tagfilter` |
-| `softBreak`, `hardBreak` | Newline leaf value, empty properties |
-| `emphasis`, `strong`, `strikethrough` | Null leaf text, formatting children |
-| `link`, `image` | Null leaf text, `url`, nullable `title`, label/alt children |
-| `annotation` | Null leaf text, `kind`, `id`, `classes`, `data`, children |
-| `footnoteReference` | Null leaf text, `label` |
+## Optional syntax and SVG preparation
 
-Plain text recursively preserves formatting children and image alt text, keeps
-code/math/HTML source, maps breaks to newline and footnote references to
-`[^label]`. Text already decoded in the IR remains decoded. Annotation fragments
-retain one supplied logical identity across formatting boundaries.
+`StructuredOptions` independently selects `syntax`, `math`, `mermaid` and `plantuml`, all off by default. These options control derivation, not parsing. Enable the normal math parsing feature when parsing math syntax. A Mermaid or PlantUML fence remains a fenced code node whether prepared or not.
 
-References map normalized labels to `destination` and nullable `title`.
-Footnotes retain every definition in IR order, including unused and duplicate
-definitions. Rich links already contain resolved destinations/titles. Rendering
-uses the existing last-definition precedence for duplicate footnotes.
+Code highlighting reuses the HTML renderer's Rust tokenizer. `CodeHighlighting.lines` holds ordered `CodeLine.tokens`; each `SyntaxToken` has a finite `TokenKind` and literal `text`. Joining each row's token text and then joining rows with LF reconstructs the normalized code source exactly, including Unicode, whitespace, blank lines and a final empty line after a terminal LF. Unknown languages use plain tokens. Viewer colors, gutter policy, language labels and controls are outside this contract.
 
-## Rendered HTML and explicit Null
+Math and supported fences carry `SvgContent` on their originating node alongside source and authoring metadata. It contains `markup`, optional intrinsic `width`, `height` and `baseline`, and required `fontIds`. The same engine rendering internals serve HTML and structured consumers. SVG has no HTML wrapper. Consumers retain explicit SVG validation and ID/reference scoping boundaries.
 
-`BlockOutput::Rendered` contains `RenderedBlockOutput`: `schema_version`,
-`mode`, `status`, `blocks`, `assets` and `diagnostics`. A `RenderedHtmlBlock` owns
-`id`, `kind` and `content: RenderedBlockContent`. Match `Html(String)` versus
-`Null(BlockNullReason)` in Rust, or use `html() -> Option<&str>`.
-This sum type prevents contradictory HTML/Null states. JSON exposes `html` and
-`nullReason` directly:
+Shared `DocumentFont` entries contain `id`, `family`, truthful `mimeType`, typed `encoding` and `content`. The bundled math font uses `font/otf` and `base64`, and is returned once even for multiple equations. Preserve its [font license and notices](../../THIRD_PARTY_NOTICES.md). Diagrams use the configured body font stack. There is no general CSS/HTML resource escape hatch.
 
-```json
-{"id":"block-1","kind":"blankLine","html":null,"nullReason":"blankLine"}
-```
+Failed or unsupported math/diagram rendering retains source, omits the unsuccessful SVG and adds a bounded warning with a stable code and owning node ID. No preparation means no preparation-failure warning. Global errors, panics or aggregate-budget exhaustion fail the whole derivation, rather than returning truncated success or disguising an abort as source fallback.
 
-`Html("")` serializes as `"html":"","nullReason":null`. It remains a valid
-fragment. Never infer Null from an empty string. Initial legal Null reasons are
-`blankLine` and `referenceDefinition`. A custom renderer can explicitly select
-`unsupported`, producing a diagnostic naming the kind and owning block.
+## Rendered HTML remains schema version 1
 
-Entries correspond to roots, in IR order. A list, quote, callout or Document
-entry contains its complete subtree. Entries have no children; appending their
-descendants would duplicate content. The engine renders each subtree once in a
-shared context, preserving heading de-duplication, cross-root links, references
-and footnote numbers. Visible footnotes append one generated `footnotes` entry.
-Its ID is `oriha-generated-footnotes`, with the smallest available numeric suffix
-when any IR node already owns that identity.
+`RenderedBlockOutput` retains `schema_version: 1`, `mode`, `status`, `blocks`, `assets` and `diagnostics`. `RenderedHtmlBlock` has `id`, typed `kind` and `RenderedBlockContent::{Html, Null}`; `html()` exposes an optional string. JSON exposes `html` and `nullReason`. Empty HTML is a valid fragment; legal null reasons are `blankLine`, `referenceDefinition` and an explicit custom `unsupported` decision.
 
-Classes and `data-oriha-*` attributes remain part of existing semantic markup.
-There is no article wrapper, theme CSS, watermark or document layout decoration.
-With the built-in renderer, joining non-null fragments in order equals the
-semantic document body after excluding those document-only decorations.
+Rendered entries correspond to roots in IR order and contain each complete subtree. Shared rendering preserves heading de-duplication, links, references and footnote numbering. Visible footnotes append one collision-free generated `footnotes` entry. Joining non-null fragments preserves the existing semantic document body without document-only layout, theme CSS, watermark or article wrapper. Existing [code presentation options](code-block-options.md), responsive images, classes and `data-oriha-*` attributes remain in force.
 
-Structured nullable array positions are reserved for deliberate future
-non-representation decisions, with an unsupported-projection diagnostic. All
-current IR variants are real structured nodes, including non-textual nodes.
-Neither output mode applies the CMS's filtering policy. Parser-consumed blank
-lines/reference definitions are not invented as IR nodes.
+`assets` retain `RenderAsset` identity, kind, MIME and content semantics, including the deduplicated math font. SVG/CSS assets are text; `Other` is not a universal text/base64 encoding. Ordinary HTML consumers retain their existing resource boundary.
 
-## Hooks and identities
+## Hooks, limits and compatibility
 
-Document parse hooks run once at parse time. Structured derivation projects the
-retained post-parse IR and executes no render hooks or diagram layout. Rendered
-derivation executes existing before/after block-render hooks on a working copy,
-with one shared context and state. Repeated and concurrent derivations do not
-mutate the parsed document. Returned IDs reflect deliberate render-hook changes;
-otherwise both modes preserve the IR IDs.
+Parse hooks run once. Structured derivation projects the retained post-parse IR without render hooks; optional preparation uses isolated engine state. Rendered derivation runs existing before/after block hooks on a working copy. Both modes exclude complete-document finalization hooks. `BlockRenderer::block_emission` defaults to HTML, preserving custom renderers that return an empty string. Ordinary document render APIs retain their finalization and emission behavior.
 
-The new block APIs execute neither `before_output_finalize` nor
-`after_output_finalize`. Those complete-document hooks retain their ordinary
-render/patch/export behavior. Arbitrary document rewrites cannot be attributed
-to fragments. Consumers needing them must use the document APIs or an explicit
-consumer block transformation.
+Check `status` before consuming the output. Incomplete parsing returns empty incomplete output; failed parsing, malformed IR, error diagnostics, global derivation failures or exhausted budgets return empty failed output. The retained source/block/container-depth limits remain enforced. Programmatic tree and inline depths have a 256-level safety bound, with a bounded aggregate graph walk. Recursive inline label parsing retains its separate 64-call bound.
 
-`BlockRenderer::render` is unchanged. The additive provided
-`block_emission(&self, block: &BlockNode) -> BlockEmission` defaults to `Html` for
-existing custom renderers, including renderers producing empty HTML. Override it
-to choose explicit Null. Ordinary document APIs ignore this emission method.
+`max_output_bytes` bounds the aggregate serialized UTF-8 document, including node payloads, ID lists, tokens, SVG, fonts, diagnostics and JSON escaping. Early accounting bounds owned construction and reserves font bytes before copying; a counting serializer checks the final aggregate without allocating another JSON document. Oversized diagnostics collapse to a bounded output-limit diagnostic. The minimal failure envelope may exceed an impossibly small configured limit. Custom hooks remain responsible for their internal allocations.
 
-IDs must be nonempty and unique throughout the tree. Validation runs before
-projection and again on the rendered working tree after hooks. Invalid IDs fail
-the derivation; source identities are never silently invented. IDs belong to one
-document revision and are unsuitable as edit-stable database keys.
+Authored/foreign HTML remains source data and does not authorize execution. HTML APIs continue to obey effective `raw_html` and tag-filter settings. The inherited inline raw-HTML security correction and exact rendered-resource accounting remain covered by regression tests.
 
-## Status, limits and resources
+Run `python3 scripts/check-block-exhaustiveness.py` to inject actual IR probe variants into a temporary source copy, verify `E0004` independently in every structured and HTML projection, and restore the copy. No probe enters the working tree. [Verification methods](verification.md) describe existing CommonMark, source-map, JSON/native, generation and product gates. [ADR 0005](../adr/0005-flat-structured-document-output.md) owns the flat contract; the earlier [design](../design/block-derivation.md) is retained as historical version-1 design evidence.
 
-Check `status` before consuming collections. `complete` means derivation
-succeeded, including legal Null and supported warning fallbacks. An incomplete
-parse returns `incomplete` with empty collections. Failed parsing, invalid IR,
-error diagnostics, output-limit failure or a caught panic returns `failed` with
-empty collections. Retain and inspect `diagnostics`; truncated output is never
-reported complete. Failure collections include references/footnotes/assets too.
-
-The retained input, per-parser-container block limit and container-depth limit
-continue to apply. List-item wrappers are not an extra parser block budget.
-Programmatic/hook-authored IR is validated against the corresponding bounds.
-A safety ceiling of 256 tree levels protects programmatic wrappers and inline
-formatting. Recursive inline label parsing and link validation have an additional
-64-call safety bound; exceeding it fails parsing. These bounds prevent stack
-exhaustion and do not produce successful partial documents. RAII guards restore
-working limits and recursion state after failures.
-
-`max_output_bytes` limits the aggregate UTF-8 JSON size: envelope, blocks,
-properties, duplicated own text, references, footnotes, diagnostics and assets,
-including JSON escaping. Early lower-bound accounting precedes structured
-payload copies; built-in HTML buffers check remaining capacity on append;
-resource registration checks the font before copying it. Incremental root and
-resource accounting precedes further accumulation. A non-allocating counting
-serializer verifies the exact final aggregate. Custom hooks/renderers remain
-responsible for allocations they perform inside their existing String-based
-extension methods; their returned output still receives aggregate validation.
-
-Oversized diagnostic lists collapse to one bounded output-limit diagnostic.
-The fixed failure envelope is the minimum possible response and can exceed a
-configured limit too small to encode any error envelope.
-
-Rendered `assets` preserve existing `RenderAsset` identity, kind, MIME and
-content semantics, including math-font deduplication. The bundled math font is
-`Other`, MIME `font/otf`, with base64 content. SVG/CSS asset content is text;
-`Other` does not universally mean base64 or text. Font/CSS loading belongs to the
-consumer. The block API generates no general theme stylesheet. Raw HTML remains
-controlled by the retained feature setting; structured HTML is authored data,
-not permission to execute it. Existing URL and annotation escaping remains in
-force. This API does not replace a consumer's HTML sanitization policy.
-
-## Compatibility and verification
-
-JSON uses camelCase, `schemaVersion: 1` and a `structured` or `rendered` mode.
-These DTOs are a public schema rather than a dump of internal IR. Incompatible
-wire changes require a schema-version change; new kinds require an explicit
-compatibility decision. Typed blocks and rich text preserve oriha-core's IR
-semantics according to the [complete mappings](../design/block-derivation.md).
-
-Both projections and built-in HTML/emission matches use the actual IR enums
-exhaustively. Run `python3 scripts/check-block-exhaustiveness.py` to add real probe
-variants in a temporary source copy and verify E0004 in each projection body.
-No probe enters the working tree. See the [Verification methods](verification.md)
-for source identity, all functional/dependency gates, limits and release evidence.
-
-### Independent production-review corrections
-
-Independent review found that the existing inline renderer ignored
-`raw_html=false`. Authored inline HTML is now escaped in both inline rendering
-paths, ordinary document output and rendered blocks, including nested formatting,
-tables and footnotes. Effective retained settings govern parsed derivation.
-`raw_html=true` retains enabled HTML behavior and the existing GFM tag filter.
-That filter is not a sanitizer. Generated Markdown/annotation markup and
-structured authored HTML data retain their existing representation. This is an
-intentional security/contract correction to baseline HTML, without an API or
-schema change.
-
-Independent review found that temporary empty resource-array wrappers were
-charged once per root. Incremental accounting now charges each newly registered
-asset/diagnostic item, so an empty delta costs zero. Real envelope/array syntax
-and commas remain covered by exact final counting serialization. A complete
-result at its measured serialized-byte limit succeeds, including many roots;
-one byte below that size fails with empty collections. Checked construction,
-font pre-copy checks and aggregate resource limits remain enforced.
-
-## Built-in HTML references without rendering
-
-Rust consumers can call `oriha_core::render::builtin_html_anchors(&parsed)` for
-built-in semantic HTML non-SVG DOM IDs in emission order, including canonical
-heading and footnote IDs. `oriha_core::render::normalize_link_destination(url)`
-uses the same destination normalization as the built-in HTML renderer. These
-functions do not generate HTML, prepare images, render math/diagrams or measure
-fonts. Custom renderers/hooks and IDs authored in raw HTML are outside the
-anchor guarantee. Application URL policies and content selection remain with
-the consumer. These APIs do not change Structured schema v1 or omit content.
-
-Footnote IDs share a document-local namespace with built-in non-SVG block and
-heading IDs. Existing IDs remain when available. Colliding definitions and
-references use encoded-label fallbacks; the section title uses an available
-alternative. Reference counters, definition links, first-reference backlinks
-and the footnotes title use the same allocation as the anchor API. This fixes
-distinct labels with equal slugs (for example `a b` and `a-b`) without changing
-footnote definition precedence or numbering. Consumers obtain canonical IDs from
-the API rather than reconstructing a slug or reference suffix.
+`render::builtin_html_anchors(&parsed)` and `render::normalize_link_destination(url)` remain available without HTML preparation. The structured contract carries heading and footnote anchors directly. Application URL policy, semantic markup, image inspection, provider embeds, galleries and search highlighting remain consumer responsibilities.

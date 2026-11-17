@@ -16,6 +16,7 @@ mod lexemes;
 use lexemes::*;
 
 use crate::html::escape_text;
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum Language {
@@ -36,8 +37,9 @@ enum Language {
     PlantUml,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum TokenKind {
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum TokenKind {
     Plain,
     AttrName,
     Builtin,
@@ -61,11 +63,12 @@ enum TokenKind {
     Variable,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq)]
-struct Token {
-    kind: TokenKind,
-    text: String,
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct SyntaxToken {
+    pub kind: TokenKind,
+    pub text: String,
 }
+type Token = SyntaxToken;
 
 #[derive(Clone, Copy)]
 struct LanguageSpec {
@@ -85,6 +88,10 @@ pub(crate) fn highlight_lines(code: &str, language: &str) -> Vec<String> {
         .into_iter()
         .map(|tokens| emit_html(&tokens))
         .collect()
+}
+
+pub(crate) fn typed_lines(code: &str, language: &str) -> Vec<Vec<SyntaxToken>> {
+    tokenize_lines(code, Language::from_info(language))
 }
 
 fn tokenize_lines(code: &str, language: Language) -> Vec<Vec<Token>> {

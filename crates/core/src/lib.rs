@@ -40,8 +40,8 @@ pub use theme::{
 pub use types::{
     default_watermark_options, is_valid_render_stats_kind, render_snapshot_schema_version,
     render_stats_kind_catalog, render_stats_schema_version, sort_render_stats_kind_counts,
-    AppearanceOptions, AssetKind, CodeBlockOptions, ColorScheme, EngineLimits, ExportHtmlInput,
-    ExportHtmlOutput, FeatureFlags, FontFamilySpec, HtmlExportOptions, KindCount,
+    AppearanceOptions, AssetKind, CodeBlockOptions, ColorScheme, DiagnosticEngine, EngineLimits,
+    ExportHtmlInput, ExportHtmlOutput, FeatureFlags, FontFamilySpec, HtmlExportOptions, KindCount,
     LockedFeatureKind, PreparedHtmlExport, PreparedMarkdownLayout, PreparedMarkdownPatch,
     PrintOptions, RenderAsset, RenderBlockKind, RenderDiagnostic, RenderInput, RenderIssueKind,
     RenderMode, RenderOptions, RenderOutput, RenderPatchFallbackReason, RenderPatchInput,

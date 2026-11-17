@@ -21,7 +21,7 @@ pub(super) fn render_fenced_code(
 
     if context.features.math && is_latex_language(language) {
         match render_latex_source_svg(&text, LatexRenderMode::Display, &context.appearance) {
-            Ok(RenderedLatex { svg }) => {
+            Ok(RenderedLatex { svg, .. }) => {
                 register_bundled_math_font_asset(state);
                 out.push_html(&format!(
                     r#"<figure id="{}" class="oriha-math-block" data-oriha-block-kind="codeBlock" data-oriha-code-language="{}">{}</figure>"#,

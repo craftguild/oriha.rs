@@ -30,6 +30,54 @@ fn rendered(output: BlockOutput) -> RenderedBlockOutput {
 fn json(output: &impl serde::Serialize) -> serde_json::Value {
     serde_json::to_value(output).unwrap()
 }
+fn node<'a>(v: &'a serde_json::Value, id: &str) -> &'a serde_json::Value {
+    v["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == id)
+        .unwrap()
+}
+fn root(v: &serde_json::Value, index: usize) -> &serde_json::Value {
+    node(v, v["rootIds"][index].as_str().unwrap())
+}
+fn child<'a>(
+    v: &'a serde_json::Value,
+    parent: &serde_json::Value,
+    index: usize,
+) -> &'a serde_json::Value {
+    node(v, parent["childIds"][index].as_str().unwrap())
+}
+fn plain(v: &serde_json::Value, n: &serde_json::Value) -> String {
+    match n["kind"].as_str().unwrap() {
+        "text" | "emoji" => n["text"].as_str().unwrap().into(),
+        "code" | "math" | "html" | "fencedCode" | "indentedCode" | "mathBlock" | "htmlBlock"
+        | "foreignHtml" => n["source"].as_str().unwrap().into(),
+        "softBreak" | "hardBreak" => "\n".into(),
+        "footnoteReference" => format!("[^{}]", n["label"].as_str().unwrap()),
+        "image" => n["altIds"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|id| plain(v, node(v, id.as_str().unwrap())))
+            .collect(),
+        _ => n["childIds"]
+            .as_array()
+            .map(|ids| {
+                ids.iter()
+                    .map(|id| plain(v, node(v, id.as_str().unwrap())))
+                    .collect()
+            })
+            .unwrap_or_default(),
+    }
+}
+fn body_key(mode: BlockOutputMode) -> &'static str {
+    if mode == BlockOutputMode::Structured {
+        "nodes"
+    } else {
+        "blocks"
+    }
+}
 fn inline(kind: InlineKind) -> InlineNode {
     kind.into()
 }
@@ -234,65 +282,60 @@ fn every_actual_kind_has_typed_data_and_self_contained_json() {
     let o = structured(engine.derive_parsed_blocks(&parsed, BlockOutputMode::Structured));
     assert_eq!(o.status, BlockOutputStatus::Complete);
     let v = json(&o);
-    assert_eq!(v["schemaVersion"], 1);
-    assert_eq!(v["blocks"].as_array().unwrap().len(), 15);
-    let p = &v["blocks"][1];
-    assert!(p["text"].as_str().unwrap().contains("日本 & decoded"));
-    assert!(p["text"].as_str().unwrap().contains("[^note]"));
+    assert_eq!(v["schemaVersion"], 2);
+    assert_eq!(v["rootIds"].as_array().unwrap().len(), 15);
+    o.validate(10_000, 512, 2_000_000).unwrap();
+    let p = root(&v, 1);
+    assert!(plain(&v, p).contains("日本 & decoded"));
+    assert!(plain(&v, p).contains("[^note]"));
+    assert_eq!(child(&v, p, 0)["data"]["key"], "value");
+    assert_eq!(child(&v, p, 0)["annotationKind"], "mention");
+    assert_eq!(child(&v, p, 2)["shortcode"], "smile");
+    assert_eq!(child(&v, p, 3)["source"], "let x = <3;");
+    assert_eq!(child(&v, p, 4)["source"], "x^2");
+    assert_eq!(child(&v, p, 5)["tagfilter"], true);
+    assert_eq!(child(&v, p, 6)["kind"], "softBreak");
+    assert_eq!(child(&v, p, 7)["kind"], "hardBreak");
+    assert_eq!(child(&v, child(&v, p, 9), 0)["kind"], "strikethrough");
     assert_eq!(
-        p["properties"]["richText"][0]["properties"]["data"]["key"],
-        "value"
-    );
-    assert_eq!(
-        p["properties"]["richText"][2]["properties"]["shortcode"],
-        "smile"
-    );
-    assert_eq!(p["properties"]["richText"][3]["text"], "let x = <3;");
-    assert_eq!(p["properties"]["richText"][4]["text"], "x^2");
-    assert_eq!(
-        p["properties"]["richText"][5]["properties"]["tagfilter"],
-        true
-    );
-    assert_eq!(p["properties"]["richText"][6]["text"], "\n");
-    assert_eq!(p["properties"]["richText"][7]["kind"], "hardBreak");
-    assert_eq!(
-        p["properties"]["richText"][9]["children"][0]["kind"],
-        "strikethrough"
-    );
-    assert_eq!(
-        p["properties"]["richText"][10]["properties"]["url"],
+        child(&v, p, 10)["destination"],
         "https://example.test/a?b=c&d=e"
     );
+    let image = child(&v, p, 11);
     assert_eq!(
-        p["properties"]["richText"][11]["children"][0]["kind"],
+        node(&v, image["altIds"][0].as_str().unwrap())["kind"],
         "strong"
     );
-    assert_eq!(v["blocks"][2]["properties"]["level"], 3);
-    assert_eq!(v["blocks"][3]["text"], "body");
-    assert_eq!(v["blocks"][3]["properties"]["closed"], false);
-    assert_eq!(v["blocks"][3]["properties"]["info"], "rust title");
-    assert_eq!(v["blocks"][4]["text"], "normalized\ncode");
-    assert_eq!(v["blocks"][5]["text"], "y^3");
-    assert_eq!(v["blocks"][7]["text"], "body");
-    assert_eq!(v["blocks"][8]["properties"]["source"], "body");
-    assert_eq!(v["blocks"][10]["properties"]["start"], "3");
+    assert_eq!(root(&v, 2)["level"], 3);
+    assert_eq!(root(&v, 2)["anchor"], "日本-decoded");
+    assert_eq!(root(&v, 3)["source"], "body");
+    assert_eq!(root(&v, 3)["closed"], false);
+    assert_eq!(root(&v, 3)["info"], "rust title");
+    assert_eq!(root(&v, 4)["source"], "normalized\ncode");
+    assert_eq!(root(&v, 5)["source"], "y^3");
+    assert_eq!(root(&v, 7)["source"], "body");
+    assert_eq!(root(&v, 8)["source"], "body");
+    assert_eq!(root(&v, 10)["start"], "3");
+    assert_eq!(child(&v, root(&v, 10), 0)["checked"], true);
     assert_eq!(
-        v["blocks"][10]["children"][0]["properties"]["checked"],
-        true
-    );
-    assert_eq!(
-        v["blocks"][11]["properties"]["alignments"],
+        root(&v, 11)["alignments"],
         json(&vec!["left", "center", "right", "none"])
     );
+    let row = node(&v, root(&v, 11)["rowIds"][1].as_str().unwrap());
+    let cell = node(&v, row["cellIds"][0].as_str().unwrap());
+    assert_eq!(plain(&v, cell), "日本 & decoded");
+    assert_eq!(root(&v, 12)["kind"], "blankLine");
+    assert!(root(&v, 12).get("text").is_none());
+    assert_eq!(root(&v, 13)["title"], "Custom");
+    assert_eq!(root(&v, 14)["trustLevel"], "sanitized");
     assert_eq!(
-        v["blocks"][11]["properties"]["rows"][0][0]["text"],
-        "日本 & decoded"
+        node(&v, v["referenceIds"][0].as_str().unwrap())["destination"],
+        "/ref"
     );
-    assert!(v["blocks"][12]["text"].is_null());
-    assert_eq!(v["blocks"][13]["properties"]["title"], "Custom");
-    assert_eq!(v["blocks"][14]["properties"]["trustLevel"], "sanitized");
-    assert_eq!(v["references"]["key"]["destination"], "/ref");
-    assert_eq!(v["footnotes"][1]["label"], "unused");
+    assert_eq!(
+        node(&v, v["footnoteIds"][1].as_str().unwrap())["label"],
+        "unused"
+    );
     let roundtrip: StructuredBlockOutput = serde_json::from_value(v.clone()).unwrap();
     assert_eq!(json(&roundtrip), v);
     let r = rendered(engine.derive_parsed_blocks(&parsed, BlockOutputMode::Rendered));
@@ -318,15 +361,27 @@ fn normalized_nested_sources_tables_images_and_annotations_survive() {
     let v = json(&structured(
         engine.derive_parsed_blocks(&parsed, BlockOutputMode::Structured),
     ));
-    let nested = &v["blocks"][0]["children"][0]["children"][0]["children"];
-    assert!(nested[0]["text"].as_str().unwrap().contains("日本 <&>"));
-    assert!(nested[1]["text"].as_str().unwrap().contains("x^2"));
-    assert_eq!(v["blocks"][1]["properties"]["header"][0]["text"], "a|b");
+    let nested = child(&v, child(&v, root(&v, 0), 0), 0);
+    assert!(child(&v, nested, 0)["source"]
+        .as_str()
+        .unwrap()
+        .contains("日本 <&>"));
+    assert!(plain(&v, child(&v, nested, 1)).contains("x^2"));
+    let table = root(&v, 1);
+    let header = node(&v, table["rowIds"][0].as_str().unwrap());
     assert_eq!(
-        v["blocks"][1]["properties"]["header"][1]["text"],
+        plain(&v, node(&v, header["cellIds"][0].as_str().unwrap())),
+        "a|b"
+    );
+    assert_eq!(
+        plain(&v, node(&v, header["cellIds"][1].as_str().unwrap())),
         "alt 太字"
     );
-    assert_eq!(v["blocks"][1]["properties"]["rows"][0][0]["text"], "&");
+    let row = node(&v, table["rowIds"][1].as_str().unwrap());
+    assert_eq!(
+        plain(&v, node(&v, row["cellIds"][0].as_str().unwrap())),
+        "&"
+    );
     let region = parsed.text_regions().find(|r| r.text == "@alice").unwrap();
     let annotated = parsed
         .apply_annotations(&[TextAnnotation {
@@ -342,11 +397,8 @@ fn normalized_nested_sources_tables_images_and_annotations_survive() {
     let av = json(&structured(
         engine.derive_parsed_blocks(&annotated, BlockOutputMode::Structured),
     ));
-    assert_eq!(av["blocks"][2]["text"], "@alice");
-    assert_eq!(
-        av["blocks"][2]["properties"]["richText"][0]["kind"],
-        "annotation"
-    );
+    assert_eq!(plain(&av, root(&av, 2)), "@alice");
+    assert_eq!(child(&av, root(&av, 2), 0)["kind"], "annotation");
 }
 
 #[test]
@@ -429,10 +481,7 @@ fn hooks_parse_reuse_identity_and_repeated_derivation_are_isolated() {
     let parsed = engine.parse(i);
     for _ in 0..2 {
         let s = structured(engine.derive_parsed_blocks(&parsed, BlockOutputMode::Structured));
-        assert_eq!(
-            s.blocks[0].as_ref().unwrap().text.as_deref(),
-            Some("retained hook IR")
-        );
+        assert_eq!(plain(&json(&s), root(&json(&s), 0)), "retained hook IR");
         let r = rendered(engine.derive_parsed_blocks(&parsed, BlockOutputMode::Rendered));
         assert_eq!(r.blocks[0].id, "working-id");
         assert!(!r.blocks[0].html().unwrap().contains("FINAL"));
@@ -504,7 +553,7 @@ fn incomplete_failed_and_invalid_documents_return_empty_results() {
         });
         let o = json(&engine.derive_blocks(input("one\n\ntwo"), mode));
         assert_eq!(o["status"], "incomplete");
-        assert_eq!(o["blocks"], json(&Vec::<u8>::new()));
+        assert_eq!(o[body_key(mode)], json(&Vec::<u8>::new()));
         let engine = OrihaEngine::default().with_limits(EngineLimits {
             max_source_bytes: 2,
             ..Default::default()
@@ -520,7 +569,7 @@ fn incomplete_failed_and_invalid_documents_return_empty_results() {
         );
         assert_eq!(o["status"], "failed");
         assert_eq!(o["diagnostics"][0]["code"], "blocks.invalid_identity");
-        assert_eq!(o["blocks"], json(&Vec::<u8>::new()));
+        assert_eq!(o[body_key(mode)], json(&Vec::<u8>::new()));
     }
 }
 
@@ -543,7 +592,7 @@ fn aggregate_budget_counts_escapes_assets_metadata_and_envelope() {
                 json(&o)
             );
             if expected == "failed" {
-                assert_eq!(json(&o)["blocks"], json(&Vec::<u8>::new()));
+                assert_eq!(json(&o)[body_key(mode)], json(&Vec::<u8>::new()));
             }
         }
     }
