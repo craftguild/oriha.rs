@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "group": "oriha",
+  "config_hash": "c3b6c2154973f5858e09b89a7675dc554055c5fded2668f69aff6efa73ec9aad",
+  "head": "dd0421790b210625919a733fee79824d0b588b8e",
+  "base": "v0.1.1",
+  "current": "0.1.1",
+  "next": "0.2.0",
+  "tag": "v0.2.0",
+  "bump": "minor",
+  "mode": "normal",
+  "prepared": false,
+  "receipt_path": "docs/releases/v0.2.0.json",
+  "notes": "# v0.2.0\n\nGroup: `oriha`\n\nCompare: `v0.1.1` → `dd0421790b210625919a733fee79824d0b588b8e`\n\n## Changes\n\n- docs(readme): install the latest published release (5f82692beebcc59461872f4a5548422bb6d94689)\n- feat(document)!: return flat typed documents with optional preparation (b869d83863645df743a49a0c57599cbaa65ecf7a)\n- fix(stats)!: replace unmaintained chrono with jiff (dd0421790b210625919a733fee79824d0b588b8e)\n\n## Breaking changes\n\n- structured document schema version 2 replaces the recursive version-1 DTOs with a flat typed node pool. (b869d83863645df743a49a0c57599cbaa65ecf7a)\n- statistics Rust APIs now use jiff::Timestamp instead of chrono::DateTime<Utc>. JSONL records and CLI formats remain compatible. (dd0421790b210625919a733fee79824d0b588b8e)\n",
+  "changes": [
+    {
+      "path": "Cargo.toml",
+      "before": "ce2f1fccabff641d01c435ef2b12edb6e3fc508e08f0c6a119e93dec4254a073",
+      "after": "b0a23f3f5ad2c657c73e9b7801756ce0c27a6340df2c050d20ecb65c3ad1bdd0"
+    },
+    {
+      "path": "Cargo.lock",
+      "before": "31e729196857eb78aa0d619f33d8d26112b2dd9235a3ab3041874658c0b67933",
+      "after": "3c5b32bfe302e916d64d95a2dc911143ad4dc40e0e2bbe772200e51bae6eecab"
+    },
+    {
+      "path": "packages/expo-oriha/package.json",
+      "before": "8b3a1a78604d947a9d1ef48f42e09aaa2f4b02d5d9d6969f6cd4e03c3f61abf8",
+      "after": "3342a9a2919e82dd6ce20e1dbb2a3eaec8e848b2540a8d71ee859d7b187a16ad"
+    },
+    {
+      "path": "packages/expo-oriha/package-lock.json",
+      "before": "839434f1fbd25008b87e256e2bff76d218d47e0c44fae6012531dd334dfa3c53",
+      "after": "6a6b4ff62b2fd4adfca102b3e8b047da95200350af57c2e98560e53401cc0018"
+    },
+    {
+      "path": "docs/releases/v0.2.0.md",
+      "before": null,
+      "after": "e0c42a2355fffa66fc7027ad2b5c96cacfa0924d270a5d9e4f62766481d65750"
+    }
+  ]
+}
