@@ -1,5 +1,5 @@
-use chrono::{DateTime, Utc};
 use clap::{Parser, ValueEnum};
+use jiff::Timestamp;
 use oriha_stats_viewer::{
     load_report, parse_from_bound, parse_last_window, parse_to_bound, resolve_last_window,
     BucketTotals, CountEntry, DimensionTotals, GroupBy, ReportOptions, ReportRow, StatsReport,
@@ -7,7 +7,7 @@ use oriha_stats_viewer::{
 use std::path::PathBuf;
 use std::process;
 
-type TimeRange = (Option<DateTime<Utc>>, Option<DateTime<Utc>>);
+type TimeRange = (Option<Timestamp>, Option<Timestamp>);
 
 fn main() {
     if let Err(error) = run(Cli::parse()) {
@@ -17,7 +17,7 @@ fn main() {
 }
 
 fn run(cli: Cli) -> Result<(), String> {
-    let (from, to) = resolve_time_range(&cli, Utc::now())?;
+    let (from, to) = resolve_time_range(&cli, Timestamp::now())?;
 
     let report = load_report(ReportOptions {
         inputs: cli.input,
@@ -41,7 +41,7 @@ fn run(cli: Cli) -> Result<(), String> {
     Ok(())
 }
 
-fn resolve_time_range(cli: &Cli, now: DateTime<Utc>) -> Result<TimeRange, String> {
+fn resolve_time_range(cli: &Cli, now: Timestamp) -> Result<TimeRange, String> {
     if let Some(last) = cli.last.as_deref() {
         if cli.from.is_some() || cli.to.is_some() {
             return Err("--last cannot be combined with --from or --to".to_string());
@@ -328,25 +328,21 @@ fn print_table_line(cells: &[String], widths: &[usize]) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use chrono::TimeZone;
     use clap::Parser;
 
     #[test]
     fn resolves_last_window_to_absolute_range() {
         let cli = Cli::try_parse_from(["oriha-stats-viewer", "--last", "7d"]).expect("parse cli");
-        let now = Utc
-            .with_ymd_and_hms(2026, 6, 15, 10, 0, 0)
-            .single()
-            .expect("valid time");
+        let now = "2026-06-15T10:00:00Z".parse().expect("valid time");
 
         let (from, to) = resolve_time_range(&cli, now).expect("resolve time range");
 
         assert_eq!(
-            from.map(|value| value.to_rfc3339()),
+            from.map(|value| value.display_with_offset(jiff::tz::Offset::UTC).to_string()),
             Some("2026-06-08T10:00:00+00:00".to_string())
         );
         assert_eq!(
-            to.map(|value| value.to_rfc3339()),
+            to.map(|value| value.display_with_offset(jiff::tz::Offset::UTC).to_string()),
             Some("2026-06-15T10:00:00+00:00".to_string())
         );
     }

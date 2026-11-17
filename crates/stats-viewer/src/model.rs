@@ -1,4 +1,4 @@
-use chrono::{DateTime, Timelike, Utc};
+use jiff::Timestamp;
 use oriha_core::RenderStats;
 use serde::{Deserialize, Serialize};
 
@@ -36,8 +36,8 @@ pub struct StatsReport {
     pub source_file_count: usize,
     pub source_files: Vec<String>,
     pub skipped_invalid_line_count: u64,
-    pub from: Option<DateTime<Utc>>,
-    pub to: Option<DateTime<Utc>>,
+    pub from: Option<Timestamp>,
+    pub to: Option<Timestamp>,
     pub group_by: GroupBy,
     pub summary: ReportRow,
     pub groups: Vec<ReportRow>,
@@ -51,8 +51,8 @@ pub struct ReportRow {
     pub renders: u64,
     pub total_blocks: u64,
     pub average_blocks_per_render: f64,
-    pub first_received_at: Option<DateTime<Utc>>,
-    pub last_received_at: Option<DateTime<Utc>>,
+    pub first_received_at: Option<Timestamp>,
+    pub last_received_at: Option<Timestamp>,
     pub issue_count: u64,
     pub locked_feature_count: u64,
     pub unsupported_count: u64,
@@ -91,7 +91,7 @@ pub struct CountEntry {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub(crate) struct StoredRecord {
-    pub(crate) received_at: DateTime<Utc>,
+    pub(crate) received_at: Timestamp,
     pub(crate) payload: StoredPayload,
 }
 
@@ -109,12 +109,8 @@ pub(crate) struct StoredPayload {
 pub(crate) fn group_key(record: &StoredRecord, group_by: GroupBy) -> String {
     match group_by {
         GroupBy::All => "all".to_string(),
-        GroupBy::Hour => format!(
-            "{} {:02}:00Z",
-            record.received_at.format("%Y-%m-%d"),
-            record.received_at.hour()
-        ),
-        GroupBy::Day => record.received_at.format("%Y-%m-%d").to_string(),
+        GroupBy::Hour => record.received_at.strftime("%Y-%m-%d %H:00Z").to_string(),
+        GroupBy::Day => record.received_at.strftime("%Y-%m-%d").to_string(),
         GroupBy::Platform => record.payload.platform.clone(),
         GroupBy::AppVersion => record.payload.app_version.clone(),
         GroupBy::BuildVersion => record.payload.build_version.clone(),

@@ -14,7 +14,7 @@ path = "src/main.rs"
 
 [dependencies]
 axum.workspace = true
-chrono.workspace = true
+jiff.workspace = true
 hex.workspace = true
 hmac.workspace = true
 oriha-stats-schema.workspace = true

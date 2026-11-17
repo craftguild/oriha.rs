@@ -13,7 +13,7 @@ name = "oriha-stats-viewer"
 path = "src/main.rs"
 
 [dependencies]
-chrono.workspace = true
+jiff.workspace = true
 clap.workspace = true
 oriha-core.workspace = true
 serde.workspace = true

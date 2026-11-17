@@ -47,8 +47,8 @@ impl ReportAccumulator {
 struct Aggregate {
     renders: u64,
     total_blocks: u64,
-    first_received_at: Option<chrono::DateTime<chrono::Utc>>,
-    last_received_at: Option<chrono::DateTime<chrono::Utc>>,
+    first_received_at: Option<jiff::Timestamp>,
+    last_received_at: Option<jiff::Timestamp>,
     buckets: BucketMaps,
 }
 

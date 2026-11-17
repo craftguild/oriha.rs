@@ -1,11 +1,11 @@
 use crate::error::ViewerError;
-use chrono::{DateTime, Days, Duration, Months, NaiveDate, TimeZone, Utc};
+use jiff::{civil::Date, tz::TimeZone, Span, Timestamp};
 
-pub fn parse_from_bound(value: &str) -> Result<DateTime<Utc>, ViewerError> {
+pub fn parse_from_bound(value: &str) -> Result<Timestamp, ViewerError> {
     parse_time_bound(value, DateBound::Start)
 }
 
-pub fn parse_to_bound(value: &str) -> Result<DateTime<Utc>, ViewerError> {
+pub fn parse_to_bound(value: &str) -> Result<Timestamp, ViewerError> {
     parse_time_bound(value, DateBound::End)
 }
 
@@ -62,17 +62,23 @@ pub fn parse_last_window(value: &str) -> Result<LastWindow, ViewerError> {
 
 pub fn resolve_last_window(
     window: LastWindow,
-    now: DateTime<Utc>,
-) -> Result<(DateTime<Utc>, DateTime<Utc>), ViewerError> {
-    let from = match window {
-        LastWindow::Hours(count) => now.checked_sub_signed(Duration::hours(i64::from(count))),
-        LastWindow::Days(count) => now.checked_sub_signed(Duration::days(i64::from(count))),
-        LastWindow::Weeks(count) => now.checked_sub_signed(Duration::weeks(i64::from(count))),
-        LastWindow::Months(count) => now.checked_sub_months(Months::new(count)),
-    }
-    .ok_or_else(|| ViewerError::LastWindowOverflow {
+    now: Timestamp,
+) -> Result<(Timestamp, Timestamp), ViewerError> {
+    let overflow = |_| ViewerError::LastWindowOverflow {
         value: window.label(),
-    })?;
+    };
+    let span = match window {
+        LastWindow::Hours(count) => Span::new().try_hours(count),
+        LastWindow::Days(count) => Span::new().try_days(count),
+        LastWindow::Weeks(count) => Span::new().try_weeks(count),
+        LastWindow::Months(count) => Span::new().try_months(count),
+    }
+    .map_err(overflow)?;
+    let from = now
+        .to_zoned(TimeZone::UTC)
+        .checked_sub(span)
+        .map_err(overflow)?
+        .timestamp();
     Ok((from, now))
 }
 
@@ -82,26 +88,24 @@ enum DateBound {
     End,
 }
 
-fn parse_time_bound(value: &str, bound: DateBound) -> Result<DateTime<Utc>, ViewerError> {
-    if let Ok(value) = DateTime::parse_from_rfc3339(value) {
-        return Ok(value.with_timezone(&Utc));
+fn parse_time_bound(value: &str, bound: DateBound) -> Result<Timestamp, ViewerError> {
+    if let Ok(value) = value.parse::<Timestamp>() {
+        return Ok(value);
     }
 
-    if let Ok(date) = NaiveDate::parse_from_str(value, "%Y-%m-%d") {
+    if let Ok(date) = Date::strptime("%Y-%m-%d", value) {
         let date = match bound {
             DateBound::Start => date,
-            DateBound::End => date.checked_add_days(Days::new(1)).ok_or_else(|| {
-                ViewerError::InvalidTimeBound {
-                    value: value.to_string(),
-                }
+            DateBound::End => date.tomorrow().map_err(|_| ViewerError::InvalidTimeBound {
+                value: value.to_string(),
             })?,
         };
-        let start = date
-            .and_hms_opt(0, 0, 0)
-            .ok_or_else(|| ViewerError::InvalidTimeBound {
+        let start = date.at(0, 0, 0, 0).to_zoned(TimeZone::UTC).map_err(|_| {
+            ViewerError::InvalidTimeBound {
                 value: value.to_string(),
-            })?;
-        return Ok(Utc.from_utc_datetime(&start));
+            }
+        })?;
+        return Ok(start.timestamp());
     }
 
     Err(ViewerError::InvalidTimeBound {

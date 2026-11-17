@@ -33,14 +33,14 @@ fn production_raw_archive_loads_and_displays_expected_report() {
         report
             .summary
             .first_received_at
-            .map(|value| value.to_rfc3339()),
+            .map(|value| value.display_with_offset(jiff::tz::Offset::UTC).to_string()),
         Some("2026-05-18T09:52:46.581101041+00:00".to_string())
     );
     assert_eq!(
         report
             .summary
             .last_received_at
-            .map(|value| value.to_rfc3339()),
+            .map(|value| value.display_with_offset(jiff::tz::Offset::UTC).to_string()),
         Some("2026-06-15T09:57:32.274503604+00:00".to_string())
     );
     assert_eq!(report.groups.len(), 19);

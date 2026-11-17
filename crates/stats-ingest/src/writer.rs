@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use jiff::{civil::Date, tz::TimeZone, Span, Timestamp};
 use oriha_stats_schema::ValidatedUsageAnalyticsPayload;
 use serde::Serialize;
 use std::error::Error;
@@ -12,7 +12,7 @@ use uuid::Uuid;
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StoredUsageAnalyticsRecord {
-    pub received_at: DateTime<Utc>,
+    pub received_at: Timestamp,
     pub storage_id: Uuid,
     pub digest: String,
     pub payload: ValidatedUsageAnalyticsPayload,
@@ -21,7 +21,7 @@ pub struct StoredUsageAnalyticsRecord {
 impl StoredUsageAnalyticsRecord {
     pub fn new(digest: String, payload: ValidatedUsageAnalyticsPayload) -> Self {
         Self {
-            received_at: Utc::now(),
+            received_at: Timestamp::now(),
             storage_id: Uuid::new_v4(),
             digest,
             payload,
@@ -111,7 +111,7 @@ struct ActiveChunk {
     file: File,
     open_path: PathBuf,
     partition_dir: PathBuf,
-    opened_at: DateTime<Utc>,
+    opened_at: Timestamp,
     bytes_written: u64,
 }
 
@@ -131,7 +131,7 @@ impl JsonlChunkWriter {
     pub async fn append(&mut self, record: &StoredUsageAnalyticsRecord) -> Result<(), WriterError> {
         let mut line = serde_json::to_vec(record).map_err(WriterError::Serialize)?;
         line.push(b'\n');
-        let now = Utc::now();
+        let now = Timestamp::now();
         self.ensure_active(now, line.len() as u64).await?;
 
         let active = self.active.as_mut().ok_or(WriterError::Closed)?;
@@ -159,20 +159,13 @@ impl JsonlChunkWriter {
         Ok(())
     }
 
-    async fn ensure_active(
-        &mut self,
-        now: DateTime<Utc>,
-        next_bytes: u64,
-    ) -> Result<(), WriterError> {
+    async fn ensure_active(&mut self, now: Timestamp, next_bytes: u64) -> Result<(), WriterError> {
         let partition_dir = partition_dir(&self.data_dir, now);
         let should_rotate = match &self.active {
             None => false,
             Some(active) => {
                 active.partition_dir != partition_dir
-                    || now
-                        .signed_duration_since(active.opened_at)
-                        .num_seconds()
-                        .max(0) as u64
+                    || now.duration_since(active.opened_at).as_secs().max(0) as u64
                         >= self.rotate_seconds
                     || active.bytes_written.saturating_add(next_bytes) > self.rotate_bytes
             }
@@ -192,7 +185,7 @@ impl JsonlChunkWriter {
     async fn open_active(
         &mut self,
         partition_dir: PathBuf,
-        now: DateTime<Utc>,
+        now: Timestamp,
     ) -> Result<(), WriterError> {
         fs::create_dir_all(&partition_dir)
             .await
@@ -246,10 +239,15 @@ pub async fn cleanup_old_raw_partitions(
     let Ok(mut entries) = fs::read_dir(&raw_dir).await else {
         return Ok(());
     };
-    let cutoff = Utc::now()
-        .date_naive()
-        .checked_sub_days(chrono::Days::new(retention_days))
+    let days = i64::try_from(retention_days)
+        .ok()
+        .and_then(|days| Span::new().try_days(days).ok())
         .ok_or(WriterError::InvalidRetention(retention_days))?;
+    let cutoff = Timestamp::now()
+        .to_zoned(TimeZone::UTC)
+        .date()
+        .checked_sub(days)
+        .map_err(|_| WriterError::InvalidRetention(retention_days))?;
 
     while let Some(entry) = entries.next_entry().await.map_err(WriterError::Io)? {
         let file_name = entry.file_name();
@@ -259,7 +257,7 @@ pub async fn cleanup_old_raw_partitions(
         let Some(date) = name.strip_prefix("dt=") else {
             continue;
         };
-        let Ok(date) = chrono::NaiveDate::parse_from_str(date, "%Y-%m-%d") else {
+        let Ok(date) = Date::strptime("%Y-%m-%d", date) else {
             continue;
         };
         if date < cutoff {
@@ -305,11 +303,11 @@ fn seal_stale_open_chunks_in_dir(dir: &Path) -> Result<(), std::io::Error> {
     Ok(())
 }
 
-fn partition_dir(data_dir: &Path, now: DateTime<Utc>) -> PathBuf {
+fn partition_dir(data_dir: &Path, now: Timestamp) -> PathBuf {
     data_dir
         .join("raw")
-        .join(format!("dt={}", now.format("%Y-%m-%d")))
-        .join(format!("hour={}", now.format("%H")))
+        .join(format!("dt={}", now.strftime("%Y-%m-%d")))
+        .join(format!("hour={}", now.strftime("%H")))
 }
 
 fn sealed_path_for_open_path(open_path: &Path) -> PathBuf {

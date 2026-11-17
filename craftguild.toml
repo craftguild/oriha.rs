@@ -542,6 +542,11 @@ role = "implementation"
 reason = "First-party runtime, generator, packaging, example, build or verification implementation"
 
 [[sources]]
+pattern = "crates/stats-ingest/tests/temporal.rs"
+role = "test"
+reason = "Statistics timestamp compatibility and retention safety regressions"
+
+[[sources]]
 pattern = "crates/stats-schema/src/lib.rs"
 role = "implementation"
 reason = "First-party runtime, generator, packaging, example, build or verification implementation"

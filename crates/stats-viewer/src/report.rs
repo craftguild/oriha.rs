@@ -2,7 +2,7 @@ use crate::aggregate::ReportAccumulator;
 use crate::error::ViewerError;
 use crate::model::{GroupBy, StatsReport, StoredRecord};
 use crate::reader::{collect_stats_files, read_stats_file};
-use chrono::{DateTime, Utc};
+use jiff::Timestamp;
 use std::path::PathBuf;
 
 #[derive(Clone, Debug)]
@@ -10,8 +10,8 @@ pub struct ReportOptions {
     pub inputs: Vec<PathBuf>,
     pub include_open: bool,
     pub skip_invalid: bool,
-    pub from: Option<DateTime<Utc>>,
-    pub to: Option<DateTime<Utc>>,
+    pub from: Option<Timestamp>,
+    pub to: Option<Timestamp>,
     pub group_by: GroupBy,
 }
 
@@ -71,11 +71,7 @@ pub fn load_report(options: ReportOptions) -> Result<StatsReport, ViewerError> {
     })
 }
 
-fn record_in_range(
-    record: &StoredRecord,
-    from: Option<DateTime<Utc>>,
-    to: Option<DateTime<Utc>>,
-) -> bool {
+fn record_in_range(record: &StoredRecord, from: Option<Timestamp>, to: Option<Timestamp>) -> bool {
     from.is_none_or(|from| record.received_at >= from)
         && to.is_none_or(|to| record.received_at < to)
 }

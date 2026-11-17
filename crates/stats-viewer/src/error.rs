@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use jiff::Timestamp;
 use std::error::Error;
 use std::fmt;
 use std::path::PathBuf;
@@ -24,8 +24,8 @@ pub enum ViewerError {
         value: String,
     },
     InvalidTimeRange {
-        from: DateTime<Utc>,
-        to: DateTime<Utc>,
+        from: Timestamp,
+        to: Timestamp,
     },
     NoStatsFiles {
         inputs: Vec<PathBuf>,
